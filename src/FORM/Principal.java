@@ -3,7 +3,6 @@ package FORM;
 import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import sun.print.PrintJob2D;
 
 public class Principal extends javax.swing.JFrame {
     
@@ -44,7 +43,6 @@ public class Principal extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
-        jRadioButtonMenuItem1 = new javax.swing.JRadioButtonMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
@@ -93,6 +91,11 @@ public class Principal extends javax.swing.JFrame {
         jMenu1.add(jMenuItem5);
 
         jMenuItem6.setText("Proveedores");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem6);
 
         jMenuBar1.add(jMenu1);
@@ -104,10 +107,6 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuItem4.setText("Cierre del ejercicio");
         jMenu3.add(jMenuItem4);
-
-        jRadioButtonMenuItem1.setSelected(true);
-        jRadioButtonMenuItem1.setText("jRadioButtonMenuItem1");
-        jMenu3.add(jRadioButtonMenuItem1);
 
         jMenuBar1.add(jMenu3);
 
@@ -132,6 +131,11 @@ public class Principal extends javax.swing.JFrame {
         jMenu5.add(jMenuItem12);
 
         jMenuItem11.setText("Cuentas Bancarias");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem11);
 
         jMenuItem9.setText("Depósitos");
@@ -173,7 +177,7 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
-        // TODO add your handling code here:
+        new Bancos().setVisible(true);
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 
     private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
@@ -187,6 +191,14 @@ public class Principal extends javax.swing.JFrame {
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         new Clientes().setVisible(true);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        new Proveedores().setVisible(true);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        new Cuentas_bancarias().setVisible(true);
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
     
     public static void main(String args[]) {
         try {
@@ -228,6 +240,5 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
     // End of variables declaration//GEN-END:variables
 }
