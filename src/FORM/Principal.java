@@ -41,7 +41,6 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
@@ -56,6 +55,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -84,9 +84,6 @@ public class Principal extends javax.swing.JFrame {
         jMenu1.add(jMenuItem6);
 
         jMenuBar1.add(jMenu1);
-
-        jMenu2.setText("Usuarios");
-        jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Contabilidad");
 
@@ -143,6 +140,9 @@ public class Principal extends javax.swing.JFrame {
         jMenu5.add(jMenuItem14);
 
         jMenuBar1.add(jMenu5);
+
+        jMenu2.setText("Usuarios");
+        jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
 
