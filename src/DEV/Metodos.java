@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 public class Metodos {
 
     public static Connection conexion = null;
+
     public static void Iniciar_Conexion() {
         try {
             String db = null;
@@ -29,4 +30,32 @@ public class Metodos {
             System.err.println(ex);
         }
     }
+
+    public static void Cerrar_Conexion() {
+        try {
+            conexion.close();
+            System.err.println("Conexion finalizada");
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+    }
+
+    public static void Verificar_conexion() {
+        try {
+            if (conexion.isClosed() == false) {
+                System.err.println("conexion OK");
+            } else {
+                System.err.println("conexion FAIL");
+                Iniciar_Conexion();
+                if (conexion.isClosed() == false) {
+                    System.err.println("conexion reiniciada; Conexion OK");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error de conexion con la base de datos.");
+                }
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+    }
+
 }

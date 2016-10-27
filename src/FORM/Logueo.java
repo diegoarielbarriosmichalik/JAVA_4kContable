@@ -1,8 +1,4 @@
 package FORM;
-
-
-import DEV.Metodos;
-import java.awt.event.KeyEvent;
 import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
@@ -18,7 +14,7 @@ public class Logueo extends javax.swing.JFrame {
 //        hoy = DEV.Metodos.getHoy_format2();
         this.setTitle("Blocked Access");
         new File(".").getAbsolutePath();
-        setIconImage(new ImageIcon(getClass().getResource("/icon.png")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/Imagenes/icon.png")).getImage());
         
        jTextField1.setEditable(false);
        jPasswordField1.setEditable(false);
