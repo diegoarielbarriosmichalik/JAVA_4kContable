@@ -40,6 +40,8 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem15 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
@@ -98,6 +100,17 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem6);
 
+        jMenuItem2.setText("Comprobantes");
+        jMenu1.add(jMenuItem2);
+
+        jMenuItem15.setText("Plan de cuentas");
+        jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem15ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem15);
+
         jMenuBar1.add(jMenu1);
 
         jMenu3.setText("Contabilidad");
@@ -113,6 +126,11 @@ public class Principal extends javax.swing.JFrame {
         jMenu4.setText("Movimientos");
 
         jMenuItem7.setText("Compras");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItem7);
 
         jMenuItem8.setText("Ventas");
@@ -199,6 +217,14 @@ public class Principal extends javax.swing.JFrame {
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
         new Cuentas_bancarias().setVisible(true);
     }//GEN-LAST:event_jMenuItem11ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        new Compras().setVisible(true);
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
+        new Cuentas().setVisible(true);
+    }//GEN-LAST:event_jMenuItem15ActionPerformed
     
     public static void main(String args[]) {
         try {
@@ -232,6 +258,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
+    private javax.swing.JMenuItem jMenuItem15;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
