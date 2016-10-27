@@ -33,8 +33,10 @@ public class Metodos {
 
     public static void Cerrar_Conexion() {
         try {
-            conexion.close();
-            System.err.println("Conexion finalizada");
+            if (conexion != null) {
+                conexion.close();
+                System.err.println("Conexion finalizada");
+            }
         } catch (SQLException ex) {
             System.err.println(ex);
         }

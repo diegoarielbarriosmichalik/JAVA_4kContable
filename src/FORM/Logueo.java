@@ -167,6 +167,7 @@ public class Logueo extends javax.swing.JFrame {
 //        }
         this.setVisible(false);
         new Principal().setVisible(true);
+        new Seleccionar_empresa().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public static void main(String args[]) {
