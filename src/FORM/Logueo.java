@@ -1,5 +1,6 @@
 package FORM;
 
+import DEV.Metodos;
 import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
@@ -165,6 +166,8 @@ public class Logueo extends javax.swing.JFrame {
 //        if (entro == true) {
 //            this.setVisible(false);
 //        }
+
+        Metodos.Iniciar_Conexion();
         this.setVisible(false);
         new Principal().setVisible(true);
         new Seleccionar_empresa().setVisible(true);
