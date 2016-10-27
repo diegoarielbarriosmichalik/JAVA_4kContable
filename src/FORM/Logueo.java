@@ -1,4 +1,5 @@
 package FORM;
+
 import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
@@ -15,10 +16,10 @@ public class Logueo extends javax.swing.JFrame {
         this.setTitle("Blocked Access");
         new File(".").getAbsolutePath();
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/icon.png")).getImage());
-        
-       jTextField1.setEditable(false);
-       jPasswordField1.setEditable(false);
-        
+
+        jTextField1.setEditable(false);
+        jPasswordField1.setEditable(false);
+
         jTextField1.requestFocus();
     }
 
@@ -164,6 +165,8 @@ public class Logueo extends javax.swing.JFrame {
 //        if (entro == true) {
 //            this.setVisible(false);
 //        }
+        this.setVisible(false);
+        new Principal().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public static void main(String args[]) {
