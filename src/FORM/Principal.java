@@ -3,6 +3,7 @@ package FORM;
 import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import sun.print.PrintJob2D;
 
 public class Principal extends javax.swing.JFrame {
     
@@ -199,8 +200,10 @@ public class Principal extends javax.swing.JFrame {
             System.err.println(ex);
         }
         
-        java.awt.EventQueue.invokeLater(() -> {
-            new Principal().setVisible(true);
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Principal().setVisible(true);
+            }
         });
     }
 
