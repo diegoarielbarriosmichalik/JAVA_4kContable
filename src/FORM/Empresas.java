@@ -73,7 +73,7 @@ public class Empresas extends javax.swing.JFrame {
             jTable1.getColumnModel().getColumn(2).setPreferredWidth(300);
         }
 
-        jTextField1.setBorder(javax.swing.BorderFactory.createTitledBorder("Buscar por nombre"));
+        jTextField1.setBorder(javax.swing.BorderFactory.createTitledBorder("Buscar"));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/nuevo_mini.png"))); // NOI18N
         jButton1.setMnemonic('n');
@@ -149,7 +149,7 @@ public class Empresas extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+    this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

@@ -5,6 +5,7 @@
  */
 package FORM;
 
+import java.awt.event.KeyEvent;
 import java.io.File;
 import javax.swing.ImageIcon;
 
@@ -75,6 +76,11 @@ public class Seleccionar_empresa extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTable1KeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setResizable(false);
@@ -135,6 +141,12 @@ public class Seleccionar_empresa extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         jTable1.requestFocus();
     }//GEN-LAST:event_formWindowOpened
+
+    private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
+        if ((evt.getKeyCode() == KeyEvent.VK_ESCAPE)) {
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_jTable1KeyPressed
 
     /**
      * @param args the command line arguments
