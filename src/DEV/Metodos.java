@@ -10,6 +10,7 @@ import FORM.Comprobante;
 import FORM.Condicion;
 import FORM.Cuentas;
 import FORM.Cuentas_ABM;
+import FORM.Cuentas_asociadas;
 import FORM.Empresas;
 import FORM.Empresas_ABM;
 import FORM.Empresas_buscar_clientes;
@@ -25,8 +26,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -260,6 +259,83 @@ public class Metodos {
             }
         } catch (NumberFormatException | SQLException e) {
             JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
+    public synchronized static void Facturas_de_compra_max() {
+        try {
+            Statement st1 = conexion.createStatement();
+            ResultSet result = st1.executeQuery(""
+                    + "SELECT MAX(id_factura_de_compra) "
+                    + "FROM factura_de_compra "
+                    + "where id_empresa = '" + empresa + "'");
+            if (result.next()) {
+                id_factura_de_compra = result.getInt(1);
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+    }
+
+    public synchronized static void Facturas_de_compra_buscar() {
+        try {
+            Statement st1 = conexion.createStatement();
+            ResultSet result = st1.executeQuery(""
+                    + "SELECT * FROM factura_de_compra "
+                    + "inner join proveedor on proveedor.id_proveedor = factura_de_compra.id_proveedor "
+                    + "inner join condicion on condicion.id_condicion = factura_de_compra.id_condicion "
+                    + "inner join moneda on moneda.id_moneda = factura_de_compra.id_moneda "
+                    + "inner join comprobante on comprobante.id_comprobante = factura_de_compra.id_comprobante "
+                    + "where id_factura_de_compra = '" + id_factura_de_compra + "' "
+                    + "and id_empresa = '" + empresa + "'");
+            while (result.next()) {
+                String factura_sucursal = result.getString("factura_sucursal");
+                if (result.getString("factura_sucursal").length() == 1) {
+                    factura_sucursal = "00" + result.getString("factura_sucursal");
+                }
+                if (result.getString("factura_sucursal").length() == 2) {
+                    factura_sucursal = "0" + result.getString("factura_sucursal");
+                }
+                String factura_caja = result.getString("factura_caja");
+                if (result.getString("factura_caja").length() == 1) {
+                    factura_caja = "00" + result.getString("factura_caja");
+                }
+                if (result.getString("factura_caja").length() == 2) {
+                    factura_caja = "0" + result.getString("factura_caja");
+                }
+                Compras.jTextField_fac_numero.setText(result.getString("factura_numero"));
+                Compras.jTextField_fac_sucursal.setText(factura_sucursal);
+                Compras.jTextField_fac_caja.setText(factura_caja);
+
+                id_proveedor = result.getInt("id_proveedor");
+
+                Compras.jTextField_proveedor.setText(result.getString("nombre"));
+                Compras.jTextField_ruc.setText(result.getString("ruc"));
+                Compras.jTextField_descripcion.setText(result.getString("descripcion"));
+
+                Statement ST2 = conexion.createStatement();
+                ResultSet RS2 = ST2.executeQuery(""
+                        + "SELECT * FROM timbrado "
+                        + "where id_proveedor = '" + id_proveedor + "' order by vencimiento DESC");
+                if (RS2.next()) {
+                    Compras.jTextField_timbrado.setText(RS2.getString("timbrado"));
+                }
+                
+                Compras.jDateChooser_fecha.setDate(result.getDate("fecha"));
+                
+                id_condicion = result.getInt("id_condicion");
+                Compras.jTextField_condicion.setText(result.getString("condicion"));
+                
+                id_moneda = result.getInt("id_moneda");
+                Compras.jTextField_moneda.setText(result.getString("moneda"));
+                
+                id_comprobante = result.getInt("id_comprobante");
+                Compras.jTextField_comprobante.setText(result.getString("comprobante"));
+                
+
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
         }
     }
 
@@ -622,6 +698,35 @@ public class Metodos {
             System.err.println(ex);
         }
     }
+    public synchronized static void Cuentas_asociadas_cargar_jtable() {
+        try {
+            DefaultTableModel dtm = (DefaultTableModel) Cuentas_asociadas.jTable_cuentas.getModel();
+            for (int j = 0; j < Cuentas_asociadas.jTable_cuentas.getRowCount(); j++) {
+                dtm.removeRow(j);
+                j -= 1;
+            }
+            PreparedStatement ps2 = conexion.prepareStatement(""
+                    + "select id_cuenta,  (nv1 || '.' || nv2|| '.' || nv3|| '.' || nv4|| '.' || nv5|| ' ' || cuenta) AS cuenta  "
+                    + "from cuenta "
+                    + "where cuenta ilike '%" + Cuentas_asociadas.jTextField_buscar.getText() + "%'");
+            ResultSet rs2 = ps2.executeQuery();
+            ResultSetMetaData rsm = rs2.getMetaData();
+            ArrayList<Object[]> data2 = new ArrayList<>();
+            while (rs2.next()) {
+                Object[] rows = new Object[rsm.getColumnCount()];
+                for (int i = 0; i < rows.length; i++) {
+                    rows[i] = rs2.getObject(i + 1).toString().trim();
+                }
+                data2.add(rows);
+            }
+            dtm = (DefaultTableModel) Cuentas_asociadas.jTable_cuentas.getModel();
+            for (int i = 0; i < data2.size(); i++) {
+                dtm.addRow(data2.get(i));
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+    }
 
     public synchronized static void Condicion_cargar_jtable() {
         try {
@@ -933,8 +1038,8 @@ public class Metodos {
         DefaultTableModel tm = (DefaultTableModel) Comprobante.jTable1.getModel();
         id_comprobante = Integer.parseInt((String.valueOf(tm.getValueAt(Comprobante.jTable1.getSelectedRow(), 0))));
         Compras.jTextField_comprobante.setText(String.valueOf(tm.getValueAt(Comprobante.jTable1.getSelectedRow(), 1)));
-        
-         try {
+
+        try {
             PreparedStatement st = conexion.prepareStatement(""
                     + "UPDATE factura_de_compra "
                     + "SET id_comprobante ='" + id_comprobante + "' "
@@ -943,15 +1048,15 @@ public class Metodos {
         } catch (SQLException ex) {
             System.err.println(ex);
         }
-        
+
     }
 
     public synchronized static void Moneda_selecionar() {
         DefaultTableModel tm = (DefaultTableModel) Moneda.jTable1.getModel();
         id_moneda = Integer.parseInt((String.valueOf(tm.getValueAt(Moneda.jTable1.getSelectedRow(), 0))));
         Compras.jTextField_moneda.setText(String.valueOf(tm.getValueAt(Moneda.jTable1.getSelectedRow(), 1)));
-        
-          try {
+
+        try {
             PreparedStatement st = conexion.prepareStatement(""
                     + "UPDATE factura_de_compra "
                     + "SET id_moneda ='" + id_moneda + "' "
@@ -960,7 +1065,7 @@ public class Metodos {
         } catch (SQLException ex) {
             System.err.println(ex);
         }
-          
+
     }
 
     public synchronized static void Seleccionar_empresa() {
