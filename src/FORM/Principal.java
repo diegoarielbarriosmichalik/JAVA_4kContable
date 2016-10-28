@@ -249,8 +249,7 @@ public class Principal extends javax.swing.JFrame {
         if (Metodos.empresa != 0) {
             new Compras().setVisible(true);
         } else {
-            new Seleccionar_empresa().setVisible(rootPaneCheckingEnabled);
-            JOptionPane.showMessageDialog(null, "Seleccione una empresa para continuar");
+            new Seleccionar_empresa().setVisible(true);
         }
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 

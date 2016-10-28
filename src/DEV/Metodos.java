@@ -135,6 +135,81 @@ public class Metodos {
         }
     }
 
+    public synchronized static void Cuentas_guardar() {
+        try {
+            if (id_cuenta == 0) {
+                if ((Cuentas_ABM.jTextField_nv1.getText().length() < 1)
+                        || (Cuentas_ABM.jTextField_cuenta.getText().length() < 1)) {
+                    JOptionPane.showMessageDialog(null, "Complete todos los campos");
+                } else {
+
+                    Statement st1 = conexion.createStatement();
+
+                    ResultSet result = st1.executeQuery("SELECT MAX(id_cuenta) FROM cuenta");
+                    if (result.next()) {
+                        id_cuenta = result.getInt(1) + 1;
+                    }
+
+                    PreparedStatement stUpdateProducto = conexion.prepareStatement("INSERT INTO cuenta VALUES(?,?,?,?,?,?,?,?)");
+                    stUpdateProducto.setInt(1, id_cuenta);
+                    stUpdateProducto.setString(2, Cuentas_ABM.jTextField_nv1.getText());
+                    stUpdateProducto.setString(3, Cuentas_ABM.jTextField_nv2.getText());
+                    stUpdateProducto.setString(4, Cuentas_ABM.jTextField_nv3.getText());
+                    stUpdateProducto.setString(5, Cuentas_ABM.jTextField_nv4.getText());
+                    stUpdateProducto.setString(6, Cuentas_ABM.jTextField_nv5.getText());
+                    stUpdateProducto.setString(7, Cuentas_ABM.jTextField_cuenta.getText());
+                    stUpdateProducto.setInt(8, 0);
+                    stUpdateProducto.executeUpdate();
+
+                }
+//            } else if (Clientes.jDateChooser_cumpleanos.getDate() != null) {
+//                java.util.Date utilDate = Clientes.jDateChooser_cumpleanos.getDate();
+//                java.sql.Date cumple = new java.sql.Date(utilDate.getTime());
+//                PreparedStatement st = conexion.prepareStatement(""
+//                        + "UPDATE cliente "
+//                        + "SET nombre ='" + jt_nombre.getText() + "', "
+//                        + "direccion ='" + jt_direccion.getText() + "', "
+//                        + "telefono ='" + jt_telefono.getText() + "', "
+//                        + "ruc ='" + jt_ruc.getText() + "', "
+//                        + "email = '" + jt_email.getText() + "', "
+//                        + "cumpleanos = '" + cumple + "', "
+//                        + "ci = '" + Integer.parseInt(Clientes.jTextField_ci.getText()) + "' "
+//                        + "WHERE id_cliente = '" + id_cliente + "'");
+//                st.executeUpdate();
+////                    Clientes.jt_nombre.setEditable(false);
+////                    JOptionPane.showMessageDialog(null, "Cliente actualizado correctamente");
+//                Clientes.jLabel_mensaje.setText("Actualizado correctamente");
+//                Clientes.jLabel_mensaje.setVisible(true);
+////                    Clientes.jt_nombre.requestFocus();
+//
+//            } else {
+//                int ci = 0;
+//                if (Clientes.jTextField_ci.getText().length() > 1) {
+//                    ci = Integer.parseInt(Clientes.jTextField_ci.getText());
+//                }
+//
+//                PreparedStatement st = conexion.prepareStatement(""
+//                        + "UPDATE cliente "
+//                        + "SET nombre ='" + jt_nombre.getText() + "', "
+//                        + "direccion ='" + jt_direccion.getText() + "', "
+//                        + "telefono ='" + jt_telefono.getText() + "', "
+//                        + "ruc ='" + jt_ruc.getText() + "', "
+//                        + "email = '" + jt_email.getText() + "', "
+//                        + "ci = '" + ci + "' "
+//                        + "WHERE id_cliente = '" + id_cliente + "'");
+//                st.executeUpdate();
+//                Clientes.jLabel_mensaje.setText("Actualizado correctamente");
+//                Clientes.jLabel_mensaje.setVisible(true);
+////                    Clientes.jt_nombre.requestFocus();
+            }
+
+            JOptionPane.showMessageDialog(null, "Guardado correctamente");
+
+        } catch (NumberFormatException | SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
     public synchronized static void Proveedores_guardar() {
         try {
             if (id_proveedor == 0) {
