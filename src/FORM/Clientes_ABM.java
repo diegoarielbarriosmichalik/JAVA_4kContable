@@ -5,6 +5,8 @@
  */
 package FORM;
 
+import DEV.Metodos;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import javax.swing.ImageIcon;
 
@@ -19,10 +21,12 @@ public class Clientes_ABM extends javax.swing.JFrame {
      */
     public Clientes_ABM() {
         initComponents();
-         this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);
         this.setTitle("Clientes");
         new File(".").getAbsolutePath();
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/icon.png")).getImage());
+        
+        Metodos.id_cliente = 0;
     }
 
     /**
@@ -82,7 +86,12 @@ public class Clientes_ABM extends javax.swing.JFrame {
             }
         });
 
-        jTextField_nombre.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder("Nombre"), "Nombre (ENTER para buscar)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(102, 102, 255)));
+        jTextField_nombre.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder("Nombre"), "Nombre (ENTER para buscar)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(102, 102, 255))); // NOI18N
+        jTextField_nombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField_nombreKeyPressed(evt);
+            }
+        });
 
         jTextField_telefono.setBorder(javax.swing.BorderFactory.createTitledBorder("Teléfono"));
 
@@ -160,16 +169,26 @@ public class Clientes_ABM extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.setVisible(false);
-        new Empresas_ABM().setVisible(true);
+        Metodos.Clientes_ABM_clear();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        Metodos.Cliente_Guardar();
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-     jTextField_nombre.requestFocus();
+        jTextField_nombre.requestFocus();
     }//GEN-LAST:event_formWindowOpened
+
+    private void jTextField_nombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_nombreKeyPressed
+        if ((evt.getKeyCode() == KeyEvent.VK_ENTER)) {
+            new Clientes().setVisible(true);
+        }
+        if ((evt.getKeyCode() == KeyEvent.VK_ESCAPE)) {
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_jTextField_nombreKeyPressed
 
     /**
      * @param args the command line arguments
@@ -211,10 +230,10 @@ public class Clientes_ABM extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField_ci;
-    private javax.swing.JTextField jTextField_direccion;
-    private javax.swing.JTextField jTextField_email;
-    private javax.swing.JTextField jTextField_nombre;
-    private javax.swing.JTextField jTextField_telefono;
+    public static javax.swing.JTextField jTextField_ci;
+    public static javax.swing.JTextField jTextField_direccion;
+    public static javax.swing.JTextField jTextField_email;
+    public static javax.swing.JTextField jTextField_nombre;
+    public static javax.swing.JTextField jTextField_telefono;
     // End of variables declaration//GEN-END:variables
 }

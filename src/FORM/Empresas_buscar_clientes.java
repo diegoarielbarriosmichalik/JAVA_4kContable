@@ -5,16 +5,15 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import javax.swing.ImageIcon;
 
-public class Clientes extends javax.swing.JFrame {
+public class Empresas_buscar_clientes extends javax.swing.JFrame {
 
-    public Clientes() {
+    public Empresas_buscar_clientes() {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setTitle("Clientes");
         new File(".").getAbsolutePath();
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/icon.png")).getImage());
     }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -95,7 +94,7 @@ public class Clientes extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 538, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 563, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -148,19 +147,22 @@ public class Clientes extends javax.swing.JFrame {
         if ((evt.getKeyCode() == KeyEvent.VK_ESCAPE)) {
             this.setVisible(false);
         }
-        
-        Metodos.Clientes_buscar_cliente_cargar_jtable();
-        
+         if ((evt.getKeyCode() == KeyEvent.VK_DOWN)) {
+             jTable1.requestFocus();
+         }
+        Metodos.Empresas_clientes_buscar_cliente_cargar_jtable();
     }//GEN-LAST:event_jTextField_buscarKeyPressed
 
     private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
-      if ((evt.getKeyCode() == KeyEvent.VK_ESCAPE)) {
-          this.setVisible(false);
-      }
+       if ((evt.getKeyCode() == KeyEvent.VK_ENTER)) {
+           Metodos.Empresas_cliente_seleccionar();
+           this.setVisible(false);
+           Empresas_ABM.jTextField_razon_social.requestFocus();
+       }
     }//GEN-LAST:event_jTable1KeyPressed
 
     public static void main(String args[]) {
-      
+
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -169,12 +171,12 @@ public class Clientes extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Clientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Empresas_buscar_clientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-       
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Clientes().setVisible(true);
+                new Empresas_buscar_clientes().setVisible(true);
             }
         });
     }
