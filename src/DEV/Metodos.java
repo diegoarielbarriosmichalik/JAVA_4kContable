@@ -17,7 +17,7 @@ public class Metodos {
             String pass = null;
 
             db = "contable";
-            host = "localhost"; // Host 4k
+            host = "190.104.162.167"; // Host 4k
             user = "postgres";
             pass = "postgres";
 
