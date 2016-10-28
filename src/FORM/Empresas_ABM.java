@@ -6,7 +6,7 @@ import java.io.File;
 import javax.swing.ImageIcon;
 
 public class Empresas_ABM extends javax.swing.JFrame {
-    
+
     public Empresas_ABM() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -14,9 +14,9 @@ public class Empresas_ABM extends javax.swing.JFrame {
         new File(".").getAbsolutePath();
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/icon.png")).getImage());
         jTextField_cliente.requestFocus();
-        
+
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -176,6 +176,7 @@ public class Empresas_ABM extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         Metodos.Empresa_guardar();
+        Metodos.Seleccionar_empresas_cargar_jtable();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jTextField_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_clienteKeyPressed
@@ -191,9 +192,9 @@ public class Empresas_ABM extends javax.swing.JFrame {
         this.setVisible(false);
         new Empresas().setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
-    
+
     public static void main(String args[]) {
-        
+
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -204,7 +205,7 @@ public class Empresas_ABM extends javax.swing.JFrame {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Empresas_ABM.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Empresas_ABM().setVisible(true);

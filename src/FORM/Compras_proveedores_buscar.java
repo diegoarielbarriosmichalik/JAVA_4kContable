@@ -143,7 +143,7 @@ public class Compras_proveedores_buscar extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.setVisible(false);
-        new Clientes_ABM().setVisible(true);
+        new Proveedores_ABM().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField_buscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_buscarKeyPressed
