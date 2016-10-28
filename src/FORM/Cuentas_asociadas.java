@@ -9,6 +9,7 @@ import DEV.Metodos;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import javax.swing.ImageIcon;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -21,11 +22,11 @@ public class Cuentas_asociadas extends javax.swing.JFrame {
      */
     public Cuentas_asociadas() {
         initComponents();
-         this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);
         this.setTitle("Cuentas asociadas");
         new File(".").getAbsolutePath();
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/icon.png")).getImage());
-
+        
         Metodos.Cuentas_asociadas_cargar_jtable();
     }
 
@@ -73,6 +74,11 @@ public class Cuentas_asociadas extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        jTable_cuentas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable_cuentasMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(jTable_cuentas);
@@ -176,6 +182,17 @@ public class Cuentas_asociadas extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTable_cuentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_cuentasMouseClicked
+        if (evt.getClickCount() == 1) {
+            
+        }
+        if (evt.getClickCount() == 2) {
+            
+            Metodos.Cuentas_asociadas_seleccionar();
+            new Cuentas_asociadas_agregar_detalle().setVisible(true);
+        }
+    }//GEN-LAST:event_jTable_cuentasMouseClicked
 
     /**
      * @param args the command line arguments

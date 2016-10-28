@@ -11,6 +11,8 @@ import FORM.Condicion;
 import FORM.Cuentas;
 import FORM.Cuentas_ABM;
 import FORM.Cuentas_asociadas;
+import FORM.Cuentas_asociadas_agregar_detalle;
+import FORM.Cuentas_asociadas_agregar_detalle_buscar_cuenta;
 import FORM.Empresas;
 import FORM.Empresas_ABM;
 import FORM.Empresas_buscar_clientes;
@@ -33,6 +35,7 @@ public class Metodos {
 
     public static Connection conexion = null;
     public static int id_cuenta = 0;
+    public static int id_cuenta_asociada = 0;
     public static int id_factura_de_compra = 0;
     public static int id_cliente = 0;
     public static int id_proveedor = 0;
@@ -698,6 +701,35 @@ public class Metodos {
             System.err.println(ex);
         }
     }
+    public synchronized static void Cuentas_asociadas_agregar_detalle_buscar_cuenta_cargar_jtable() {
+        try {
+            DefaultTableModel dtm = (DefaultTableModel) Cuentas_asociadas_agregar_detalle_buscar_cuenta.jTable1.getModel();
+            for (int j = 0; j < Cuentas_asociadas_agregar_detalle_buscar_cuenta.jTable1.getRowCount(); j++) {
+                dtm.removeRow(j);
+                j -= 1;
+            }
+            PreparedStatement ps2 = conexion.prepareStatement(""
+                    + "select id_cuenta,  (nv1 || '.' || nv2|| '.' || nv3|| '.' || nv4|| '.' || nv5|| ' ' || cuenta) AS cuenta  "
+                    + "from cuenta "
+                    + "where cuenta ilike '%" + Cuentas_asociadas_agregar_detalle_buscar_cuenta.jTextField_buscar.getText() + "%'");
+            ResultSet rs2 = ps2.executeQuery();
+            ResultSetMetaData rsm = rs2.getMetaData();
+            ArrayList<Object[]> data2 = new ArrayList<>();
+            while (rs2.next()) {
+                Object[] rows = new Object[rsm.getColumnCount()];
+                for (int i = 0; i < rows.length; i++) {
+                    rows[i] = rs2.getObject(i + 1).toString().trim();
+                }
+                data2.add(rows);
+            }
+            dtm = (DefaultTableModel) Cuentas_asociadas_agregar_detalle_buscar_cuenta.jTable1.getModel();
+            for (int i = 0; i < data2.size(); i++) {
+                dtm.addRow(data2.get(i));
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+    }
     public synchronized static void Cuentas_asociadas_cargar_jtable() {
         try {
             DefaultTableModel dtm = (DefaultTableModel) Cuentas_asociadas.jTable_cuentas.getModel();
@@ -1051,6 +1083,22 @@ public class Metodos {
 
     }
 
+    public synchronized static void Cuentas_asociadas_seleccionar() {
+        DefaultTableModel tm = (DefaultTableModel) Cuentas_asociadas.jTable_cuentas.getModel();
+        id_cuenta = Integer.parseInt((String.valueOf(tm.getValueAt(Cuentas_asociadas.jTable_cuentas.getSelectedRow(), 0))));
+        cuenta = (String.valueOf(tm.getValueAt(Cuentas_asociadas.jTable_cuentas.getSelectedRow(), 1)));
+//
+//        try {
+//            PreparedStatement st = conexion.prepareStatement(""
+//                    + "UPDATE factura_de_compra "
+//                    + "SET id_comprobante ='" + id_comprobante + "' "
+//                    + "WHERE id_factura_de_compra = '" + id_factura_de_compra + "'");
+//            st.executeUpdate();
+//        } catch (SQLException ex) {
+//            System.err.println(ex);
+//        }
+    }
+
     public synchronized static void Moneda_selecionar() {
         DefaultTableModel tm = (DefaultTableModel) Moneda.jTable1.getModel();
         id_moneda = Integer.parseInt((String.valueOf(tm.getValueAt(Moneda.jTable1.getSelectedRow(), 0))));
@@ -1066,6 +1114,11 @@ public class Metodos {
             System.err.println(ex);
         }
 
+    }
+    public synchronized static void Cuentas_asociadas_agregar_cuenta_asociada_seleccionar() {
+        DefaultTableModel tm = (DefaultTableModel) Cuentas_asociadas_agregar_detalle_buscar_cuenta.jTable1.getModel();
+        id_cuenta_asociada = Integer.parseInt((String.valueOf(tm.getValueAt(Cuentas_asociadas_agregar_detalle_buscar_cuenta.jTable1.getSelectedRow(), 0))));
+        Cuentas_asociadas_agregar_detalle.jTextField_asociar.setText(String.valueOf(tm.getValueAt(Cuentas_asociadas_agregar_detalle_buscar_cuenta.jTable1.getSelectedRow(), 1)));
     }
 
     public synchronized static void Seleccionar_empresa() {
