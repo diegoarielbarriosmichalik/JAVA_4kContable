@@ -36,6 +36,7 @@ public class Metodos {
     public static Connection conexion = null;
     public static int id_cuenta = 0;
     public static int id_cuenta_asociada = 0;
+    public static int id_cuenta_asociada_max = 0;
     public static int id_factura_de_compra = 0;
     public static int id_cliente = 0;
     public static int id_proveedor = 0;
@@ -229,6 +230,42 @@ public class Metodos {
 
     }
 
+    public synchronized static void Cuentas_asociadas_guardar() {
+        try {
+
+            Statement st1 = conexion.createStatement();
+            ResultSet result = st1.executeQuery("SELECT MAX(id_cuentas_asociadas) FROM cuentas_asociadas");
+            if (result.next()) {
+                id_cuenta_asociada_max = result.getInt(1) + 1;
+            }
+            int iva = 0;
+            if (Cuentas_asociadas_agregar_detalle.jCheckBox_iva.isSelected() == true) {
+                iva = 1;
+            }
+            int gravada = 0;
+            if (Cuentas_asociadas_agregar_detalle.jCheckBox_gravada.isSelected() == true) {
+                gravada = 1;
+            }
+            int deducible = 0;
+            if (Cuentas_asociadas_agregar_detalle.jCheckBox_deducible.isSelected() == true) {
+                deducible = 1;
+            }
+
+            PreparedStatement stUpdateProducto = conexion.prepareStatement(""
+                    + "INSERT INTO cuenta_asociada VALUES(?,?,?,?,?)");
+            stUpdateProducto.setInt(1, id_cuenta_asociada);
+            stUpdateProducto.setInt(2, id_cuenta);
+            stUpdateProducto.setLong(3, Long.parseLong(Compras.jTextField_fac_caja.getText()));
+            stUpdateProducto.setLong(4, Long.parseLong(Compras.jTextField_fac_numero.getText()));
+            stUpdateProducto.setDate(5, null);
+            stUpdateProducto.executeUpdate();
+
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+
+    }
+
     public synchronized static void Timbrado_guardar() {
         try {
             if (id_proveedor != 0 && Compras.jTextField_timbrado.getText().length() > 0) {
@@ -323,18 +360,17 @@ public class Metodos {
                 if (RS2.next()) {
                     Compras.jTextField_timbrado.setText(RS2.getString("timbrado"));
                 }
-                
+
                 Compras.jDateChooser_fecha.setDate(result.getDate("fecha"));
-                
+
                 id_condicion = result.getInt("id_condicion");
                 Compras.jTextField_condicion.setText(result.getString("condicion"));
-                
+
                 id_moneda = result.getInt("id_moneda");
                 Compras.jTextField_moneda.setText(result.getString("moneda"));
-                
+
                 id_comprobante = result.getInt("id_comprobante");
                 Compras.jTextField_comprobante.setText(result.getString("comprobante"));
-                
 
             }
         } catch (SQLException ex) {
@@ -701,6 +737,7 @@ public class Metodos {
             System.err.println(ex);
         }
     }
+
     public synchronized static void Cuentas_asociadas_agregar_detalle_buscar_cuenta_cargar_jtable() {
         try {
             DefaultTableModel dtm = (DefaultTableModel) Cuentas_asociadas_agregar_detalle_buscar_cuenta.jTable1.getModel();
@@ -730,6 +767,7 @@ public class Metodos {
             System.err.println(ex);
         }
     }
+
     public synchronized static void Cuentas_asociadas_cargar_jtable() {
         try {
             DefaultTableModel dtm = (DefaultTableModel) Cuentas_asociadas.jTable_cuentas.getModel();
@@ -1115,6 +1153,7 @@ public class Metodos {
         }
 
     }
+
     public synchronized static void Cuentas_asociadas_agregar_cuenta_asociada_seleccionar() {
         DefaultTableModel tm = (DefaultTableModel) Cuentas_asociadas_agregar_detalle_buscar_cuenta.jTable1.getModel();
         id_cuenta_asociada = Integer.parseInt((String.valueOf(tm.getValueAt(Cuentas_asociadas_agregar_detalle_buscar_cuenta.jTable1.getSelectedRow(), 0))));
