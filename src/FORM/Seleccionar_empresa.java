@@ -25,7 +25,7 @@ public class Seleccionar_empresa extends javax.swing.JFrame {
         this.setTitle("Seleccione una empresa");
         new File(".").getAbsolutePath();
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/icon.png")).getImage());
-        
+
         Metodos.Seleccionar_empresas_cargar_jtable();
     }
 
@@ -153,10 +153,17 @@ public class Seleccionar_empresa extends javax.swing.JFrame {
         if ((evt.getKeyCode() == KeyEvent.VK_ESCAPE)) {
             this.setVisible(false);
         }
+
+        if ((evt.getKeyCode() == KeyEvent.VK_ENTER)) {
+            Metodos.Seleccionar_empresa();
+            this.setVisible(false);
+            new Principal().setVisible(true);
+        }
     }//GEN-LAST:event_jTable1KeyPressed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         Metodos.Seleccionar_empresa();
+        this.setVisible(false);
         new Principal().setVisible(true);
     }//GEN-LAST:event_jTable1MouseClicked
 

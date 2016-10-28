@@ -182,9 +182,13 @@ public class Compras extends javax.swing.JFrame {
             }
         });
 
-        jTextField_timbrado.setEditable(false);
         jTextField_timbrado.setBackground(new java.awt.Color(255, 255, 255));
         jTextField_timbrado.setBorder(javax.swing.BorderFactory.createTitledBorder("Timbrado"));
+        jTextField_timbrado.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField_timbradoFocusLost(evt);
+            }
+        });
 
         jTextField_ruc.setEditable(false);
         jTextField_ruc.setBackground(new java.awt.Color(255, 255, 255));
@@ -341,7 +345,7 @@ public class Compras extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1FocusLost
 
     private void jTextField_proveedorFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_proveedorFocusLost
-        jTextField_descripcion.requestFocus();
+//        jTextField_timbrado.requestFocus();
     }//GEN-LAST:event_jTextField_proveedorFocusLost
 
     private void jTextField_descripcionFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_descripcionFocusLost
@@ -349,7 +353,7 @@ public class Compras extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField_descripcionFocusLost
 
     private void jTextField_cuentaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_cuentaFocusLost
-        jTextField_fac_sucursal.requestFocus();
+//        jTextField_fac_sucursal.requestFocus();
     }//GEN-LAST:event_jTextField_cuentaFocusLost
 
     private void jTextField_fac_sucursalFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_fac_sucursalFocusGained
@@ -359,6 +363,10 @@ public class Compras extends javax.swing.JFrame {
     private void jTextField_fac_cajaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_fac_cajaFocusGained
         jTextField_fac_caja.selectAll();
     }//GEN-LAST:event_jTextField_fac_cajaFocusGained
+
+    private void jTextField_timbradoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_timbradoFocusLost
+        Metodos.Timbrado_guardar();
+    }//GEN-LAST:event_jTextField_timbradoFocusLost
 
     /**
      * @param args the command line arguments

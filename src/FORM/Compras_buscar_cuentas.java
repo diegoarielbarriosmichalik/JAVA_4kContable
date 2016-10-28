@@ -169,6 +169,7 @@ public class Compras_buscar_cuentas extends javax.swing.JFrame {
         if ((evt.getKeyCode() == KeyEvent.VK_ENTER)) {
             Metodos.Compras_buscar_cuentas_seleccionar_cuenta();
             this.setVisible(false);
+            new Compras_agregar_detalle().setVisible(true);
         }
     }//GEN-LAST:event_jTable1KeyPressed
 

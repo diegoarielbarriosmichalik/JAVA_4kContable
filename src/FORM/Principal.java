@@ -45,7 +45,6 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem15 = new javax.swing.JMenuItem();
-        jMenuItem17 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
@@ -123,14 +122,6 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem15);
-
-        jMenuItem17.setText("Timbrado de factura");
-        jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem17ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem17);
 
         jMenuBar1.add(jMenu1);
 
@@ -249,6 +240,7 @@ public class Principal extends javax.swing.JFrame {
         if (Metodos.empresa != 0) {
             new Compras().setVisible(true);
         } else {
+            this.setVisible(false);
             new Seleccionar_empresa().setVisible(true);
         }
     }//GEN-LAST:event_jMenuItem7ActionPerformed
@@ -261,10 +253,6 @@ public class Principal extends javax.swing.JFrame {
         this.setVisible(false);
         new Seleccionar_empresa().setVisible(true);
     }//GEN-LAST:event_jMenuItem16ActionPerformed
-
-    private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem17ActionPerformed
 
     public static void main(String args[]) {
         try {
@@ -300,7 +288,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem16;
-    private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

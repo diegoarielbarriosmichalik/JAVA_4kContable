@@ -163,7 +163,7 @@ public class Compras_proveedores_buscar extends javax.swing.JFrame {
         if ((evt.getKeyCode() == KeyEvent.VK_ENTER)) {
             this.setVisible(false);
             Metodos.Compras_proveedores_selecionar();
-            Compras.jTextField_cuenta.requestFocus();
+            Compras.jTextField_timbrado.requestFocus();
         }
     }//GEN-LAST:event_jTable1KeyPressed
 
