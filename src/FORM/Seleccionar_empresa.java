@@ -40,7 +40,6 @@ public class Seleccionar_empresa extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
-        setAlwaysOnTop(true);
         setUndecorated(true);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -133,9 +132,9 @@ public class Seleccionar_empresa extends javax.swing.JFrame {
         //        if (entro == true) {
         //            this.setVisible(false);
         //        }
-        this.setVisible(false);
-        new Principal().setVisible(true);
-        new Seleccionar_empresa().setVisible(true);
+      //  this.setVisible(false);
+      //  new Principal().setVisible(true);
+        new Empresas_ABM().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
