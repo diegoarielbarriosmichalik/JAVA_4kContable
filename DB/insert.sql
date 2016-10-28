@@ -2,6 +2,10 @@
 INSERT INTO comprobante VALUES 
 ('1','FACTURA');
 
+
+INSERT INTO proveedor VALUES 
+('0','No especificado', '0', '0','-','0');
+
 INSERT INTO moneda VALUES 
 ('1','GUARANIES'),
 ('2','DOLARES'),
@@ -359,11 +363,4 @@ INSERT INTO cuenta VALUES
 	
 	('302', '19', '', '', '', '',		'IMPUESTO A LA RENTA','0'),
 	
-	('303', '20', '', '', '', '',		'GANANCIAS/PERDIDAS NETAS DEL EJERCICIO','0'),
-	
-	
-	
-	
-	
-	
-  ;
+	('303', '20', '', '', '', '',		'GANANCIAS/PERDIDAS NETAS DEL EJERCICIO','0');

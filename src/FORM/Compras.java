@@ -94,14 +94,14 @@ public class Compras extends javax.swing.JFrame {
 
         jTextField_fac_sucursal.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTextField_fac_sucursal.setText("001");
-        jTextField_fac_sucursal.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jTextField_fac_sucursalFocusGained(evt);
-            }
-        });
         jTextField_fac_sucursal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_fac_sucursalActionPerformed(evt);
+            }
+        });
+        jTextField_fac_sucursal.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextField_fac_sucursalFocusGained(evt);
             }
         });
 
@@ -330,8 +330,9 @@ public class Compras extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        this.setVisible(false);
-        new Clientes_ABM().setVisible(true);
+        Metodos.id_factura_de_compra = 0;
+        Metodos.Facturas_de_compra_guardar();
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jTextField_cuentaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_cuentaKeyPressed
@@ -447,9 +448,9 @@ public class Compras extends javax.swing.JFrame {
     public static javax.swing.JTextField jTextField_condicion;
     public static javax.swing.JTextField jTextField_cuenta;
     public static javax.swing.JTextField jTextField_descripcion;
-    private javax.swing.JTextField jTextField_fac_caja;
-    private javax.swing.JTextField jTextField_fac_numero;
-    private javax.swing.JTextField jTextField_fac_sucursal;
+    public static javax.swing.JTextField jTextField_fac_caja;
+    public static javax.swing.JTextField jTextField_fac_numero;
+    public static javax.swing.JTextField jTextField_fac_sucursal;
     public static javax.swing.JTextField jTextField_moneda;
     public static javax.swing.JTextField jTextField_proveedor;
     public static javax.swing.JTextField jTextField_ruc;

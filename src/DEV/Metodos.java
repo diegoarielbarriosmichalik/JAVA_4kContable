@@ -24,13 +24,16 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class Metodos {
-    
+
     public static Connection conexion = null;
     public static int id_cuenta = 0;
+    public static int id_factura_de_compra = 0;
     public static int id_cliente = 0;
     public static int id_proveedor = 0;
     public static int id_timbrado = 0;
@@ -41,29 +44,29 @@ public class Metodos {
     public static int empresa = 0;
     public static String empresa_razon_social = "Selecciona una empresa...";
     public static String cuenta = null;
-    
+
     public static void Iniciar_Conexion() {
         try {
             String db = null;
             String host = null;
             String user = null;
             String pass = null;
-            
+
             db = "contable";
             host = "190.104.167.162"; // Host 4k
             user = "postgres";
             pass = "postgres";
-            
+
             Class.forName("org.postgresql.Driver");
             conexion = DriverManager.getConnection("jdbc:postgresql://" + host + ":5432/" + db, user, pass);
-            
+
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al iniciar la conexion con la base de datos." + ex);
         } catch (ClassNotFoundException ex) {
             System.err.println(ex);
         }
     }
-    
+
     public synchronized static void Cliente_Guardar() {
         try {
             if (id_cliente == 0) {
@@ -74,14 +77,14 @@ public class Metodos {
                         || (Clientes_ABM.jTextField_email.getText().length() < 1)) {
                     JOptionPane.showMessageDialog(null, "Complete todos los campos");
                 } else {
-                    
+
                     Statement st1 = conexion.createStatement();
-                    
+
                     ResultSet result = st1.executeQuery("SELECT MAX(id_propietario) FROM propietario");
                     if (result.next()) {
                         id_cliente = result.getInt(1) + 1;
                     }
-                    
+
                     PreparedStatement stUpdateProducto = conexion.prepareStatement("INSERT INTO propietario VALUES(?,?,?,?,?,?,?)");
                     stUpdateProducto.setInt(1, id_cliente);
                     stUpdateProducto.setString(2, Clientes_ABM.jTextField_nombre.getText());
@@ -91,7 +94,7 @@ public class Metodos {
                     stUpdateProducto.setString(6, Clientes_ABM.jTextField_email.getText());
                     stUpdateProducto.setInt(7, 0);
                     stUpdateProducto.executeUpdate();
-                    
+
                 }
 //            } else if (Clientes.jDateChooser_cumpleanos.getDate() != null) {
 //                java.util.Date utilDate = Clientes.jDateChooser_cumpleanos.getDate();
@@ -133,14 +136,42 @@ public class Metodos {
 //                Clientes.jLabel_mensaje.setVisible(true);
 ////                    Clientes.jt_nombre.requestFocus();
             }
-            
+
             JOptionPane.showMessageDialog(null, "Guardado correctamente");
-            
+
         } catch (NumberFormatException | SQLException e) {
             JOptionPane.showMessageDialog(null, e);
         }
     }
-    
+
+    public synchronized static void Facturas_de_compra_guardar() {
+        try {
+            Statement st1 = conexion.createStatement();
+            ResultSet result = st1.executeQuery("SELECT MAX(id_factura_de_compra) FROM factura_de_compra");
+            if (result.next()) {
+                id_factura_de_compra = result.getInt(1) + 1;
+            }
+
+            PreparedStatement stUpdateProducto = conexion.prepareStatement(""
+                    + "INSERT INTO factura_de_compra VALUES(?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,? )");
+            stUpdateProducto.setInt(1, id_factura_de_compra);
+            stUpdateProducto.setString(2, "");
+            stUpdateProducto.setString(3, "");
+            stUpdateProducto.setString(4, "");
+            stUpdateProducto.setDate(5, null);
+            stUpdateProducto.setString(6, "");
+            stUpdateProducto.setInt(7, id_empresa);
+            stUpdateProducto.setInt(8, 0);
+            stUpdateProducto.setInt(9, 1);
+            stUpdateProducto.setInt(10, 1);
+            stUpdateProducto.executeUpdate();
+            
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+
+    }
+
     public synchronized static void Timbrado_guardar() {
         try {
             if (id_proveedor != 0) {
@@ -156,15 +187,15 @@ public class Metodos {
                     if (result2.next()) {
                         existe = true;
                     }
-                    
+
                     if (existe == false) {
                         Statement st1 = conexion.createStatement();
-                        
+
                         ResultSet result = st1.executeQuery("SELECT MAX(id_timbrado) FROM timbrado");
                         if (result.next()) {
                             id_timbrado = result.getInt(1) + 1;
                         }
-                        
+
                         PreparedStatement stUpdateProducto = conexion.prepareStatement("INSERT INTO timbrado VALUES(?,?,?,?)");
                         stUpdateProducto.setInt(1, id_timbrado);
                         stUpdateProducto.setInt(2, Integer.parseInt(Compras.jTextField_timbrado.getText()));
@@ -172,7 +203,7 @@ public class Metodos {
                         stUpdateProducto.setInt(4, id_proveedor);
                         stUpdateProducto.executeUpdate();
                     }
-                    
+
                 }
 //            } else if (Clientes.jDateChooser_cumpleanos.getDate() != null) {
 //                java.util.Date utilDate = Clientes.jDateChooser_cumpleanos.getDate();
@@ -220,7 +251,7 @@ public class Metodos {
             JOptionPane.showMessageDialog(null, e);
         }
     }
-    
+
     public synchronized static void Cuentas_guardar() {
         try {
             if (id_cuenta == 0) {
@@ -228,14 +259,14 @@ public class Metodos {
                         || (Cuentas_ABM.jTextField_cuenta.getText().length() < 1)) {
                     System.err.println("Complete todos los campos");
                 } else {
-                    
+
                     Statement st1 = conexion.createStatement();
-                    
+
                     ResultSet result = st1.executeQuery("SELECT MAX(id_cuenta) FROM cuenta");
                     if (result.next()) {
                         id_cuenta = result.getInt(1) + 1;
                     }
-                    
+
                     PreparedStatement stUpdateProducto = conexion.prepareStatement("INSERT INTO cuenta VALUES(?,?,?,?,?,?,?,?)");
                     stUpdateProducto.setInt(1, id_cuenta);
                     stUpdateProducto.setString(2, Cuentas_ABM.jTextField_nv1.getText());
@@ -246,7 +277,7 @@ public class Metodos {
                     stUpdateProducto.setString(7, Cuentas_ABM.jTextField_cuenta.getText());
                     stUpdateProducto.setInt(8, 0);
                     stUpdateProducto.executeUpdate();
-                    
+
                 }
 //            } else if (Clientes.jDateChooser_cumpleanos.getDate() != null) {
 //                java.util.Date utilDate = Clientes.jDateChooser_cumpleanos.getDate();
@@ -288,14 +319,14 @@ public class Metodos {
 //                Clientes.jLabel_mensaje.setVisible(true);
 ////                    Clientes.jt_nombre.requestFocus();
             }
-            
+
             JOptionPane.showMessageDialog(null, "Guardado correctamente");
-            
+
         } catch (NumberFormatException | SQLException e) {
             JOptionPane.showMessageDialog(null, e);
         }
     }
-    
+
     public synchronized static void Proveedores_guardar() {
         try {
             if (id_proveedor == 0) {
@@ -306,12 +337,12 @@ public class Metodos {
                     JOptionPane.showMessageDialog(null, "Complete todos los campos");
                 } else {
                     Statement st1 = conexion.createStatement();
-                    
+
                     ResultSet result = st1.executeQuery("SELECT MAX(id_proveedor) FROM proveedor ");
                     if (result.next()) {
                         id_proveedor = result.getInt(1) + 1;
                     }
-                    
+
                     PreparedStatement stUpdateProducto = conexion.prepareStatement("INSERT INTO proveedor VALUES(?,?,?,?,?,?,?)");
                     stUpdateProducto.setInt(1, id_proveedor);
                     stUpdateProducto.setString(2, Proveedores_ABM.jTextField_razon_social.getText());
@@ -321,7 +352,7 @@ public class Metodos {
                     stUpdateProducto.setInt(6, 0); //borrado
                     stUpdateProducto.setInt(7, empresa);
                     stUpdateProducto.executeUpdate();
-                    
+
                 }
 
 //            } else if (Clientes.jDateChooser_cumpleanos.getDate() != null) {
@@ -364,14 +395,14 @@ public class Metodos {
 //                Clientes.jLabel_mensaje.setVisible(true);
 ////                    Clientes.jt_nombre.requestFocus();
             }
-            
+
             JOptionPane.showMessageDialog(null, "Guardado correctamente");
-            
+
         } catch (NumberFormatException | SQLException e) {
             JOptionPane.showMessageDialog(null, e);
         }
     }
-    
+
     public synchronized static void Empresa_guardar() {
         try {
             if (id_empresa == 0) {
@@ -441,7 +472,7 @@ public class Metodos {
             JOptionPane.showMessageDialog(null, e);
         }
     }
-    
+
     public static void Compras_agregar_detalle_calculo_gravada10() {
         String gravada_10_str = Compras_agregar_detalle.jTextField_gravadas10.getText().replace(".", "");
         long gravada_10_long = Long.parseLong(gravada_10_str);
@@ -452,10 +483,10 @@ public class Metodos {
         long total = gravada_10_long + iva_10;
         Compras_agregar_detalle.jTextField_total.setText(getSepararMiles(String.valueOf(total)));
     }
-    
+
     public synchronized static String getSepararMiles(String txtprec) {
         String valor = txtprec;
-        
+
         int largo = valor.length();
         if (largo > 8) {
             valor = valor.substring(largo - 9, largo - 6) + "." + valor.substring(largo - 6, largo - 3) + "." + valor.substring(largo - 3, largo);
@@ -473,7 +504,7 @@ public class Metodos {
         txtprec = valor;
         return valor;
     }
-    
+
     public static void Clientes_ABM_clear() {
         id_cliente = 0;
         Clientes_ABM.jTextField_nombre.setText("");
@@ -482,9 +513,9 @@ public class Metodos {
         Clientes_ABM.jTextField_email.setText("");
         Clientes_ABM.jTextField_telefono.setText("");
         Clientes_ABM.jTextField_nombre.requestFocus();
-        
+
     }
-    
+
     public static void Proveedores_clear() {
         id_proveedor = 0;
         Proveedores_ABM.jTextField_direccion.setText("");
@@ -492,7 +523,7 @@ public class Metodos {
         Proveedores_ABM.jTextField_ruc.setText("");
         Proveedores_ABM.jTextField_telefono.setText("");
     }
-    
+
     public static void Cuentas_clear() {
         id_cuenta = 0;
         Cuentas_ABM.jTextField_nv1.setText("");
@@ -502,7 +533,7 @@ public class Metodos {
         Cuentas_ABM.jTextField_nv5.setText("");
         Cuentas_ABM.jTextField_cuenta.setText("");
     }
-    
+
     public static void Cerrar_Conexion() {
         try {
             if (conexion != null) {
@@ -513,7 +544,7 @@ public class Metodos {
             System.err.println(ex);
         }
     }
-    
+
     public static void Verificar_conexion() {
         try {
             if (conexion.isClosed() == false) {
@@ -531,7 +562,7 @@ public class Metodos {
             System.err.println(ex);
         }
     }
-    
+
     public synchronized static void Cuentas_cargar_jtable() {
         try {
             DefaultTableModel dtm = (DefaultTableModel) Cuentas.jTable1.getModel();
@@ -561,6 +592,7 @@ public class Metodos {
             System.err.println(ex);
         }
     }
+
     public synchronized static void Condicion_cargar_jtable() {
         try {
             DefaultTableModel dtm = (DefaultTableModel) Condicion.jTable1.getModel();
@@ -589,6 +621,7 @@ public class Metodos {
             System.err.println(ex);
         }
     }
+
     public synchronized static void Comprobante_cargar_jtable() {
         try {
             DefaultTableModel dtm = (DefaultTableModel) Comprobante.jTable1.getModel();
@@ -617,6 +650,7 @@ public class Metodos {
             System.err.println(ex);
         }
     }
+
     public synchronized static void Moneda_cargar_jtable() {
         try {
             DefaultTableModel dtm = (DefaultTableModel) Moneda.jTable1.getModel();
@@ -645,7 +679,7 @@ public class Metodos {
             System.err.println(ex);
         }
     }
-    
+
     public synchronized static void Compras_proveedores_buscar_cargar_jtable() {
         try {
             DefaultTableModel dtm = (DefaultTableModel) Compras_proveedores_buscar.jTable1.getModel();
@@ -675,7 +709,7 @@ public class Metodos {
             System.err.println(ex);
         }
     }
-    
+
     public synchronized static void Seleccionar_empresas_cargar_jtable() {
         try {
             DefaultTableModel dtm = (DefaultTableModel) Seleccionar_empresa.jTable1.getModel();
@@ -704,7 +738,7 @@ public class Metodos {
             System.err.println(ex);
         }
     }
-    
+
     public synchronized static void Empresas_cargar_jtable() {
         try {
             DefaultTableModel dtm = (DefaultTableModel) Empresas.jTable1.getModel();
@@ -734,7 +768,7 @@ public class Metodos {
             System.err.println(ex);
         }
     }
-    
+
     public synchronized static void Clientes_buscar_cliente_cargar_jtable() {
         try {
             DefaultTableModel dtm = (DefaultTableModel) Clientes.jTable1.getModel();
@@ -764,7 +798,7 @@ public class Metodos {
             System.err.println(ex);
         }
     }
-    
+
     public synchronized static void Empresas_clientes_buscar_cliente_cargar_jtable() {
         try {
             DefaultTableModel dtm = (DefaultTableModel) Empresas_buscar_clientes.jTable1.getModel();
@@ -794,7 +828,7 @@ public class Metodos {
             System.err.println(ex);
         }
     }
-    
+
     public synchronized static void Compras_cuentas_cargar_jtable() {
         try {
             DefaultTableModel dtm = (DefaultTableModel) Compras_buscar_cuentas.jTable1.getModel();
@@ -824,12 +858,12 @@ public class Metodos {
             System.err.println(ex);
         }
     }
-    
+
     public synchronized static void Compras_buscar_cuentas_seleccionar_cuenta() {
-        
+
         DefaultTableModel tm = (DefaultTableModel) Compras_buscar_cuentas.jTable1.getModel();
         id_cuenta = Integer.parseInt(String.valueOf(tm.getValueAt(Compras_buscar_cuentas.jTable1.getSelectedRow(), 0)));
-        
+
         try {
             Statement ST = conexion.createStatement();
             ResultSet RS = ST.executeQuery("SELECT * FROM cuenta where id_cuenta = '" + id_cuenta + "'");
@@ -840,42 +874,43 @@ public class Metodos {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
-        
+
     }
-    
+
     public synchronized static void Empresas_cliente_seleccionar() {
         DefaultTableModel tm = (DefaultTableModel) Empresas_buscar_clientes.jTable1.getModel();
         id_cliente = Integer.parseInt(String.valueOf(tm.getValueAt(Empresas_buscar_clientes.jTable1.getSelectedRow(), 0)));
         Empresas_ABM.jTextField_cliente.setText(String.valueOf(tm.getValueAt(Empresas_buscar_clientes.jTable1.getSelectedRow(), 1)));
     }
-    
+
     public synchronized static void Condicion_selecionar() {
         DefaultTableModel tm = (DefaultTableModel) Condicion.jTable1.getModel();
         id_condicion = Integer.parseInt((String.valueOf(tm.getValueAt(Condicion.jTable1.getSelectedRow(), 0))));
         Compras.jTextField_condicion.setText(String.valueOf(tm.getValueAt(Condicion.jTable1.getSelectedRow(), 1)));
     }
+
     public synchronized static void Comprobante_selecionar() {
         DefaultTableModel tm = (DefaultTableModel) Comprobante.jTable1.getModel();
         id_comprobante = Integer.parseInt((String.valueOf(tm.getValueAt(Comprobante.jTable1.getSelectedRow(), 0))));
         Compras.jTextField_comprobante.setText(String.valueOf(tm.getValueAt(Comprobante.jTable1.getSelectedRow(), 1)));
     }
-    
+
     public synchronized static void Moneda_selecionar() {
         DefaultTableModel tm = (DefaultTableModel) Moneda.jTable1.getModel();
         id_moneda = Integer.parseInt((String.valueOf(tm.getValueAt(Moneda.jTable1.getSelectedRow(), 0))));
         Compras.jTextField_moneda.setText(String.valueOf(tm.getValueAt(Moneda.jTable1.getSelectedRow(), 1)));
     }
-    
+
     public synchronized static void Seleccionar_empresa() {
         DefaultTableModel tm = (DefaultTableModel) Seleccionar_empresa.jTable1.getModel();
         empresa = Integer.parseInt(String.valueOf(tm.getValueAt(Seleccionar_empresa.jTable1.getSelectedRow(), 0)));
         empresa_razon_social = "Empresa activa: " + String.valueOf(tm.getValueAt(Seleccionar_empresa.jTable1.getSelectedRow(), 1));
     }
-    
+
     public synchronized static void Cuentas_seleccionar() {
         DefaultTableModel tm = (DefaultTableModel) Cuentas.jTable1.getModel();
         id_cuenta = Integer.parseInt(String.valueOf(tm.getValueAt(Cuentas.jTable1.getSelectedRow(), 0)));
-        
+
         try {
             Statement ST = conexion.createStatement();
             ResultSet RS = ST.executeQuery("SELECT * FROM cuenta where id_cuenta = '" + id_cuenta + "'");
@@ -890,9 +925,9 @@ public class Metodos {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
-        
+
     }
-    
+
     public synchronized static void Compras_proveedores_selecionar() {
         DefaultTableModel tm = (DefaultTableModel) Compras_proveedores_buscar.jTable1.getModel();
         id_proveedor = Integer.parseInt(String.valueOf(tm.getValueAt(Compras_proveedores_buscar.jTable1.getSelectedRow(), 0)));
@@ -902,10 +937,10 @@ public class Metodos {
                     + "SELECT * FROM proveedor "
                     + "where id_proveedor = '" + id_proveedor + "'");
             if (RS.next()) {
-                
+
                 Compras.jTextField_proveedor.setText(RS.getString("nombre"));
                 Compras.jTextField_ruc.setText(RS.getString("ruc"));
-                
+
                 Statement ST2 = conexion.createStatement();
                 ResultSet RS2 = ST2.executeQuery(""
                         + "SELECT * FROM timbrado "
