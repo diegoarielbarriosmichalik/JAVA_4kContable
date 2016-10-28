@@ -5,6 +5,7 @@
  */
 package FORM;
 
+import DEV.Metodos;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import javax.swing.ImageIcon;
@@ -38,7 +39,7 @@ public class Empresas extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
+        jTextField_buscar = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
@@ -74,10 +75,10 @@ public class Empresas extends javax.swing.JFrame {
             jTable1.getColumnModel().getColumn(2).setPreferredWidth(300);
         }
 
-        jTextField1.setBorder(javax.swing.BorderFactory.createTitledBorder("Buscar"));
-        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+        jTextField_buscar.setBorder(javax.swing.BorderFactory.createTitledBorder("Buscar"));
+        jTextField_buscar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextField1KeyPressed(evt);
+                jTextField_buscarKeyPressed(evt);
             }
         });
 
@@ -109,7 +110,7 @@ public class Empresas extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 757, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -121,7 +122,7 @@ public class Empresas extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(13, Short.MAX_VALUE)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextField_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -154,11 +155,15 @@ public class Empresas extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
+    private void jTextField_buscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_buscarKeyPressed
         if ((evt.getKeyCode() == KeyEvent.VK_ESCAPE)) {
             this.setVisible(false);
         }
-    }//GEN-LAST:event_jTextField1KeyPressed
+        if ((evt.getKeyCode() == KeyEvent.VK_DOWN)) {
+            jTable1.requestFocus();
+        }
+        Metodos.Empresas_cargar_jtable();
+    }//GEN-LAST:event_jTextField_buscarKeyPressed
 
     /**
      * @param args the command line arguments
@@ -200,7 +205,7 @@ public class Empresas extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    public static javax.swing.JTable jTable1;
+    public static javax.swing.JTextField jTextField_buscar;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,6 +5,7 @@
  */
 package FORM;
 
+import DEV.Metodos;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import javax.swing.ImageIcon;
@@ -24,6 +25,8 @@ public class Seleccionar_empresa extends javax.swing.JFrame {
         this.setTitle("Seleccione una empresa");
         new File(".").getAbsolutePath();
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/icon.png")).getImage());
+        
+        Metodos.Seleccionar_empresas_cargar_jtable();
     }
 
     /**
@@ -73,6 +76,11 @@ public class Seleccionar_empresa extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
             }
         });
         jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -132,8 +140,8 @@ public class Seleccionar_empresa extends javax.swing.JFrame {
         //        if (entro == true) {
         //            this.setVisible(false);
         //        }
-      //  this.setVisible(false);
-      //  new Principal().setVisible(true);
+        //  this.setVisible(false);
+        //  new Principal().setVisible(true);
         new Empresas_ABM().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -146,6 +154,11 @@ public class Seleccionar_empresa extends javax.swing.JFrame {
             this.setVisible(false);
         }
     }//GEN-LAST:event_jTable1KeyPressed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        Metodos.Seleccionar_empresa();
+        new Principal().setVisible(true);
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -186,6 +199,6 @@ public class Seleccionar_empresa extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    public static javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

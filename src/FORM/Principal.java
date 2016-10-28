@@ -10,7 +10,7 @@ public class Principal extends javax.swing.JFrame {
     public Principal() {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.setTitle("Sistema contable");
+        this.setTitle(Metodos.empresa_razon_social);
         new File(".").getAbsolutePath();
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/icon.png")).getImage());
         
@@ -244,6 +244,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem15ActionPerformed
 
     private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
+        this.setVisible(false);
         new Seleccionar_empresa().setVisible(true);
     }//GEN-LAST:event_jMenuItem16ActionPerformed
     
