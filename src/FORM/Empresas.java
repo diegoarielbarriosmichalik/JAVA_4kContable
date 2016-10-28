@@ -5,6 +5,7 @@
  */
 package FORM;
 
+import java.awt.event.KeyEvent;
 import java.io.File;
 import javax.swing.ImageIcon;
 
@@ -19,7 +20,7 @@ public class Empresas extends javax.swing.JFrame {
      */
     public Empresas() {
         initComponents();
-         this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);
         this.setTitle("Sistema contable");
         new File(".").getAbsolutePath();
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/icon.png")).getImage());
@@ -74,6 +75,11 @@ public class Empresas extends javax.swing.JFrame {
         }
 
         jTextField1.setBorder(javax.swing.BorderFactory.createTitledBorder("Buscar"));
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField1KeyPressed(evt);
+            }
+        });
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/nuevo_mini.png"))); // NOI18N
         jButton1.setMnemonic('n');
@@ -145,8 +151,14 @@ public class Empresas extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-    this.setVisible(false);
+        this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
+        if ((evt.getKeyCode() == KeyEvent.VK_ESCAPE)) {
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_jTextField1KeyPressed
 
     /**
      * @param args the command line arguments

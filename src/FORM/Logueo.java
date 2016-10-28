@@ -1,5 +1,6 @@
 package FORM;
 
+import DEV.Metodos;
 import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
@@ -21,6 +22,9 @@ public class Logueo extends javax.swing.JFrame {
         jPasswordField1.setEditable(false);
 
         jTextField1.requestFocus();
+
+        Metodos.Iniciar_Conexion();
+
     }
 
     @SuppressWarnings("unchecked")
@@ -141,7 +145,7 @@ public class Logueo extends javax.swing.JFrame {
     }//GEN-LAST:event_formFocusGained
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-//        Conexion.Iniciar_Conexion();
+//        
 
 
     }//GEN-LAST:event_formWindowActivated
@@ -165,17 +169,13 @@ public class Logueo extends javax.swing.JFrame {
 //        if (entro == true) {
 //            this.setVisible(false);
 //        }
+
         this.setVisible(false);
         new Principal().setVisible(true);
-        new Seleccionar_empresa().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -186,14 +186,6 @@ public class Logueo extends javax.swing.JFrame {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Logueo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        //</editor-fold>
-
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Logueo().setVisible(true);

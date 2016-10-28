@@ -165,8 +165,11 @@ public class Empresas_ABM extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Empresas_ABM.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
 
-        java.awt.EventQueue.invokeLater(() -> {
+        
+         java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
             new Empresas_ABM().setVisible(true);
+            }
         });
     }
 

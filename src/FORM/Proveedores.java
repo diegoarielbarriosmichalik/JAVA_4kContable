@@ -4,9 +4,9 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import javax.swing.ImageIcon;
 
-public class Clientes extends javax.swing.JFrame {
+public class Proveedores extends javax.swing.JFrame {
 
-    public Clientes() {
+    public Proveedores() {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setTitle("Clientes");
@@ -37,7 +37,7 @@ public class Clientes extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Nombre", "C.I.", "Teléfono"
+                "ID", "Razón Social", "C.I.", "Teléfono"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -157,12 +157,12 @@ public class Clientes extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Clientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Proveedores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Clientes().setVisible(true);
+                new Proveedores().setVisible(true);
             }
         });
     }
