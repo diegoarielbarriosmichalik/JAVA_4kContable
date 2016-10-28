@@ -13,7 +13,7 @@ public class Compras_agregar_detalle extends javax.swing.JFrame {
         new File(".").getAbsolutePath();
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/icon.png")).getImage());
         jTextField_cuenta.setText(Metodos.cuenta);
-        jTextField_gravadas_5.requestFocus();
+        jTextField_gravadas10.requestFocus();
     }
 
     @SuppressWarnings("unchecked")

@@ -1,3 +1,18 @@
+
+INSERT INTO comprobante VALUES 
+('1','FACTURA');
+
+INSERT INTO moneda VALUES 
+('1','GUARANIES'),
+('2','DOLARES'),
+('3','REALES'),
+('4','PESOS');
+
+
+INSERT INTO condicion VALUES 
+('1','CONTADO'),
+('2','CREDITO');
+
 INSERT INTO cuenta VALUES 
 	('1', '1', '', '', '', '', 'ACTIVO','0'),
 	('2', '1', '01', '', '', '', 'ACTIVO CORRIENTE','0'),

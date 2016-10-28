@@ -6,11 +6,14 @@ import FORM.Compras;
 import FORM.Compras_agregar_detalle;
 import FORM.Compras_buscar_cuentas;
 import FORM.Compras_proveedores_buscar;
+import FORM.Comprobante;
+import FORM.Condicion;
 import FORM.Cuentas;
 import FORM.Cuentas_ABM;
 import FORM.Empresas;
 import FORM.Empresas_ABM;
 import FORM.Empresas_buscar_clientes;
+import FORM.Moneda;
 import FORM.Proveedores_ABM;
 import FORM.Seleccionar_empresa;
 import java.sql.Connection;
@@ -558,6 +561,90 @@ public class Metodos {
             System.err.println(ex);
         }
     }
+    public synchronized static void Condicion_cargar_jtable() {
+        try {
+            DefaultTableModel dtm = (DefaultTableModel) Condicion.jTable1.getModel();
+            for (int j = 0; j < Condicion.jTable1.getRowCount(); j++) {
+                dtm.removeRow(j);
+                j -= 1;
+            }
+            PreparedStatement ps2 = conexion.prepareStatement(""
+                    + "select id_condicion,  condicion  "
+                    + "from condicion ");
+            ResultSet rs2 = ps2.executeQuery();
+            ResultSetMetaData rsm = rs2.getMetaData();
+            ArrayList<Object[]> data2 = new ArrayList<>();
+            while (rs2.next()) {
+                Object[] rows = new Object[rsm.getColumnCount()];
+                for (int i = 0; i < rows.length; i++) {
+                    rows[i] = rs2.getObject(i + 1).toString().trim();
+                }
+                data2.add(rows);
+            }
+            dtm = (DefaultTableModel) Condicion.jTable1.getModel();
+            for (int i = 0; i < data2.size(); i++) {
+                dtm.addRow(data2.get(i));
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+    }
+    public synchronized static void Comprobante_cargar_jtable() {
+        try {
+            DefaultTableModel dtm = (DefaultTableModel) Comprobante.jTable1.getModel();
+            for (int j = 0; j < Comprobante.jTable1.getRowCount(); j++) {
+                dtm.removeRow(j);
+                j -= 1;
+            }
+            PreparedStatement ps2 = conexion.prepareStatement(""
+                    + "select id_comprobante,  comprobante  "
+                    + "from comprobante ");
+            ResultSet rs2 = ps2.executeQuery();
+            ResultSetMetaData rsm = rs2.getMetaData();
+            ArrayList<Object[]> data2 = new ArrayList<>();
+            while (rs2.next()) {
+                Object[] rows = new Object[rsm.getColumnCount()];
+                for (int i = 0; i < rows.length; i++) {
+                    rows[i] = rs2.getObject(i + 1).toString().trim();
+                }
+                data2.add(rows);
+            }
+            dtm = (DefaultTableModel) Comprobante.jTable1.getModel();
+            for (int i = 0; i < data2.size(); i++) {
+                dtm.addRow(data2.get(i));
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+    }
+    public synchronized static void Moneda_cargar_jtable() {
+        try {
+            DefaultTableModel dtm = (DefaultTableModel) Moneda.jTable1.getModel();
+            for (int j = 0; j < Moneda.jTable1.getRowCount(); j++) {
+                dtm.removeRow(j);
+                j -= 1;
+            }
+            PreparedStatement ps2 = conexion.prepareStatement(""
+                    + "select id_moneda,  moneda  "
+                    + "from moneda ");
+            ResultSet rs2 = ps2.executeQuery();
+            ResultSetMetaData rsm = rs2.getMetaData();
+            ArrayList<Object[]> data2 = new ArrayList<>();
+            while (rs2.next()) {
+                Object[] rows = new Object[rsm.getColumnCount()];
+                for (int i = 0; i < rows.length; i++) {
+                    rows[i] = rs2.getObject(i + 1).toString().trim();
+                }
+                data2.add(rows);
+            }
+            dtm = (DefaultTableModel) Moneda.jTable1.getModel();
+            for (int i = 0; i < data2.size(); i++) {
+                dtm.addRow(data2.get(i));
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+    }
     
     public synchronized static void Compras_proveedores_buscar_cargar_jtable() {
         try {
@@ -760,6 +847,23 @@ public class Metodos {
         DefaultTableModel tm = (DefaultTableModel) Empresas_buscar_clientes.jTable1.getModel();
         id_cliente = Integer.parseInt(String.valueOf(tm.getValueAt(Empresas_buscar_clientes.jTable1.getSelectedRow(), 0)));
         Empresas_ABM.jTextField_cliente.setText(String.valueOf(tm.getValueAt(Empresas_buscar_clientes.jTable1.getSelectedRow(), 1)));
+    }
+    
+    public synchronized static void Condicion_selecionar() {
+        DefaultTableModel tm = (DefaultTableModel) Condicion.jTable1.getModel();
+        id_condicion = Integer.parseInt((String.valueOf(tm.getValueAt(Condicion.jTable1.getSelectedRow(), 0))));
+        Compras.jTextField_condicion.setText(String.valueOf(tm.getValueAt(Condicion.jTable1.getSelectedRow(), 1)));
+    }
+    public synchronized static void Comprobante_selecionar() {
+        DefaultTableModel tm = (DefaultTableModel) Comprobante.jTable1.getModel();
+        id_comprobante = Integer.parseInt((String.valueOf(tm.getValueAt(Comprobante.jTable1.getSelectedRow(), 0))));
+        Compras.jTextField_comprobante.setText(String.valueOf(tm.getValueAt(Comprobante.jTable1.getSelectedRow(), 1)));
+    }
+    
+    public synchronized static void Moneda_selecionar() {
+        DefaultTableModel tm = (DefaultTableModel) Moneda.jTable1.getModel();
+        id_moneda = Integer.parseInt((String.valueOf(tm.getValueAt(Moneda.jTable1.getSelectedRow(), 0))));
+        Compras.jTextField_moneda.setText(String.valueOf(tm.getValueAt(Moneda.jTable1.getSelectedRow(), 1)));
     }
     
     public synchronized static void Seleccionar_empresa() {
