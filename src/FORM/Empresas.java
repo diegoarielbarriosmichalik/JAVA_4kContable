@@ -54,7 +54,7 @@ public class Empresas extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Razón social", "Propietario"
+                "ID", "Razón social", "Cliente"
             }
         ) {
             boolean[] canEdit = new boolean [] {

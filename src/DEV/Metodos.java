@@ -17,6 +17,8 @@ import FORM.Empresas;
 import FORM.Empresas_ABM;
 import FORM.Empresas_buscar_clientes;
 import FORM.Moneda;
+import FORM.Parametros;
+import FORM.Parametros_buscar_cuentas;
 import FORM.Proveedores_ABM;
 import FORM.Seleccionar_empresa;
 import java.sql.Connection;
@@ -28,6 +30,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -39,16 +43,20 @@ public class Metodos {
     public static int id_cuenta_asociada_max = 0;
     public static int id_factura_de_compra = 0;
     public static int id_cliente = 0;
+    public static int cuenta_iva_10 = 0;
+    public static String cuenta_iva_10_str = null;
     public static int id_proveedor = 0;
     public static int id_timbrado = 0;
     public static int id_condicion = 0;
     public static int id_comprobante = 0;
     public static int id_moneda = 0;
     public static int id_empresa = 0;
+    public static int id = 0;
     public static int empresa = 0;
     public static String empresa_razon_social = "Selecciona una empresa...";
     public static String cuenta = null;
     public static boolean existe = false;
+    public static int cuenta_gravada_10 = 0;
 
     public synchronized static void Iniciar_Conexion() {
         try {
@@ -58,7 +66,8 @@ public class Metodos {
             String pass = null;
 
             db = "contable";
-            host = "190.104.167.162"; // Host 4k
+//            host = "190.104.167.162"; // Host 4k
+            host = "localhost"; // Host 4k
             user = "postgres";
             pass = "postgres";
 
@@ -85,12 +94,12 @@ public class Metodos {
 
                     Statement st1 = conexion.createStatement();
 
-                    ResultSet result = st1.executeQuery("SELECT MAX(id_propietario) FROM propietario");
+                    ResultSet result = st1.executeQuery("SELECT MAX(id_cliente) FROM cliente");
                     if (result.next()) {
                         id_cliente = result.getInt(1) + 1;
                     }
 
-                    PreparedStatement stUpdateProducto = conexion.prepareStatement("INSERT INTO propietario VALUES(?,?,?,?,?,?,?)");
+                    PreparedStatement stUpdateProducto = conexion.prepareStatement("INSERT INTO cliente VALUES(?,?,?,?,?,?,?)");
                     stUpdateProducto.setInt(1, id_cliente);
                     stUpdateProducto.setString(2, Clientes_ABM.jTextField_nombre.getText());
                     stUpdateProducto.setInt(3, Integer.parseInt(Clientes_ABM.jTextField_ci.getText()));
@@ -149,6 +158,81 @@ public class Metodos {
         }
     }
 
+    public synchronized static void Parametros_buscar() {
+        try {
+            Statement st1 = conexion.createStatement();
+            ResultSet result = st1.executeQuery("SELECT * FROM parametro");
+            if (result.next()) {
+                int id_cuenta_iva_10 = result.getInt("cuenta_iva_10");
+                Statement st2 = conexion.createStatement();
+                ResultSet result2 = st2.executeQuery("SELECT * FROM cuenta where id_cuenta = '"+id_cuenta_iva_10+"'");
+                if (result2.next()) {
+                    Parametros.jTextField_iva_10.setText(result2.getString("cuenta"));
+                }
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+    }
+
+    public synchronized static void Compras_detalle_guardar() {
+        try {
+
+            Statement st1 = conexion.createStatement();
+
+            ResultSet result = st1.executeQuery("SELECT MAX(id_factura_de_compra_detalle) FROM factura_de_compra_detalle");
+            if (result.next()) {
+                id = result.getInt(1) + 1;
+            }
+            long gravada_10 = Long.valueOf(Compras_agregar_detalle.jTextField_gravadas10.getText().replace(".", ""));
+            long gravada_5 = Long.valueOf(Compras_agregar_detalle.jTextField_gravadas_5.getText().replace(".", ""));
+
+            PreparedStatement stUpdateProducto = conexion.prepareStatement("INSERT INTO factura_de_compra_detalle VALUES(?,?,?,?,?,?,?,?)");
+            stUpdateProducto.setInt(1, id);
+            stUpdateProducto.setInt(2, id_cuenta);
+            stUpdateProducto.setLong(3, gravada_10 + gravada_5);
+            stUpdateProducto.setLong(4, 0);
+            stUpdateProducto.setInt(5, 1);
+            stUpdateProducto.setInt(6, 1);
+            stUpdateProducto.setInt(7, 1);
+            stUpdateProducto.setInt(8, 1);
+            stUpdateProducto.executeUpdate();
+
+            if (gravada_10 > 0) {
+
+                Statement st12 = conexion.createStatement();
+                ResultSet result2 = st12.executeQuery("SELECT MAX(id_factura_de_compra_detalle) FROM factura_de_compra_detalle");
+                if (result2.next()) {
+                    id = result2.getInt(1) + 1;
+                }
+
+                Statement st123 = conexion.createStatement();
+                ResultSet result23 = st123.executeQuery("select * from parametro ");
+                if (result23.next()) {
+                    id_cuenta = result23.getInt("cuenta_iva_10");
+                }
+
+                long iva_10 = Long.valueOf(Compras_agregar_detalle.jTextField_iva10.getText().replace(".", ""));
+
+                PreparedStatement stUpdateProducto2 = conexion.prepareStatement("INSERT INTO factura_de_compra_detalle VALUES(?,?,?,?,?,?,?,?)");
+                stUpdateProducto2.setInt(1, id);
+                stUpdateProducto2.setInt(2, id_cuenta);
+                stUpdateProducto2.setLong(3, iva_10);
+                stUpdateProducto2.setLong(4, 0);
+                stUpdateProducto2.setInt(5, 1);
+                stUpdateProducto2.setInt(6, 1);
+                stUpdateProducto2.setInt(7, 1);
+                stUpdateProducto2.setInt(8, 1);
+                stUpdateProducto2.executeUpdate();
+            }
+
+            Facturas_de_compra_buscar();
+
+        } catch (NumberFormatException | SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
     public synchronized static void Compras_actualizar_fecha() {
         try {
             PreparedStatement st = conexion.prepareStatement(""
@@ -156,6 +240,17 @@ public class Metodos {
                     + "SET fecha ='" + util_Date_to_sql_date(Compras.jDateChooser_fecha.getDate()) + "', "
                     + "descripcion ='" + Compras.jTextField_descripcion.getText() + "' "
                     + "WHERE id_factura_de_compra = '" + id_factura_de_compra + "'");
+            st.executeUpdate();
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+    }
+
+    public synchronized static void Parametros_cuenta_iva_10_update() {
+        try {
+            PreparedStatement st = conexion.prepareStatement(""
+                    + "UPDATE parametro "
+                    + "SET cuenta_iva_10 = '" + cuenta_iva_10 + "' ");
             st.executeUpdate();
         } catch (SQLException ex) {
             System.err.println(ex);
@@ -231,38 +326,38 @@ public class Metodos {
     }
 
     public synchronized static void Cuentas_asociadas_guardar() {
-        try {
-
-            Statement st1 = conexion.createStatement();
-            ResultSet result = st1.executeQuery("SELECT MAX(id_cuentas_asociadas) FROM cuentas_asociadas");
-            if (result.next()) {
-                id_cuenta_asociada_max = result.getInt(1) + 1;
-            }
-            int iva = 0;
-            if (Cuentas_asociadas_agregar_detalle.jCheckBox_iva.isSelected() == true) {
-                iva = 1;
-            }
-            int gravada = 0;
-            if (Cuentas_asociadas_agregar_detalle.jCheckBox_gravada.isSelected() == true) {
-                gravada = 1;
-            }
-            int deducible = 0;
-            if (Cuentas_asociadas_agregar_detalle.jCheckBox_deducible.isSelected() == true) {
-                deducible = 1;
-            }
-
-            PreparedStatement stUpdateProducto = conexion.prepareStatement(""
-                    + "INSERT INTO cuenta_asociada VALUES(?,?,?,?,?)");
-            stUpdateProducto.setInt(1, id_cuenta_asociada);
-            stUpdateProducto.setInt(2, id_cuenta);
-            stUpdateProducto.setLong(3, Long.parseLong(Compras.jTextField_fac_caja.getText()));
-            stUpdateProducto.setLong(4, Long.parseLong(Compras.jTextField_fac_numero.getText()));
-            stUpdateProducto.setDate(5, null);
-            stUpdateProducto.executeUpdate();
-
-        } catch (SQLException ex) {
-            System.err.println(ex);
-        }
+//        try {
+//
+//            Statement st1 = conexion.createStatement();
+//            ResultSet result = st1.executeQuery("SELECT MAX(id_cuentas_asociadas) FROM cuentas_asociadas");
+//            if (result.next()) {
+//                id_cuenta_asociada_max = result.getInt(1) + 1;
+//            }
+//            int iva = 0;
+//            if (Cuentas_asociadas_agregar_detalle.jCheckBox_iva.isSelected() == true) {
+//                iva = 1;
+//            }
+//            int gravada = 0;
+//            if (Cuentas_asociadas_agregar_detalle.jCheckBox_gravada.isSelected() == true) {
+//                gravada = 1;
+//            }
+//            int deducible = 0;
+//            if (Cuentas_asociadas_agregar_detalle.jCheckBox_deducible.isSelected() == true) {
+//                deducible = 1;
+//            }
+//
+//            PreparedStatement stUpdateProducto = conexion.prepareStatement(""
+//                    + "INSERT INTO cuenta_asociada VALUES(?,?,?,?,?)");
+//            stUpdateProducto.setInt(1, id_cuenta_asociada);
+//            stUpdateProducto.setInt(2, id_cuenta);
+//            stUpdateProducto.setLong(3, Long.parseLong(Compras.jTextField_fac_caja.getText()));
+//            stUpdateProducto.setLong(4, Long.parseLong(Compras.jTextField_fac_numero.getText()));
+//            stUpdateProducto.setDate(5, null);
+//            stUpdateProducto.executeUpdate();
+//
+//        } catch (SQLException ex) {
+//            System.err.println(ex);
+//        }
 
     }
 
@@ -371,6 +466,33 @@ public class Metodos {
 
                 id_comprobante = result.getInt("id_comprobante");
                 Compras.jTextField_comprobante.setText(result.getString("comprobante"));
+
+                //-------------------------------------------
+                DefaultTableModel dtm = (DefaultTableModel) Compras.jTable_compras_detalle.getModel();
+                for (int j = 0; j < Compras.jTable_compras_detalle.getRowCount(); j++) {
+                    dtm.removeRow(j);
+                    j -= 1;
+                }
+                PreparedStatement ps2 = conexion.prepareStatement(""
+                        + "select id_factura_de_compra_detalle, "
+                        + "(nv1 || '.' || nv2|| '.' || nv3|| '.' || nv4|| '.' || nv5|| ' ' || cuenta) AS cuenta, debe, haber "
+                        + "from factura_de_compra_detalle "
+                        + "inner join cuenta on cuenta.id_cuenta = factura_de_compra_detalle.id_cuenta "
+                        + "where id_factura_de_compra = '" + id_factura_de_compra + "' order by id_factura_de_compra_detalle ASC");
+                ResultSet rs2 = ps2.executeQuery();
+                ResultSetMetaData rsm = rs2.getMetaData();
+                ArrayList<Object[]> data2 = new ArrayList<>();
+                while (rs2.next()) {
+                    Object[] rows = new Object[rsm.getColumnCount()];
+                    for (int i = 0; i < rows.length; i++) {
+                        rows[i] = rs2.getObject(i + 1).toString().trim();
+                    }
+                    data2.add(rows);
+                }
+                dtm = (DefaultTableModel) Compras.jTable_compras_detalle.getModel();
+                for (int i = 0; i < data2.size(); i++) {
+                    dtm.addRow(data2.get(i));
+                }
 
             }
         } catch (SQLException ex) {
@@ -551,6 +673,7 @@ public class Metodos {
                     stUpdateProducto.setString(5, Empresas_ABM.jTextField_direccion.getText());
                     stUpdateProducto.setInt(6, id_cliente);
                     stUpdateProducto.executeUpdate();
+                    JOptionPane.showMessageDialog(null, "Guardado correctamente");
                 }
 //            } else if (Clientes.jDateChooser_cumpleanos.getDate() != null) {
 //                java.util.Date utilDate = Clientes.jDateChooser_cumpleanos.getDate();
@@ -592,7 +715,7 @@ public class Metodos {
 //                Clientes.jLabel_mensaje.setVisible(true);
 ////                    Clientes.jt_nombre.requestFocus();
             }
-            JOptionPane.showMessageDialog(null, "Guardado correctamente");
+
         } catch (NumberFormatException | SQLException e) {
             JOptionPane.showMessageDialog(null, e);
         }
@@ -730,6 +853,36 @@ public class Metodos {
                 data2.add(rows);
             }
             dtm = (DefaultTableModel) Cuentas.jTable1.getModel();
+            for (int i = 0; i < data2.size(); i++) {
+                dtm.addRow(data2.get(i));
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+    }
+
+    public synchronized static void Parametros_cuentas_cargar_jtable() {
+        try {
+            DefaultTableModel dtm = (DefaultTableModel) Parametros_buscar_cuentas.jTable1.getModel();
+            for (int j = 0; j < Parametros_buscar_cuentas.jTable1.getRowCount(); j++) {
+                dtm.removeRow(j);
+                j -= 1;
+            }
+            PreparedStatement ps2 = conexion.prepareStatement(""
+                    + "select id_cuenta,  (nv1 || '.' || nv2|| '.' || nv3|| '.' || nv4|| '.' || nv5|| ' ' || cuenta) AS cuenta  "
+                    + "from cuenta "
+                    + "where cuenta ilike '%" + Parametros_buscar_cuentas.jTextField_buscar.getText() + "%'");
+            ResultSet rs2 = ps2.executeQuery();
+            ResultSetMetaData rsm = rs2.getMetaData();
+            ArrayList<Object[]> data2 = new ArrayList<>();
+            while (rs2.next()) {
+                Object[] rows = new Object[rsm.getColumnCount()];
+                for (int i = 0; i < rows.length; i++) {
+                    rows[i] = rs2.getObject(i + 1).toString().trim();
+                }
+                data2.add(rows);
+            }
+            dtm = (DefaultTableModel) Parametros_buscar_cuentas.jTable1.getModel();
             for (int i = 0; i < data2.size(); i++) {
                 dtm.addRow(data2.get(i));
             }
@@ -923,7 +1076,7 @@ public class Metodos {
                 j -= 1;
             }
             PreparedStatement ps2 = conexion.prepareStatement(""
-                    + "select id_empresa, razon_social, id_propietario  "
+                    + "select id_empresa, razon_social, id_cliente  "
                     + "from empresa");
             ResultSet rs2 = ps2.executeQuery();
             ResultSetMetaData rsm = rs2.getMetaData();
@@ -952,7 +1105,7 @@ public class Metodos {
                 j -= 1;
             }
             PreparedStatement ps2 = conexion.prepareStatement(""
-                    + "select id_empresa, razon_social, id_propietario  "
+                    + "select id_empresa, razon_social, id_cliente  "
                     + "from empresa "
                     + "where razon_social ilike '%" + Empresas.jTextField_buscar.getText() + "%'");
             ResultSet rs2 = ps2.executeQuery();
@@ -982,8 +1135,8 @@ public class Metodos {
                 j -= 1;
             }
             PreparedStatement ps2 = conexion.prepareStatement(""
-                    + "select id_propietario, nombre, ci, telefono  "
-                    + "from propietario "
+                    + "select id_cliente, nombre, ci, telefono  "
+                    + "from cliente "
                     + "where nombre ilike '%" + Clientes.jTextField_buscar.getText() + "%'");
             ResultSet rs2 = ps2.executeQuery();
             ResultSetMetaData rsm = rs2.getMetaData();
@@ -1012,8 +1165,8 @@ public class Metodos {
                 j -= 1;
             }
             PreparedStatement ps2 = conexion.prepareStatement(""
-                    + "select id_propietario, nombre, ci, telefono  "
-                    + "from propietario "
+                    + "select id_cliente, nombre, ci, telefono  "
+                    + "from cliente "
                     + "where nombre ilike '%" + Empresas_buscar_clientes.jTextField_buscar.getText() + "%'");
             ResultSet rs2 = ps2.executeQuery();
             ResultSetMetaData rsm = rs2.getMetaData();
@@ -1080,6 +1233,13 @@ public class Metodos {
             JOptionPane.showMessageDialog(null, ex);
         }
 
+    }
+
+    public synchronized static void Parametros_cuentas_seleccionar() {
+        DefaultTableModel tm = (DefaultTableModel) Parametros_buscar_cuentas.jTable1.getModel();
+        cuenta_iva_10 = Integer.parseInt(String.valueOf(tm.getValueAt(Parametros_buscar_cuentas.jTable1.getSelectedRow(), 0)));
+        Parametros.jTextField_iva_10.setText(String.valueOf(tm.getValueAt(Parametros_buscar_cuentas.jTable1.getSelectedRow(), 1)));
+        Metodos.Parametros_cuenta_iva_10_update();
     }
 
     public synchronized static void Empresas_cliente_seleccionar() {

@@ -3,6 +3,20 @@ INSERT INTO comprobante VALUES
 ('1','FACTURA');
 
 
+INSERT INTO parametro VALUES 
+('1');
+
+INSERT INTO tipo_de_iva VALUES 
+('1', 'Indistinto');
+
+INSERT INTO ventas VALUES 
+('1', 'Ventas al 5%, 10%');
+
+INSERT INTO impuesto VALUES 
+('1', 'IVA 10%');
+
+
+
 INSERT INTO proveedor VALUES 
 ('0','No especificado', '0', '0','-','0');
 

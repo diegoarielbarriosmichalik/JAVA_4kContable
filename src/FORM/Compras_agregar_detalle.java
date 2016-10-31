@@ -1,6 +1,7 @@
 package FORM;
 
 import DEV.Metodos;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import javax.swing.ImageIcon;
 
@@ -12,8 +13,7 @@ public class Compras_agregar_detalle extends javax.swing.JFrame {
         setTitle("Bancos");
         new File(".").getAbsolutePath();
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/icon.png")).getImage());
-      //  jTextField_cuenta.setText(Metodos.cuenta);
-        jTextField_gravadas10.requestFocus();
+        //  jTextField_cuenta.setText(Metodos.cuenta);
     }
 
     @SuppressWarnings("unchecked")
@@ -27,7 +27,6 @@ public class Compras_agregar_detalle extends javax.swing.JFrame {
         jTextField_exentas = new javax.swing.JTextField();
         jTextField_iva10 = new javax.swing.JTextField();
         jTextField_total = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
         setAlwaysOnTop(true);
@@ -38,10 +37,19 @@ public class Compras_agregar_detalle extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jTextField_gravadas10.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTextField_gravadas10.setText("0");
         jTextField_gravadas10.setBorder(javax.swing.BorderFactory.createTitledBorder("Gravadas 10%"));
         jTextField_gravadas10.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextField_gravadas10FocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTextField_gravadas10FocusLost(evt);
+            }
+        });
+        jTextField_gravadas10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField_gravadas10ActionPerformed(evt);
             }
         });
         jTextField_gravadas10.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -54,28 +62,81 @@ public class Compras_agregar_detalle extends javax.swing.JFrame {
         });
 
         jTextField_gravadas_5.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTextField_gravadas_5.setText("0");
         jTextField_gravadas_5.setBorder(javax.swing.BorderFactory.createTitledBorder("Gravadas 5%"));
+        jTextField_gravadas_5.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextField_gravadas_5FocusGained(evt);
+            }
+        });
+        jTextField_gravadas_5.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField_gravadas_5KeyPressed(evt);
+            }
+        });
 
         jTextField_iva5.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTextField_iva5.setText("0");
         jTextField_iva5.setBorder(javax.swing.BorderFactory.createTitledBorder("I.V.A. 5%"));
+        jTextField_iva5.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextField_iva5FocusGained(evt);
+            }
+        });
+        jTextField_iva5.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField_iva5KeyPressed(evt);
+            }
+        });
 
         jTextField_exentas.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTextField_exentas.setText("0");
         jTextField_exentas.setBorder(javax.swing.BorderFactory.createTitledBorder("Exentas"));
+        jTextField_exentas.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextField_exentasFocusGained(evt);
+            }
+        });
+        jTextField_exentas.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField_exentasKeyPressed(evt);
+            }
+        });
 
         jTextField_iva10.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTextField_iva10.setText("0");
         jTextField_iva10.setBorder(javax.swing.BorderFactory.createTitledBorder("I.V.A. 10%"));
+        jTextField_iva10.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextField_iva10FocusGained(evt);
+            }
+        });
+        jTextField_iva10.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+                jTextField_iva10CaretPositionChanged(evt);
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+            }
+        });
+        jTextField_iva10.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField_iva10KeyPressed(evt);
+            }
+        });
 
         jTextField_total.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jTextField_total.setForeground(new java.awt.Color(0, 102, 0));
         jTextField_total.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTextField_total.setText("0");
         jTextField_total.setBorder(javax.swing.BorderFactory.createTitledBorder("Total"));
-
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/exit1.png"))); // NOI18N
-        jButton2.setMnemonic('x');
-        jButton2.setToolTipText("Alt + X");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+        jTextField_total.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextField_totalFocusGained(evt);
+            }
+        });
+        jTextField_total.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField_totalKeyPressed(evt);
             }
         });
 
@@ -92,10 +153,9 @@ public class Compras_agregar_detalle extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField_exentas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -104,14 +164,12 @@ public class Compras_agregar_detalle extends javax.swing.JFrame {
                         .addComponent(jTextField_total, javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jTextField_iva10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jTextField_gravadas10, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(3, 3, 3)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jTextField_gravadas10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField_gravadas_5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -119,13 +177,13 @@ public class Compras_agregar_detalle extends javax.swing.JFrame {
                 .addComponent(jTextField_iva10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField_iva5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jTextField_exentas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField_total, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(54, 54, 54))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -136,22 +194,23 @@ public class Compras_agregar_detalle extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        this.setVisible(false);
-    }//GEN-LAST:event_jButton2ActionPerformed
-
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-    
+        Metodos.Compras_detalle_guardar();
+        this.setVisible(false);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jTextField_gravadas10KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_gravadas10KeyPressed
-
+        if ((evt.getKeyCode() == KeyEvent.VK_ESCAPE)) {
+            this.setVisible(false);
+        }
     }//GEN-LAST:event_jTextField_gravadas10KeyPressed
 
     private void jTextField_gravadas10FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_gravadas10FocusLost
@@ -161,6 +220,71 @@ public class Compras_agregar_detalle extends javax.swing.JFrame {
     private void jTextField_gravadas10KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_gravadas10KeyReleased
         jTextField_gravadas10.setText(Metodos.getSepararMiles(jTextField_gravadas10.getText().replace(".", "")));
     }//GEN-LAST:event_jTextField_gravadas10KeyReleased
+
+    private void jTextField_gravadas10FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_gravadas10FocusGained
+        jTextField_gravadas10.selectAll();
+    }//GEN-LAST:event_jTextField_gravadas10FocusGained
+
+    private void jTextField_gravadas_5FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_gravadas_5FocusGained
+        jTextField_gravadas_5.selectAll();
+    }//GEN-LAST:event_jTextField_gravadas_5FocusGained
+
+    private void jTextField_iva10FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_iva10FocusGained
+        jTextField_iva10.selectAll();
+    }//GEN-LAST:event_jTextField_iva10FocusGained
+
+    private void jTextField_iva5FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_iva5FocusGained
+        jTextField_iva5.selectAll();
+    }//GEN-LAST:event_jTextField_iva5FocusGained
+
+    private void jTextField_exentasFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_exentasFocusGained
+        jTextField_exentas.selectAll();
+    }//GEN-LAST:event_jTextField_exentasFocusGained
+
+    private void jTextField_totalFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_totalFocusGained
+        jTextField_total.selectAll();
+    }//GEN-LAST:event_jTextField_totalFocusGained
+
+    private void jTextField_gravadas10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_gravadas10ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField_gravadas10ActionPerformed
+
+    private void jTextField_gravadas_5KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_gravadas_5KeyPressed
+        if ((evt.getKeyCode() == KeyEvent.VK_ESCAPE)) {
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_jTextField_gravadas_5KeyPressed
+
+    private void jTextField_iva10CaretPositionChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_jTextField_iva10CaretPositionChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField_iva10CaretPositionChanged
+
+    private void jTextField_iva10KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_iva10KeyPressed
+        if ((evt.getKeyCode() == KeyEvent.VK_ESCAPE)) {
+            this.setVisible(false);
+        }
+
+    }//GEN-LAST:event_jTextField_iva10KeyPressed
+
+    private void jTextField_iva5KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_iva5KeyPressed
+        if ((evt.getKeyCode() == KeyEvent.VK_ESCAPE)) {
+            this.setVisible(false);
+        }
+
+    }//GEN-LAST:event_jTextField_iva5KeyPressed
+
+    private void jTextField_exentasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_exentasKeyPressed
+        if ((evt.getKeyCode() == KeyEvent.VK_ESCAPE)) {
+            this.setVisible(false);
+        }
+
+    }//GEN-LAST:event_jTextField_exentasKeyPressed
+
+    private void jTextField_totalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_totalKeyPressed
+        if ((evt.getKeyCode() == KeyEvent.VK_ESCAPE)) {
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_jTextField_totalKeyPressed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -195,7 +319,6 @@ public class Compras_agregar_detalle extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JPanel jPanel1;
     public static javax.swing.JTextField jTextField_exentas;

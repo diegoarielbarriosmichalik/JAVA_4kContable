@@ -25,9 +25,6 @@ public class Cuentas_asociadas_agregar_detalle extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jTextField_cuenta = new javax.swing.JTextField();
         jTextField_asociar = new javax.swing.JTextField();
-        jCheckBox_iva = new javax.swing.JCheckBox();
-        jCheckBox_deducible = new javax.swing.JCheckBox();
-        jCheckBox_gravada = new javax.swing.JCheckBox();
         jButton3 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
@@ -41,21 +38,12 @@ public class Cuentas_asociadas_agregar_detalle extends javax.swing.JFrame {
         jTextField_cuenta.setBackground(new java.awt.Color(255, 255, 255));
         jTextField_cuenta.setBorder(javax.swing.BorderFactory.createTitledBorder("Cuenta"));
 
-        jTextField_asociar.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Asociar a cuenta (ENTER para buscar)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(102, 102, 255)));
+        jTextField_asociar.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Asociar a cuenta (ENTER para buscar)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(102, 102, 255))); // NOI18N
         jTextField_asociar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jTextField_asociarKeyPressed(evt);
             }
         });
-
-        jCheckBox_iva.setBackground(new java.awt.Color(255, 255, 255));
-        jCheckBox_iva.setText("IVA");
-
-        jCheckBox_deducible.setBackground(new java.awt.Color(255, 255, 255));
-        jCheckBox_deducible.setText("Deducible");
-
-        jCheckBox_gravada.setBackground(new java.awt.Color(255, 255, 255));
-        jCheckBox_gravada.setText("Gravada");
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/terminar_mini.jpg"))); // NOI18N
         jButton3.setMnemonic('g');
@@ -88,12 +76,8 @@ public class Cuentas_asociadas_agregar_detalle extends javax.swing.JFrame {
                     .addComponent(jTextField_cuenta)
                     .addComponent(jTextField_asociar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCheckBox_deducible)
-                            .addComponent(jCheckBox_iva)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jCheckBox_gravada))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 334, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -106,14 +90,8 @@ public class Cuentas_asociadas_agregar_detalle extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField_asociar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox_iva)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox_deducible)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox_gravada)
-                .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -166,9 +144,6 @@ Metodos.Cuentas_asociadas_guardar();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    public static javax.swing.JCheckBox jCheckBox_deducible;
-    public static javax.swing.JCheckBox jCheckBox_gravada;
-    public static javax.swing.JCheckBox jCheckBox_iva;
     private javax.swing.JPanel jPanel1;
     public static javax.swing.JTextField jTextField_asociar;
     private javax.swing.JTextField jTextField_cuenta;

@@ -32,9 +32,6 @@ public class Compras extends javax.swing.JFrame {
         
         Metodos.Facturas_de_compra_max();
         Metodos.Facturas_de_compra_buscar();
-        
-        
-        
         jTextField_proveedor.requestFocus();
     }
 
@@ -49,7 +46,7 @@ public class Compras extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTable_compras_detalle = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jTextField_fac_sucursal = new javax.swing.JTextField();
         jTextField_fac_caja = new javax.swing.JTextField();
@@ -78,27 +75,26 @@ public class Compras extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTable_compras_detalle.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID", "Cuenta", "Descripción", "Debe", "Haber", "Tipo de Imp.", "Impuesto", "Ventas", "Ded.", "Gra.", "IVA"
+                "ID", "Cuenta", "Debe", "Haber", "Tipo de Imp.", "Impuesto", "Ventas", "Ded.", "Gra.", "IVA"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(2);
-            jTable1.getColumnModel().getColumn(1).setPreferredWidth(10);
-            jTable1.getColumnModel().getColumn(2).setPreferredWidth(300);
-            jTable1.getColumnModel().getColumn(3).setPreferredWidth(20);
-            jTable1.getColumnModel().getColumn(4).setPreferredWidth(20);
-            jTable1.getColumnModel().getColumn(5).setPreferredWidth(30);
-            jTable1.getColumnModel().getColumn(6).setPreferredWidth(10);
-            jTable1.getColumnModel().getColumn(7).setPreferredWidth(10);
-            jTable1.getColumnModel().getColumn(8).setPreferredWidth(2);
-            jTable1.getColumnModel().getColumn(9).setPreferredWidth(2);
-            jTable1.getColumnModel().getColumn(10).setPreferredWidth(2);
+        jScrollPane1.setViewportView(jTable_compras_detalle);
+        if (jTable_compras_detalle.getColumnModel().getColumnCount() > 0) {
+            jTable_compras_detalle.getColumnModel().getColumn(0).setPreferredWidth(2);
+            jTable_compras_detalle.getColumnModel().getColumn(1).setPreferredWidth(300);
+            jTable_compras_detalle.getColumnModel().getColumn(2).setPreferredWidth(20);
+            jTable_compras_detalle.getColumnModel().getColumn(3).setPreferredWidth(20);
+            jTable_compras_detalle.getColumnModel().getColumn(4).setPreferredWidth(30);
+            jTable_compras_detalle.getColumnModel().getColumn(5).setPreferredWidth(10);
+            jTable_compras_detalle.getColumnModel().getColumn(6).setPreferredWidth(10);
+            jTable_compras_detalle.getColumnModel().getColumn(7).setPreferredWidth(2);
+            jTable_compras_detalle.getColumnModel().getColumn(8).setPreferredWidth(2);
+            jTable_compras_detalle.getColumnModel().getColumn(9).setPreferredWidth(2);
         }
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -155,7 +151,7 @@ public class Compras extends javax.swing.JFrame {
         );
 
         jTextField_comprobante.setText("FACTURA");
-        jTextField_comprobante.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Comprobante", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(102, 102, 255)));
+        jTextField_comprobante.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Comprobante", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(102, 102, 255))); // NOI18N
         jTextField_comprobante.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_comprobanteActionPerformed(evt);
@@ -185,7 +181,7 @@ public class Compras extends javax.swing.JFrame {
             }
         });
 
-        jTextField_proveedor.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Proveedor (ENTER para buscar)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(102, 102, 255)));
+        jTextField_proveedor.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Proveedor (ENTER para buscar)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(102, 102, 255))); // NOI18N
         jTextField_proveedor.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTextField_proveedorFocusLost(evt);
@@ -198,7 +194,7 @@ public class Compras extends javax.swing.JFrame {
         });
 
         jTextField_condicion.setText("CONTADO");
-        jTextField_condicion.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Condición", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(102, 102, 255)));
+        jTextField_condicion.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Condición", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(102, 102, 255))); // NOI18N
         jTextField_condicion.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jTextField_condicionKeyPressed(evt);
@@ -224,7 +220,7 @@ public class Compras extends javax.swing.JFrame {
         jTextField_ruc.setBorder(javax.swing.BorderFactory.createTitledBorder("R.U.C."));
 
         jTextField_moneda.setText("GUARANIES");
-        jTextField_moneda.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Moneda", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(102, 102, 255)));
+        jTextField_moneda.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Moneda", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(102, 102, 255))); // NOI18N
         jTextField_moneda.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jTextField_monedaKeyPressed(evt);
@@ -249,7 +245,7 @@ public class Compras extends javax.swing.JFrame {
             }
         });
 
-        jTextField_cuenta.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cuentas (ENTER para buscar)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(102, 102, 255)));
+        jTextField_cuenta.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cuentas (ENTER para buscar)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(102, 102, 255))); // NOI18N
         jTextField_cuenta.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTextField_cuentaFocusLost(evt);
@@ -532,7 +528,7 @@ public class Compras extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    public static javax.swing.JTable jTable_compras_detalle;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
