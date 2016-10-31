@@ -5,6 +5,7 @@ import FORM.Clientes_ABM;
 import FORM.Compras;
 import FORM.Compras_agregar_detalle;
 import FORM.Compras_buscar_cuentas;
+import FORM.Compras_detalle_modificar;
 import FORM.Compras_proveedores_buscar;
 import FORM.Comprobante;
 import FORM.Condicion;
@@ -16,6 +17,7 @@ import FORM.Cuentas_asociadas_agregar_detalle_buscar_cuenta;
 import FORM.Empresas;
 import FORM.Empresas_ABM;
 import FORM.Empresas_buscar_clientes;
+import FORM.Factura_compra_detalle_modificar_cuentas_buscar;
 import FORM.Moneda;
 import FORM.Parametros;
 import FORM.Parametros_buscar_cuentas;
@@ -81,6 +83,17 @@ public class Metodos {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al iniciar la conexion con la base de datos." + ex);
         } catch (ClassNotFoundException ex) {
+            System.err.println(ex);
+        }
+    }
+
+    public synchronized static void Compras_detalle_modificar_borrar() {
+        try {
+            PreparedStatement stUpdateAuxiliar2 = conexion.prepareStatement(""
+                    + "delete from factura_de_compra_detalle WHERE id_factura_de_compra_detalle ='" + id_factura_de_compra_detalle + "'");
+            stUpdateAuxiliar2.executeUpdate();
+            Facturas_de_compra_buscar();
+        } catch (SQLException ex) {
             System.err.println(ex);
         }
     }
@@ -948,6 +961,36 @@ public class Metodos {
         }
     }
 
+    public synchronized static void Factura_compra_detalle_modificar_cuentas_cargar_jtable() {
+        try {
+            DefaultTableModel dtm = (DefaultTableModel) Factura_compra_detalle_modificar_cuentas_buscar.jTable1.getModel();
+            for (int j = 0; j < Factura_compra_detalle_modificar_cuentas_buscar.jTable1.getRowCount(); j++) {
+                dtm.removeRow(j);
+                j -= 1;
+            }
+            PreparedStatement ps2 = conexion.prepareStatement(""
+                    + "select id_cuenta,  (nv1 || '.' || nv2|| '.' || nv3|| '.' || nv4|| '.' || nv5|| ' ' || cuenta) AS cuenta  "
+                    + "from cuenta "
+                    + "where cuenta ilike '%" + Factura_compra_detalle_modificar_cuentas_buscar.jTextField_buscar.getText() + "%'");
+            ResultSet rs2 = ps2.executeQuery();
+            ResultSetMetaData rsm = rs2.getMetaData();
+            ArrayList<Object[]> data2 = new ArrayList<>();
+            while (rs2.next()) {
+                Object[] rows = new Object[rsm.getColumnCount()];
+                for (int i = 0; i < rows.length; i++) {
+                    rows[i] = rs2.getObject(i + 1).toString().trim();
+                }
+                data2.add(rows);
+            }
+            dtm = (DefaultTableModel) Factura_compra_detalle_modificar_cuentas_buscar.jTable1.getModel();
+            for (int i = 0; i < data2.size(); i++) {
+                dtm.addRow(data2.get(i));
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+    }
+
     public synchronized static void Parametros_cuentas_cargar_jtable() {
         try {
             DefaultTableModel dtm = (DefaultTableModel) Parametros_buscar_cuentas.jTable1.getModel();
@@ -1443,6 +1486,25 @@ public class Metodos {
 
     }
 
+    public synchronized static void Factura_compra_detalle_modificar_cuentas_seleccionar() {
+        DefaultTableModel tm = (DefaultTableModel) Factura_compra_detalle_modificar_cuentas_buscar.jTable1.getModel();
+        id_cuenta = Integer.parseInt(String.valueOf(tm.getValueAt(Factura_compra_detalle_modificar_cuentas_buscar.jTable1.getSelectedRow(), 0)));
+
+        try {
+            PreparedStatement st = conexion.prepareStatement(""
+                    + "UPDATE factura_de_compra_detalle "
+                    + "SET id_cuenta ='" + id_cuenta + "' "
+                    + "WHERE id_factura_de_compra_detalle = '" + id_factura_de_compra_detalle + "'");
+            st.executeUpdate();
+
+            Facturas_de_compra_buscar();
+
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+
+    }
+
     public synchronized static void Compras_proveedores_selecionar() {
         DefaultTableModel tm = (DefaultTableModel) Compras_proveedores_buscar.jTable1.getModel();
         id_proveedor = Integer.parseInt(String.valueOf(tm.getValueAt(Compras_proveedores_buscar.jTable1.getSelectedRow(), 0)));
@@ -1467,5 +1529,11 @@ public class Metodos {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
+    }
+
+    public synchronized static void Compras_detalle_seleccionar_detalle() {
+        DefaultTableModel tm = (DefaultTableModel) Compras.jTable_compras_detalle.getModel();
+        id_factura_de_compra_detalle = Integer.parseInt(String.valueOf(tm.getValueAt(Compras.jTable_compras_detalle.getSelectedRow(), 0)));
+        Compras_detalle_modificar.jTextField_cuenta.setText(String.valueOf(tm.getValueAt(Compras.jTable_compras_detalle.getSelectedRow(), 1)));
     }
 }

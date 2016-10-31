@@ -1,4 +1,3 @@
-
 package FORM;
 
 import DEV.Metodos;
@@ -67,6 +66,16 @@ public class Compras extends javax.swing.JFrame {
                 "ID", "Cuenta", "Debe", "Haber", "Tipo de Imp.", "Impuesto", "Ventas", "Ded.", "Gra.", "IVA"
             }
         ));
+        jTable_compras_detalle.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable_compras_detalleMouseClicked(evt);
+            }
+        });
+        jTable_compras_detalle.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTable_compras_detalleKeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable_compras_detalle);
         if (jTable_compras_detalle.getColumnModel().getColumnCount() > 0) {
             jTable_compras_detalle.getColumnModel().getColumn(0).setPreferredWidth(2);
@@ -135,7 +144,7 @@ public class Compras extends javax.swing.JFrame {
         );
 
         jTextField_comprobante.setText("FACTURA");
-        jTextField_comprobante.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Comprobante", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(102, 102, 255))); // NOI18N
+        jTextField_comprobante.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Comprobante", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(102, 102, 255)));
         jTextField_comprobante.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_comprobanteActionPerformed(evt);
@@ -165,7 +174,7 @@ public class Compras extends javax.swing.JFrame {
             }
         });
 
-        jTextField_proveedor.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Proveedor (ENTER para buscar)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(102, 102, 255))); // NOI18N
+        jTextField_proveedor.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Proveedor (ENTER para buscar)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(102, 102, 255)));
         jTextField_proveedor.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTextField_proveedorFocusLost(evt);
@@ -178,7 +187,7 @@ public class Compras extends javax.swing.JFrame {
         });
 
         jTextField_condicion.setText("CONTADO");
-        jTextField_condicion.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Condición", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(102, 102, 255))); // NOI18N
+        jTextField_condicion.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Condición", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(102, 102, 255)));
         jTextField_condicion.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jTextField_condicionKeyPressed(evt);
@@ -204,7 +213,7 @@ public class Compras extends javax.swing.JFrame {
         jTextField_ruc.setBorder(javax.swing.BorderFactory.createTitledBorder("R.U.C."));
 
         jTextField_moneda.setText("GUARANIES");
-        jTextField_moneda.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Moneda", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(102, 102, 255))); // NOI18N
+        jTextField_moneda.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Moneda", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(102, 102, 255)));
         jTextField_moneda.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jTextField_monedaKeyPressed(evt);
@@ -229,7 +238,7 @@ public class Compras extends javax.swing.JFrame {
             }
         });
 
-        jTextField_cuenta.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cuentas (ENTER para buscar)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(102, 102, 255))); // NOI18N
+        jTextField_cuenta.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cuentas (ENTER para buscar)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(102, 102, 255)));
         jTextField_cuenta.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTextField_cuentaFocusLost(evt);
@@ -328,14 +337,13 @@ public class Compras extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jTextField_proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField_timbrado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField_ruc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(17, 17, 17)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextField_proveedor)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTextField_timbrado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextField_ruc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -349,7 +357,7 @@ public class Compras extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField_cuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -470,6 +478,18 @@ public class Compras extends javax.swing.JFrame {
     private void jTextField_comprobanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_comprobanteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField_comprobanteActionPerformed
+
+    private void jTable_compras_detalleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_compras_detalleMouseClicked
+        new Compras_detalle_modificar().setVisible(true);
+        Metodos.Compras_detalle_seleccionar_detalle();
+    }//GEN-LAST:event_jTable_compras_detalleMouseClicked
+
+    private void jTable_compras_detalleKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable_compras_detalleKeyPressed
+        if ((evt.getKeyCode() == KeyEvent.VK_ENTER)) {
+            new Compras_detalle_modificar().setVisible(true);
+            Metodos.Compras_detalle_seleccionar_detalle();
+        }
+    }//GEN-LAST:event_jTable_compras_detalleKeyPressed
 
     public static void main(String args[]) {
         try {

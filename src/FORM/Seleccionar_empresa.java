@@ -170,9 +170,7 @@ public class Seleccionar_empresa extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
-        if ((evt.getKeyCode() == KeyEvent.VK_ESCAPE)) {
-            this.setVisible(false);
-        }
+     
 
         if ((evt.getKeyCode() == KeyEvent.VK_ENTER)) {
             Metodos.Seleccionar_empresa();
