@@ -881,6 +881,8 @@ public class Metodos {
         Compras.jTextField_proveedor.setText("");
         Compras.jTextField_ruc.setText("");
         Compras.jTextField_timbrado.setText("");
+        Compras.jDateChooser_fecha.setDate(null);
+        Compras.jTextField_total.setText("");
 
     }
 
