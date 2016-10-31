@@ -831,6 +831,17 @@ public class Metodos {
         long total = gravada_10_long + iva_10;
         Compras_agregar_detalle.jTextField_total.setText(getSepararMiles(String.valueOf(total)));
     }
+    
+    public static void Compras_agregar_detalle_calculo_gravada5() {
+        String gravada_10_str = Compras_agregar_detalle.jTextField_gravadas10.getText().replace(".", "");
+        long gravada_10_long = Long.parseLong(gravada_10_str);
+        long iva_10 = gravada_10_long / 11;
+        gravada_10_long = gravada_10_long - iva_10;
+        Compras_agregar_detalle.jTextField_gravadas10.setText(getSepararMiles(String.valueOf(gravada_10_long)));
+        Compras_agregar_detalle.jTextField_iva10.setText(getSepararMiles(String.valueOf(iva_10)));
+        long total = gravada_10_long + iva_10;
+        Compras_agregar_detalle.jTextField_total.setText(getSepararMiles(String.valueOf(total)));
+    }
 
     public synchronized static String getSepararMiles(String txtprec) {
         String valor = txtprec;
@@ -1208,8 +1219,9 @@ public class Metodos {
                 j -= 1;
             }
             PreparedStatement ps2 = conexion.prepareStatement(""
-                    + "select id_empresa, razon_social, id_cliente  "
-                    + "from empresa");
+                    + "select id_empresa, razon_social, cliente.nombre  "
+                    + "from empresa "
+                    + "inner join cliente on cliente.id_cliente = empresa.id_cliente ");
             ResultSet rs2 = ps2.executeQuery();
             ResultSetMetaData rsm = rs2.getMetaData();
             ArrayList<Object[]> data2 = new ArrayList<>();

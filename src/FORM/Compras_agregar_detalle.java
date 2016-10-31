@@ -10,7 +10,7 @@ public class Compras_agregar_detalle extends javax.swing.JFrame {
     public Compras_agregar_detalle() {
         initComponents();
         setLocationRelativeTo(null);
-        setTitle("Bancos");
+        setTitle("Detalle");
         new File(".").getAbsolutePath();
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/icon.png")).getImage());
         //  jTextField_cuenta.setText(Metodos.cuenta);
@@ -39,17 +39,17 @@ public class Compras_agregar_detalle extends javax.swing.JFrame {
         jTextField_gravadas10.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTextField_gravadas10.setText("0");
         jTextField_gravadas10.setBorder(javax.swing.BorderFactory.createTitledBorder("Gravadas 10%"));
-        jTextField_gravadas10.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jTextField_gravadas10FocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextField_gravadas10FocusLost(evt);
-            }
-        });
         jTextField_gravadas10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_gravadas10ActionPerformed(evt);
+            }
+        });
+        jTextField_gravadas10.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField_gravadas10FocusLost(evt);
+            }
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextField_gravadas10FocusGained(evt);
             }
         });
         jTextField_gravadas10.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -65,6 +65,9 @@ public class Compras_agregar_detalle extends javax.swing.JFrame {
         jTextField_gravadas_5.setText("0");
         jTextField_gravadas_5.setBorder(javax.swing.BorderFactory.createTitledBorder("Gravadas 5%"));
         jTextField_gravadas_5.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField_gravadas_5FocusLost(evt);
+            }
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jTextField_gravadas_5FocusGained(evt);
             }
@@ -286,12 +289,11 @@ public class Compras_agregar_detalle extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTextField_totalKeyPressed
 
+    private void jTextField_gravadas_5FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_gravadas_5FocusLost
+        Metodos.Compras_agregar_detalle_calculo_gravada10();
+    }//GEN-LAST:event_jTextField_gravadas_5FocusLost
+
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -299,22 +301,11 @@ public class Compras_agregar_detalle extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Compras_agregar_detalle.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Compras_agregar_detalle.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Compras_agregar_detalle.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Compras_agregar_detalle.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Compras_agregar_detalle().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new Compras_agregar_detalle().setVisible(true);
         });
     }
 
