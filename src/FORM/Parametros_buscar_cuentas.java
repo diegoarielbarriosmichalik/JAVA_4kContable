@@ -142,7 +142,6 @@ public class Parametros_buscar_cuentas extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField_buscarKeyPressed
 
     private void jTextField_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_buscarActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_jTextField_buscarActionPerformed
 
     private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
@@ -151,7 +150,6 @@ public class Parametros_buscar_cuentas extends javax.swing.JFrame {
         }
         if ((evt.getKeyCode() == KeyEvent.VK_ENTER)) {
             this.setVisible(false);
-//            new Cuentas_ABM().setVisible(true);
             Metodos.Parametros_cuentas_seleccionar();
         }
     }//GEN-LAST:event_jTable1KeyPressed

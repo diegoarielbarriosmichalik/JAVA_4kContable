@@ -44,6 +44,7 @@ public class Metodos {
     public static int id_factura_de_compra = 0;
     public static int id_cliente = 0;
     public static int cuenta_iva_10 = 0;
+    public static int cuenta_caja = 0;
     public static String cuenta_iva_10_str = null;
     public static int id_proveedor = 0;
     public static int id_timbrado = 0;
@@ -57,6 +58,7 @@ public class Metodos {
     public static String cuenta = null;
     public static boolean existe = false;
     public static int cuenta_gravada_10 = 0;
+    public static int cuenta_parametros = 0;
 
     public synchronized static void Iniciar_Conexion() {
         try {
@@ -164,10 +166,15 @@ public class Metodos {
             ResultSet result = st1.executeQuery("SELECT * FROM parametro");
             if (result.next()) {
                 int id_cuenta_iva_10 = result.getInt("cuenta_iva_10");
+                int id_cuenta_caja = result.getInt("cuenta_caja");
                 Statement st2 = conexion.createStatement();
-                ResultSet result2 = st2.executeQuery("SELECT * FROM cuenta where id_cuenta = '"+id_cuenta_iva_10+"'");
+                ResultSet result2 = st2.executeQuery("SELECT * FROM cuenta where id_cuenta = '" + id_cuenta_iva_10 + "'");
                 if (result2.next()) {
                     Parametros.jTextField_iva_10.setText(result2.getString("cuenta"));
+                }
+                ResultSet result3 = st2.executeQuery("SELECT * FROM cuenta where id_cuenta = '" + id_cuenta_caja + "'");
+                if (result3.next()) {
+                    Parametros.jTextField_caja.setText(result3.getString("cuenta"));
                 }
             }
         } catch (SQLException ex) {
@@ -225,6 +232,31 @@ public class Metodos {
                 stUpdateProducto2.setInt(8, 1);
                 stUpdateProducto2.executeUpdate();
             }
+            
+              Statement st12 = conexion.createStatement();
+                ResultSet result2 = st12.executeQuery("SELECT MAX(id_factura_de_compra_detalle) FROM factura_de_compra_detalle");
+                if (result2.next()) {
+                    id = result2.getInt(1) + 1;
+                }
+
+                Statement st123 = conexion.createStatement();
+                ResultSet result23 = st123.executeQuery("select * from parametro ");
+                if (result23.next()) {
+                    id_cuenta = result23.getInt("cuenta_caja");
+                }
+
+                long total = Long.valueOf(Compras_agregar_detalle.jTextField_total.getText().replace(".", ""));
+
+                PreparedStatement stUpdateProducto2 = conexion.prepareStatement("INSERT INTO factura_de_compra_detalle VALUES(?,?,?,?,?,?,?,?)");
+                stUpdateProducto2.setInt(1, id);
+                stUpdateProducto2.setInt(2, id_cuenta);
+                stUpdateProducto2.setLong(3, 0);
+                stUpdateProducto2.setLong(4, total);
+                stUpdateProducto2.setInt(5, 1);
+                stUpdateProducto2.setInt(6, 1);
+                stUpdateProducto2.setInt(7, 1);
+                stUpdateProducto2.setInt(8, 1);
+                stUpdateProducto2.executeUpdate();
 
             Facturas_de_compra_buscar();
 
@@ -251,6 +283,16 @@ public class Metodos {
             PreparedStatement st = conexion.prepareStatement(""
                     + "UPDATE parametro "
                     + "SET cuenta_iva_10 = '" + cuenta_iva_10 + "' ");
+            st.executeUpdate();
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+    }
+    public synchronized static void Parametros_caja_update() {
+        try {
+            PreparedStatement st = conexion.prepareStatement(""
+                    + "UPDATE parametro "
+                    + "SET cuenta_caja = '" + cuenta_caja + "' ");
             st.executeUpdate();
         } catch (SQLException ex) {
             System.err.println(ex);
@@ -467,36 +509,72 @@ public class Metodos {
                 id_comprobante = result.getInt("id_comprobante");
                 Compras.jTextField_comprobante.setText(result.getString("comprobante"));
 
-                //-------------------------------------------
-                DefaultTableModel dtm = (DefaultTableModel) Compras.jTable_compras_detalle.getModel();
-                for (int j = 0; j < Compras.jTable_compras_detalle.getRowCount(); j++) {
-                    dtm.removeRow(j);
-                    j -= 1;
-                }
-                PreparedStatement ps2 = conexion.prepareStatement(""
-                        + "select id_factura_de_compra_detalle, "
-                        + "(nv1 || '.' || nv2|| '.' || nv3|| '.' || nv4|| '.' || nv5|| ' ' || cuenta) AS cuenta, debe, haber "
-                        + "from factura_de_compra_detalle "
-                        + "inner join cuenta on cuenta.id_cuenta = factura_de_compra_detalle.id_cuenta "
-                        + "where id_factura_de_compra = '" + id_factura_de_compra + "' order by id_factura_de_compra_detalle ASC");
-                ResultSet rs2 = ps2.executeQuery();
-                ResultSetMetaData rsm = rs2.getMetaData();
-                ArrayList<Object[]> data2 = new ArrayList<>();
-                while (rs2.next()) {
-                    Object[] rows = new Object[rsm.getColumnCount()];
-                    for (int i = 0; i < rows.length; i++) {
-                        rows[i] = rs2.getObject(i + 1).toString().trim();
-                    }
-                    data2.add(rows);
-                }
-                dtm = (DefaultTableModel) Compras.jTable_compras_detalle.getModel();
-                for (int i = 0; i < data2.size(); i++) {
-                    dtm.addRow(data2.get(i));
-                }
+                Compras_clear_jtable();
+                        
+//                
+//                //-------------------------------------------
+//                DefaultTableModel dtm = (DefaultTableModel) Compras.jTable_compras_detalle.getModel();
+//                for (int j = 0; j < Compras.jTable_compras_detalle.getRowCount(); j++) {
+//                    dtm.removeRow(j);
+//                    j -= 1;
+//                }
+//                PreparedStatement ps2 = conexion.prepareStatement(""
+//                        + "select id_factura_de_compra_detalle, "
+//                        + "(nv1 || '.' || nv2|| '.' || nv3|| '.' || nv4|| '.' || nv5|| ' ' || cuenta) AS cuenta, debe, haber "
+//                        + "from factura_de_compra_detalle "
+//                        + "inner join cuenta on cuenta.id_cuenta = factura_de_compra_detalle.id_cuenta "
+//                        + "where id_factura_de_compra = '" + id_factura_de_compra + "' order by id_factura_de_compra_detalle ASC");
+//                ResultSet rs2 = ps2.executeQuery();
+//                ResultSetMetaData rsm = rs2.getMetaData();
+//                ArrayList<Object[]> data2 = new ArrayList<>();
+//                while (rs2.next()) {
+//                    Object[] rows = new Object[rsm.getColumnCount()];
+//                    for (int i = 0; i < rows.length; i++) {
+//                        rows[i] = rs2.getObject(i + 1).toString().trim();
+//                    }
+//                    data2.add(rows);
+//                }
+//                dtm = (DefaultTableModel) Compras.jTable_compras_detalle.getModel();
+//                for (int i = 0; i < data2.size(); i++) {
+//                    dtm.addRow(data2.get(i));
+//                }
 
             }
         } catch (SQLException ex) {
             System.err.println(ex);
+        }
+    }
+    
+    public static void Compras_clear_jtable() {
+        try {
+            //-------------------------------------------
+            DefaultTableModel dtm = (DefaultTableModel) Compras.jTable_compras_detalle.getModel();
+            for (int j = 0; j < Compras.jTable_compras_detalle.getRowCount(); j++) {
+                dtm.removeRow(j);
+                j -= 1;
+            }
+            PreparedStatement ps2 = conexion.prepareStatement(""
+                    + "select id_factura_de_compra_detalle, "
+                    + "(nv1 || '.' || nv2|| '.' || nv3|| '.' || nv4|| '.' || nv5|| ' ' || cuenta) AS cuenta, debe, haber "
+                    + "from factura_de_compra_detalle "
+                    + "inner join cuenta on cuenta.id_cuenta = factura_de_compra_detalle.id_cuenta "
+                    + "where id_factura_de_compra = '" + id_factura_de_compra + "' order by id_factura_de_compra_detalle ASC");
+            ResultSet rs2 = ps2.executeQuery();
+            ResultSetMetaData rsm = rs2.getMetaData();
+            ArrayList<Object[]> data2 = new ArrayList<>();
+            while (rs2.next()) {
+                Object[] rows = new Object[rsm.getColumnCount()];
+                for (int i = 0; i < rows.length; i++) {
+                    rows[i] = rs2.getObject(i + 1).toString().trim();
+                }
+                data2.add(rows);
+            }
+            dtm = (DefaultTableModel) Compras.jTable_compras_detalle.getModel();
+            for (int i = 0; i < data2.size(); i++) {
+                dtm.addRow(data2.get(i));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Metodos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -781,6 +859,8 @@ public class Metodos {
         Compras.jTextField_proveedor.setText("");
         Compras.jTextField_ruc.setText("");
         Compras.jTextField_timbrado.setText("");
+        
+        
 
     }
 
@@ -1237,9 +1317,18 @@ public class Metodos {
 
     public synchronized static void Parametros_cuentas_seleccionar() {
         DefaultTableModel tm = (DefaultTableModel) Parametros_buscar_cuentas.jTable1.getModel();
-        cuenta_iva_10 = Integer.parseInt(String.valueOf(tm.getValueAt(Parametros_buscar_cuentas.jTable1.getSelectedRow(), 0)));
-        Parametros.jTextField_iva_10.setText(String.valueOf(tm.getValueAt(Parametros_buscar_cuentas.jTable1.getSelectedRow(), 1)));
-        Metodos.Parametros_cuenta_iva_10_update();
+        if (cuenta_parametros == 1) {
+            cuenta_iva_10 = Integer.parseInt(String.valueOf(tm.getValueAt(Parametros_buscar_cuentas.jTable1.getSelectedRow(), 0)));
+            Parametros.jTextField_iva_10.setText(String.valueOf(tm.getValueAt(Parametros_buscar_cuentas.jTable1.getSelectedRow(), 1)));
+            Metodos.Parametros_cuenta_iva_10_update();
+
+        }
+        if (cuenta_parametros == 2) {
+            cuenta_caja = Integer.parseInt(String.valueOf(tm.getValueAt(Parametros_buscar_cuentas.jTable1.getSelectedRow(), 0)));
+            Parametros.jTextField_caja.setText(String.valueOf(tm.getValueAt(Parametros_buscar_cuentas.jTable1.getSelectedRow(), 1)));
+            Metodos.Parametros_caja_update();
+
+        }
     }
 
     public synchronized static void Empresas_cliente_seleccionar() {

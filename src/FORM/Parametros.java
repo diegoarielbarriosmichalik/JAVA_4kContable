@@ -25,7 +25,7 @@ public class Parametros extends javax.swing.JFrame {
         setTitle("Parámetros");
         new File(".").getAbsolutePath();
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/icon.png")).getImage());
-        
+
         Metodos.Parametros_buscar();
     }
 
@@ -44,7 +44,7 @@ public class Parametros extends javax.swing.JFrame {
         jTextField_iva_10 = new javax.swing.JTextField();
         jTextField4 = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
+        jTextField_caja = new javax.swing.JTextField();
 
         setResizable(false);
 
@@ -63,7 +63,12 @@ public class Parametros extends javax.swing.JFrame {
 
         jTextField5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cuenta para Exentas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(102, 102, 255))); // NOI18N
 
-        jTextField6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cuenta para Caja", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(102, 102, 255))); // NOI18N
+        jTextField_caja.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cuenta para Caja", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(102, 102, 255))); // NOI18N
+        jTextField_caja.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField_cajaKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -75,7 +80,7 @@ public class Parametros extends javax.swing.JFrame {
                     .addComponent(jTextField_iva_10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE)
                     .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jTextField5)
-                    .addComponent(jTextField6))
+                    .addComponent(jTextField_caja))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -88,7 +93,7 @@ public class Parametros extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextField_caja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -125,8 +130,14 @@ public class Parametros extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField_iva_10KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_iva_10KeyPressed
+        Metodos.cuenta_parametros = 1;
         new Parametros_buscar_cuentas().setVisible(true);
     }//GEN-LAST:event_jTextField_iva_10KeyPressed
+
+    private void jTextField_cajaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_cajaKeyPressed
+        Metodos.cuenta_parametros = 2;
+        new Parametros_buscar_cuentas().setVisible(true);
+    }//GEN-LAST:event_jTextField_cajaKeyPressed
 
     /**
      * @param args the command line arguments
@@ -169,7 +180,7 @@ public class Parametros extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     public static javax.swing.JTextField jTextField4;
     public static javax.swing.JTextField jTextField5;
-    public static javax.swing.JTextField jTextField6;
+    public static javax.swing.JTextField jTextField_caja;
     public static javax.swing.JTextField jTextField_iva_10;
     // End of variables declaration//GEN-END:variables
 }
