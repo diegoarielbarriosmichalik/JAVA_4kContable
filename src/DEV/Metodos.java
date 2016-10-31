@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.print.DocFlavor;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -53,6 +54,7 @@ public class Metodos {
     public static int id_moneda = 0;
     public static int id_empresa = 0;
     public static int id = 0;
+    public static int id_factura_de_compra_detalle = 0;
     public static int empresa = 0;
     public static String empresa_razon_social = "Selecciona una empresa...";
     public static String cuenta = null;
@@ -189,20 +191,22 @@ public class Metodos {
 
             ResultSet result = st1.executeQuery("SELECT MAX(id_factura_de_compra_detalle) FROM factura_de_compra_detalle");
             if (result.next()) {
-                id = result.getInt(1) + 1;
+                id_factura_de_compra_detalle = result.getInt(1) + 1;
             }
             long gravada_10 = Long.valueOf(Compras_agregar_detalle.jTextField_gravadas10.getText().replace(".", ""));
+            long iva_10 = Long.valueOf(Compras_agregar_detalle.jTextField_iva10.getText().replace(".", ""));
+            long iva_5 = Long.valueOf(Compras_agregar_detalle.jTextField_iva5.getText().replace(".", ""));
             long gravada_5 = Long.valueOf(Compras_agregar_detalle.jTextField_gravadas_5.getText().replace(".", ""));
 
             PreparedStatement stUpdateProducto = conexion.prepareStatement("INSERT INTO factura_de_compra_detalle VALUES(?,?,?,?,?,?,?,?)");
-            stUpdateProducto.setInt(1, id);
+            stUpdateProducto.setInt(1, id_factura_de_compra_detalle);
             stUpdateProducto.setInt(2, id_cuenta);
             stUpdateProducto.setLong(3, gravada_10 + gravada_5);
             stUpdateProducto.setLong(4, 0);
             stUpdateProducto.setInt(5, 1);
             stUpdateProducto.setInt(6, 1);
             stUpdateProducto.setInt(7, 1);
-            stUpdateProducto.setInt(8, 1);
+            stUpdateProducto.setInt(8, id_factura_de_compra);
             stUpdateProducto.executeUpdate();
 
             if (gravada_10 > 0) {
@@ -219,8 +223,6 @@ public class Metodos {
                     id_cuenta = result23.getInt("cuenta_iva_10");
                 }
 
-                long iva_10 = Long.valueOf(Compras_agregar_detalle.jTextField_iva10.getText().replace(".", ""));
-
                 PreparedStatement stUpdateProducto2 = conexion.prepareStatement("INSERT INTO factura_de_compra_detalle VALUES(?,?,?,?,?,?,?,?)");
                 stUpdateProducto2.setInt(1, id);
                 stUpdateProducto2.setInt(2, id_cuenta);
@@ -229,34 +231,39 @@ public class Metodos {
                 stUpdateProducto2.setInt(5, 1);
                 stUpdateProducto2.setInt(6, 1);
                 stUpdateProducto2.setInt(7, 1);
-                stUpdateProducto2.setInt(8, 1);
+                stUpdateProducto2.setInt(8, id_factura_de_compra);
                 stUpdateProducto2.executeUpdate();
             }
-            
-              Statement st12 = conexion.createStatement();
-                ResultSet result2 = st12.executeQuery("SELECT MAX(id_factura_de_compra_detalle) FROM factura_de_compra_detalle");
-                if (result2.next()) {
-                    id = result2.getInt(1) + 1;
-                }
 
-                Statement st123 = conexion.createStatement();
-                ResultSet result23 = st123.executeQuery("select * from parametro ");
-                if (result23.next()) {
-                    id_cuenta = result23.getInt("cuenta_caja");
-                }
+            Statement st12 = conexion.createStatement();
+            ResultSet result2 = st12.executeQuery("SELECT MAX(id_factura_de_compra_detalle) FROM factura_de_compra_detalle");
+            if (result2.next()) {
+                id = result2.getInt(1) + 1;
+            }
 
-                long total = Long.valueOf(Compras_agregar_detalle.jTextField_total.getText().replace(".", ""));
+            Statement st123 = conexion.createStatement();
+            ResultSet result23 = st123.executeQuery("select * from parametro ");
+            if (result23.next()) {
+                id_cuenta = result23.getInt("cuenta_caja");
+            }
 
-                PreparedStatement stUpdateProducto2 = conexion.prepareStatement("INSERT INTO factura_de_compra_detalle VALUES(?,?,?,?,?,?,?,?)");
-                stUpdateProducto2.setInt(1, id);
-                stUpdateProducto2.setInt(2, id_cuenta);
-                stUpdateProducto2.setLong(3, 0);
-                stUpdateProducto2.setLong(4, total);
-                stUpdateProducto2.setInt(5, 1);
-                stUpdateProducto2.setInt(6, 1);
-                stUpdateProducto2.setInt(7, 1);
-                stUpdateProducto2.setInt(8, 1);
-                stUpdateProducto2.executeUpdate();
+            long total = Long.valueOf(Compras_agregar_detalle.jTextField_total.getText().replace(".", ""));
+
+            PreparedStatement stUpdateProducto2 = conexion.prepareStatement("INSERT INTO factura_de_compra_detalle VALUES(?,?,?,?,?,?,?,?)");
+            stUpdateProducto2.setInt(1, id);
+            stUpdateProducto2.setInt(2, id_cuenta);
+            stUpdateProducto2.setLong(3, 0);
+            stUpdateProducto2.setLong(4, total);
+            stUpdateProducto2.setInt(5, 1);
+            stUpdateProducto2.setInt(6, 1);
+            stUpdateProducto2.setInt(7, 1);
+            stUpdateProducto2.setInt(8, id_factura_de_compra);
+            stUpdateProducto2.executeUpdate();
+
+            PreparedStatement st = conexion.prepareStatement(""
+                    + "UPDATE factura_de_compra "
+                    + "SET total_debe = '" + (gravada_10 + iva_10) + "'");
+            st.executeUpdate();
 
             Facturas_de_compra_buscar();
 
@@ -288,6 +295,7 @@ public class Metodos {
             System.err.println(ex);
         }
     }
+
     public synchronized static void Parametros_caja_update() {
         try {
             PreparedStatement st = conexion.prepareStatement(""
@@ -509,8 +517,10 @@ public class Metodos {
                 id_comprobante = result.getInt("id_comprobante");
                 Compras.jTextField_comprobante.setText(result.getString("comprobante"));
 
+                Compras.jTextField_total.setText(getSepararMiles(result.getString("total_debe")));
+
                 Compras_clear_jtable();
-                        
+
 //                
 //                //-------------------------------------------
 //                DefaultTableModel dtm = (DefaultTableModel) Compras.jTable_compras_detalle.getModel();
@@ -538,13 +548,12 @@ public class Metodos {
 //                for (int i = 0; i < data2.size(); i++) {
 //                    dtm.addRow(data2.get(i));
 //                }
-
             }
         } catch (SQLException ex) {
             System.err.println(ex);
         }
     }
-    
+
     public static void Compras_clear_jtable() {
         try {
             //-------------------------------------------
@@ -859,8 +868,6 @@ public class Metodos {
         Compras.jTextField_proveedor.setText("");
         Compras.jTextField_ruc.setText("");
         Compras.jTextField_timbrado.setText("");
-        
-        
 
     }
 

@@ -51,7 +51,7 @@ public class Compras extends javax.swing.JFrame {
         jTextField3 = new javax.swing.JTextField();
         jTextField4 = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
+        jTextField_total = new javax.swing.JTextField();
 
         setUndecorated(true);
         setResizable(false);
@@ -266,12 +266,12 @@ public class Compras extends javax.swing.JFrame {
         jTextField5.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTextField5.setBorder(javax.swing.BorderFactory.createTitledBorder("Exentas"));
 
-        jTextField6.setEditable(false);
-        jTextField6.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jTextField6.setForeground(new java.awt.Color(0, 102, 51));
-        jTextField6.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jTextField6.setBorder(javax.swing.BorderFactory.createTitledBorder("Total"));
+        jTextField_total.setEditable(false);
+        jTextField_total.setBackground(new java.awt.Color(255, 255, 255));
+        jTextField_total.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextField_total.setForeground(new java.awt.Color(0, 102, 51));
+        jTextField_total.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTextField_total.setBorder(javax.swing.BorderFactory.createTitledBorder("Total"));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -307,7 +307,7 @@ public class Compras extends javax.swing.JFrame {
                                 .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jTextField6)))
+                            .addComponent(jTextField_total)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextField_cuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -359,7 +359,7 @@ public class Compras extends javax.swing.JFrame {
                     .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField_total, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -390,6 +390,7 @@ public class Compras extends javax.swing.JFrame {
         Metodos.id_factura_de_compra = 0;
         Metodos.Facturas_de_compra_clear();
         Metodos.Compras_clear_jtable();
+        jTextField_proveedor.requestFocus();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jTextField_cuentaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_cuentaKeyPressed
@@ -500,7 +501,6 @@ public class Compras extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
     public static javax.swing.JTextField jTextField_comprobante;
     public static javax.swing.JTextField jTextField_condicion;
     public static javax.swing.JTextField jTextField_cuenta;
@@ -512,5 +512,6 @@ public class Compras extends javax.swing.JFrame {
     public static javax.swing.JTextField jTextField_proveedor;
     public static javax.swing.JTextField jTextField_ruc;
     public static javax.swing.JTextField jTextField_timbrado;
+    public static javax.swing.JTextField jTextField_total;
     // End of variables declaration//GEN-END:variables
 }
