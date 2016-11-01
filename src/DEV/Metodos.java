@@ -614,14 +614,33 @@ public class Metodos {
                     if (result.next()) {
                         id_cuenta = result.getInt(1) + 1;
                     }
-
+                    int nv1 = 0;
+                    if(Cuentas_ABM.jTextField_nv1.getText().length() > 0){
+                        nv1 = Integer.parseInt(Cuentas_ABM.jTextField_nv1.getText());
+                    }
+                    int nv2 = 0;
+                    if(Cuentas_ABM.jTextField_nv2.getText().length() > 0){
+                        nv2 = Integer.parseInt(Cuentas_ABM.jTextField_nv2.getText());
+                    }
+                    int nv3 = 0;
+                    if(Cuentas_ABM.jTextField_nv3.getText().length() > 0){
+                        nv3 = Integer.parseInt(Cuentas_ABM.jTextField_nv3.getText());
+                    }
+                    int nv4 = 0;
+                    if(Cuentas_ABM.jTextField_nv4.getText().length() > 0){
+                        nv4 = Integer.parseInt(Cuentas_ABM.jTextField_nv4.getText());
+                    }
+                    int nv5 = 0;
+                    if(Cuentas_ABM.jTextField_nv5.getText().length() > 0){
+                        nv5 = Integer.parseInt(Cuentas_ABM.jTextField_nv5.getText());
+                    }
                     PreparedStatement stUpdateProducto = conexion.prepareStatement("INSERT INTO cuenta VALUES(?,?,?,?,?,?,?,?)");
                     stUpdateProducto.setInt(1, id_cuenta);
-                    stUpdateProducto.setString(2, Cuentas_ABM.jTextField_nv1.getText());
-                    stUpdateProducto.setString(3, Cuentas_ABM.jTextField_nv2.getText());
-                    stUpdateProducto.setString(4, Cuentas_ABM.jTextField_nv3.getText());
-                    stUpdateProducto.setString(5, Cuentas_ABM.jTextField_nv4.getText());
-                    stUpdateProducto.setString(6, Cuentas_ABM.jTextField_nv5.getText());
+                    stUpdateProducto.setInt(2, nv1);
+                    stUpdateProducto.setInt(3, nv2);
+                    stUpdateProducto.setInt(4, nv3);
+                    stUpdateProducto.setInt(5, nv4);
+                    stUpdateProducto.setInt(6, nv5);
                     stUpdateProducto.setString(7, Cuentas_ABM.jTextField_cuenta.getText());
                     stUpdateProducto.setInt(8, 0);
                     stUpdateProducto.executeUpdate();
@@ -954,14 +973,20 @@ public class Metodos {
             PreparedStatement ps2 = conexion.prepareStatement(""
                     + "select id_cuenta,  (nv1 || '.' || nv2|| '.' || nv3|| '.' || nv4|| '.' || nv5|| ' ' || cuenta) AS cuenta  "
                     + "from cuenta "
-                    + "where cuenta ilike '%" + Cuentas.jTextField_buscar.getText() + "%'");
+                    + "where cuenta ilike '%" + Cuentas.jTextField_buscar.getText() + "%' order by nv1, nv2,nv3,nv4,nv5");
             ResultSet rs2 = ps2.executeQuery();
             ResultSetMetaData rsm = rs2.getMetaData();
             ArrayList<Object[]> data2 = new ArrayList<>();
             while (rs2.next()) {
                 Object[] rows = new Object[rsm.getColumnCount()];
                 for (int i = 0; i < rows.length; i++) {
-                    rows[i] = rs2.getObject(i + 1).toString().trim();
+                    
+                    String cadena = rs2.getObject(i + 1).toString().trim().replace("....", "                    ");
+                    cadena = cadena.replace(".0.0.0.0", " ");
+                    cadena = cadena.replace(".0.0.0", " ");
+                    cadena = cadena.replace(".0.0", " ");
+                    cadena = cadena.replace(".0", " ");
+                    rows[i] = cadena;
                 }
                 data2.add(rows);
             }
