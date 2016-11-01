@@ -42,8 +42,8 @@ public class Parametros extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jTextField_iva_10 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
+        jTextField_iva_5 = new javax.swing.JTextField();
+        jTextField_exentas = new javax.swing.JTextField();
         jTextField_caja = new javax.swing.JTextField();
 
         setResizable(false);
@@ -59,9 +59,19 @@ public class Parametros extends javax.swing.JFrame {
             }
         });
 
-        jTextField4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cuenta para IVA 5%", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(102, 102, 255))); // NOI18N
+        jTextField_iva_5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cuenta para IVA 5%", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(102, 102, 255))); // NOI18N
+        jTextField_iva_5.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField_iva_5KeyPressed(evt);
+            }
+        });
 
-        jTextField5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cuenta para Exentas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(102, 102, 255))); // NOI18N
+        jTextField_exentas.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cuenta para Exentas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(102, 102, 255))); // NOI18N
+        jTextField_exentas.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField_exentasKeyPressed(evt);
+            }
+        });
 
         jTextField_caja.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cuenta para Caja", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(102, 102, 255))); // NOI18N
         jTextField_caja.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -78,8 +88,8 @@ public class Parametros extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextField_iva_10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextField5)
+                    .addComponent(jTextField_iva_5, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jTextField_exentas)
                     .addComponent(jTextField_caja))
                 .addContainerGap())
         );
@@ -89,9 +99,9 @@ public class Parametros extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jTextField_iva_10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextField_iva_5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextField_exentas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField_caja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -130,14 +140,33 @@ public class Parametros extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField_iva_10KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_iva_10KeyPressed
-        Metodos.cuenta_parametros = 1;
-        new Parametros_buscar_cuentas().setVisible(true);
+        if ((evt.getKeyCode() == KeyEvent.VK_ENTER)) {
+            Metodos.cuenta_parametros = 1;
+            new Parametros_buscar_cuentas().setVisible(true);
+        }
     }//GEN-LAST:event_jTextField_iva_10KeyPressed
 
     private void jTextField_cajaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_cajaKeyPressed
-        Metodos.cuenta_parametros = 2;
-        new Parametros_buscar_cuentas().setVisible(true);
+        if ((evt.getKeyCode() == KeyEvent.VK_ENTER)) {
+            Metodos.cuenta_parametros = 2;
+            new Parametros_buscar_cuentas().setVisible(true);
+        }
     }//GEN-LAST:event_jTextField_cajaKeyPressed
+
+    private void jTextField_iva_5KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_iva_5KeyPressed
+        if ((evt.getKeyCode() == KeyEvent.VK_ENTER)) {
+            Metodos.cuenta_parametros = 3;
+            new Parametros_buscar_cuentas().setVisible(true);
+        }
+    }//GEN-LAST:event_jTextField_iva_5KeyPressed
+
+    private void jTextField_exentasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_exentasKeyPressed
+        if ((evt.getKeyCode() == KeyEvent.VK_ENTER)) {
+            Metodos.cuenta_parametros = 4;
+            new Parametros_buscar_cuentas().setVisible(true);
+        }
+
+    }//GEN-LAST:event_jTextField_exentasKeyPressed
 
     /**
      * @param args the command line arguments
@@ -178,9 +207,9 @@ public class Parametros extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTabbedPane jTabbedPane1;
-    public static javax.swing.JTextField jTextField4;
-    public static javax.swing.JTextField jTextField5;
     public static javax.swing.JTextField jTextField_caja;
+    public static javax.swing.JTextField jTextField_exentas;
     public static javax.swing.JTextField jTextField_iva_10;
+    public static javax.swing.JTextField jTextField_iva_5;
     // End of variables declaration//GEN-END:variables
 }

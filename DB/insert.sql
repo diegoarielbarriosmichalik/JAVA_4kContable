@@ -13,7 +13,9 @@ INSERT INTO ventas VALUES
 ('1', 'Ventas al 5%, 10%');
 
 INSERT INTO impuesto VALUES 
-('1', 'IVA 10%');
+('1', 'IVA 10%'),
+('2', 'IVA 5%'),
+('3', 'EXENTAS');
 
 
 

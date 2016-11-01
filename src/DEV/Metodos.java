@@ -45,9 +45,15 @@ public class Metodos {
     public static int id_cuenta_asociada = 0;
     public static int id_cuenta_asociada_max = 0;
     public static int id_factura_de_compra = 0;
+    public static int id_cuenta_iva_10 = 0;
+    public static int id_cuenta_iva_5 = 0;
+    public static int id_cuenta_exentas = 0;
+    public static int id_cuenta_caja = 0;
     public static int id_cliente = 0;
     public static int cuenta_iva_10 = 0;
     public static int cuenta_caja = 0;
+    public static int cuenta_iva_5 = 0;
+    public static int cuenta_exentas = 0;
     public static String cuenta_iva_10_str = null;
     public static int id_proveedor = 0;
     public static int id_timbrado = 0;
@@ -181,7 +187,9 @@ public class Metodos {
             ResultSet result = st1.executeQuery("SELECT * FROM parametro");
             if (result.next()) {
                 int id_cuenta_iva_10 = result.getInt("cuenta_iva_10");
+                int id_cuenta_iva_5 = result.getInt("cuenta_iva_5");
                 int id_cuenta_caja = result.getInt("cuenta_caja");
+                int id_cuenta_exentas = result.getInt("cuenta_exentas");
                 Statement st2 = conexion.createStatement();
                 ResultSet result2 = st2.executeQuery("SELECT * FROM cuenta where id_cuenta = '" + id_cuenta_iva_10 + "'");
                 if (result2.next()) {
@@ -190,6 +198,15 @@ public class Metodos {
                 ResultSet result3 = st2.executeQuery("SELECT * FROM cuenta where id_cuenta = '" + id_cuenta_caja + "'");
                 if (result3.next()) {
                     Parametros.jTextField_caja.setText(result3.getString("cuenta"));
+                }
+                ResultSet result4 = st2.executeQuery("SELECT * FROM cuenta where id_cuenta = '" + id_cuenta_iva_5 + "'");
+                if (result4.next()) {
+                    Parametros.jTextField_iva_5.setText(result4.getString("cuenta").trim());
+                }
+
+                ResultSet result5 = st2.executeQuery("SELECT * FROM cuenta where id_cuenta = '" + id_cuenta_exentas + "'");
+                if (result5.next()) {
+                    Parametros.jTextField_exentas.setText(result5.getString("cuenta").trim());
                 }
             }
         } catch (SQLException ex) {
@@ -200,45 +217,44 @@ public class Metodos {
     public synchronized static void Compras_detalle_guardar() {
         try {
 
-            Statement st1 = conexion.createStatement();
-
-            ResultSet result = st1.executeQuery("SELECT MAX(id_factura_de_compra_detalle) FROM factura_de_compra_detalle");
-            if (result.next()) {
-                id_factura_de_compra_detalle = result.getInt(1) + 1;
-            }
             long gravada_10 = Long.valueOf(Compras_agregar_detalle.jTextField_gravadas10.getText().replace(".", ""));
             long iva_10 = Long.valueOf(Compras_agregar_detalle.jTextField_iva10.getText().replace(".", ""));
             long iva_5 = Long.valueOf(Compras_agregar_detalle.jTextField_iva5.getText().replace(".", ""));
             long gravada_5 = Long.valueOf(Compras_agregar_detalle.jTextField_gravadas_5.getText().replace(".", ""));
+            long exentas = Long.valueOf(Compras_agregar_detalle.jTextField_exentas.getText().replace(".", ""));
 
-            PreparedStatement stUpdateProducto = conexion.prepareStatement("INSERT INTO factura_de_compra_detalle VALUES(?,?,?,?,?,?,?,?)");
-            stUpdateProducto.setInt(1, id_factura_de_compra_detalle);
-            stUpdateProducto.setInt(2, id_cuenta);
-            stUpdateProducto.setLong(3, gravada_10 + gravada_5);
-            stUpdateProducto.setLong(4, 0);
-            stUpdateProducto.setInt(5, 1);
-            stUpdateProducto.setInt(6, 1);
-            stUpdateProducto.setInt(7, 1);
-            stUpdateProducto.setInt(8, id_factura_de_compra);
-            stUpdateProducto.executeUpdate();
+            Statement st1 = conexion.createStatement();
+            ResultSet result = st1.executeQuery("SELECT MAX(id_factura_de_compra_detalle) FROM factura_de_compra_detalle");
+            if (result.next()) {
+                id_factura_de_compra_detalle = result.getInt(1);
+            }
+
+            Statement st123 = conexion.createStatement();
+            ResultSet result23 = st123.executeQuery("select * from parametro ");
+            if (result23.next()) {
+                id_cuenta_iva_10 = result23.getInt("cuenta_iva_10");
+                id_cuenta_iva_5 = result23.getInt("cuenta_iva_5");
+                id_cuenta_exentas = result23.getInt("cuenta_exentas");
+                id_cuenta_caja = result23.getInt("cuenta_caja");
+            }
 
             if (gravada_10 > 0) {
-
-                Statement st12 = conexion.createStatement();
-                ResultSet result2 = st12.executeQuery("SELECT MAX(id_factura_de_compra_detalle) FROM factura_de_compra_detalle");
-                if (result2.next()) {
-                    id = result2.getInt(1) + 1;
-                }
-
-                Statement st123 = conexion.createStatement();
-                ResultSet result23 = st123.executeQuery("select * from parametro ");
-                if (result23.next()) {
-                    id_cuenta = result23.getInt("cuenta_iva_10");
-                }
-
+                id_factura_de_compra_detalle++;
+                PreparedStatement stUpdateProducto = conexion.prepareStatement("INSERT INTO factura_de_compra_detalle VALUES(?,?,?,?,?,?,?,?)");
+                stUpdateProducto.setInt(1, id_factura_de_compra_detalle);
+                stUpdateProducto.setInt(2, id_cuenta);
+                stUpdateProducto.setLong(3, gravada_10);
+                stUpdateProducto.setLong(4, 0);
+                stUpdateProducto.setInt(5, 1);
+                stUpdateProducto.setInt(6, 1);
+                stUpdateProducto.setInt(7, 1);
+                stUpdateProducto.setInt(8, id_factura_de_compra);
+                stUpdateProducto.executeUpdate();
+                
+                id_factura_de_compra_detalle++;
                 PreparedStatement stUpdateProducto2 = conexion.prepareStatement("INSERT INTO factura_de_compra_detalle VALUES(?,?,?,?,?,?,?,?)");
-                stUpdateProducto2.setInt(1, id);
-                stUpdateProducto2.setInt(2, id_cuenta);
+                stUpdateProducto2.setInt(1, id_factura_de_compra_detalle);
+                stUpdateProducto2.setInt(2, id_cuenta_iva_10);
                 stUpdateProducto2.setLong(3, iva_10);
                 stUpdateProducto2.setLong(4, 0);
                 stUpdateProducto2.setInt(5, 1);
@@ -246,25 +262,56 @@ public class Metodos {
                 stUpdateProducto2.setInt(7, 1);
                 stUpdateProducto2.setInt(8, id_factura_de_compra);
                 stUpdateProducto2.executeUpdate();
+                
+            }
+            if (gravada_5 > 0) {
+
+                id_factura_de_compra_detalle++;
+                PreparedStatement stUpdateProducto = conexion.prepareStatement("INSERT INTO factura_de_compra_detalle VALUES(?,?,?,?,?,?,?,?)");
+                stUpdateProducto.setInt(1, id_factura_de_compra_detalle);
+                stUpdateProducto.setInt(2, id_cuenta);
+                stUpdateProducto.setLong(3, gravada_5);
+                stUpdateProducto.setLong(4, 0);
+                stUpdateProducto.setInt(5, 1);
+                stUpdateProducto.setInt(6, 2);
+                stUpdateProducto.setInt(7, 1);
+                stUpdateProducto.setInt(8, id_factura_de_compra);
+                stUpdateProducto.executeUpdate();
+
+                id_factura_de_compra_detalle++;
+                PreparedStatement stUpdateProducto23 = conexion.prepareStatement("INSERT INTO factura_de_compra_detalle VALUES(?,?,?,?,?,?,?,?)");
+                stUpdateProducto23.setInt(1, id_factura_de_compra_detalle);
+                stUpdateProducto23.setInt(2, id_cuenta_iva_5);
+                stUpdateProducto23.setLong(3, iva_5);
+                stUpdateProducto23.setLong(4, 0);
+                stUpdateProducto23.setInt(5, 1);
+                stUpdateProducto23.setInt(6, 2);
+                stUpdateProducto23.setInt(7, 1);
+                stUpdateProducto23.setInt(8, id_factura_de_compra);
+                stUpdateProducto23.executeUpdate();
+
+            }
+            if (exentas > 0) {
+
+                id_factura_de_compra_detalle++;
+                PreparedStatement stUpdateProducto = conexion.prepareStatement("INSERT INTO factura_de_compra_detalle VALUES(?,?,?,?,?,?,?,?)");
+                stUpdateProducto.setInt(1, id_factura_de_compra_detalle);
+                stUpdateProducto.setInt(2, id_cuenta);
+                stUpdateProducto.setLong(3, exentas);
+                stUpdateProducto.setLong(4, 0);
+                stUpdateProducto.setInt(5, 1);
+                stUpdateProducto.setInt(6, 3);
+                stUpdateProducto.setInt(7, 1);
+                stUpdateProducto.setInt(8, id_factura_de_compra);
+                stUpdateProducto.executeUpdate();
             }
 
-            Statement st12 = conexion.createStatement();
-            ResultSet result2 = st12.executeQuery("SELECT MAX(id_factura_de_compra_detalle) FROM factura_de_compra_detalle");
-            if (result2.next()) {
-                id = result2.getInt(1) + 1;
-            }
-
-            Statement st123 = conexion.createStatement();
-            ResultSet result23 = st123.executeQuery("select * from parametro ");
-            if (result23.next()) {
-                id_cuenta = result23.getInt("cuenta_caja");
-            }
 
             long total = Long.valueOf(Compras_agregar_detalle.jTextField_total.getText().replace(".", ""));
-
+            id_factura_de_compra_detalle++;
             PreparedStatement stUpdateProducto2 = conexion.prepareStatement("INSERT INTO factura_de_compra_detalle VALUES(?,?,?,?,?,?,?,?)");
-            stUpdateProducto2.setInt(1, id);
-            stUpdateProducto2.setInt(2, id_cuenta);
+            stUpdateProducto2.setInt(1, id_factura_de_compra_detalle);
+            stUpdateProducto2.setInt(2, id_cuenta_caja);
             stUpdateProducto2.setLong(3, 0);
             stUpdateProducto2.setLong(4, total);
             stUpdateProducto2.setInt(5, 1);
@@ -275,11 +322,10 @@ public class Metodos {
 
             PreparedStatement st = conexion.prepareStatement(""
                     + "UPDATE factura_de_compra "
-                    + "SET total_debe = '" + (gravada_10 + iva_10) + "'");
+                    + "SET total_debe = '" + (gravada_10 + iva_10) + "', "
+                    + "total_haber = '" + (gravada_5 + iva_5) + "'");
             st.executeUpdate();
-
             Facturas_de_compra_buscar();
-
         } catch (NumberFormatException | SQLException e) {
             JOptionPane.showMessageDialog(null, e);
         }
@@ -314,6 +360,28 @@ public class Metodos {
             PreparedStatement st = conexion.prepareStatement(""
                     + "UPDATE parametro "
                     + "SET cuenta_caja = '" + cuenta_caja + "' ");
+            st.executeUpdate();
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+    }
+
+    public synchronized static void Parametros_iva_5_update() {
+        try {
+            PreparedStatement st = conexion.prepareStatement(""
+                    + "UPDATE parametro "
+                    + "SET cuenta_iva_5 = '" + cuenta_iva_5 + "' ");
+            st.executeUpdate();
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+    }
+
+    public synchronized static void Parametros_exentas_update() {
+        try {
+            PreparedStatement st = conexion.prepareStatement(""
+                    + "UPDATE parametro "
+                    + "SET cuenta_exentas = '" + cuenta_exentas + "' ");
             st.executeUpdate();
         } catch (SQLException ex) {
             System.err.println(ex);
@@ -530,7 +598,11 @@ public class Metodos {
                 id_comprobante = result.getInt("id_comprobante");
                 Compras.jTextField_comprobante.setText(result.getString("comprobante"));
 
-                Compras.jTextField_total.setText(getSepararMiles(result.getString("total_debe")));
+                long total = result.getLong("total_debe") + result.getLong("total_haber");
+                System.err.println(total);
+                String total_str = String.valueOf(total);
+
+                Compras.jTextField_total.setText(getSepararMiles(total_str));
 
                 Compras_clear_jtable();
 
@@ -577,9 +649,11 @@ public class Metodos {
             }
             PreparedStatement ps2 = conexion.prepareStatement(""
                     + "select id_factura_de_compra_detalle, "
-                    + "(nv1 || '.' || nv2|| '.' || nv3|| '.' || nv4|| '.' || nv5|| ' ' || cuenta) AS cuenta, debe, haber "
+                    + "(nv1 || '.' || nv2|| '.' || nv3|| '.' || nv4|| '.' || nv5|| ' ' || cuenta) AS cuenta, debe, haber, tipo_de_iva, impuesto  "
                     + "from factura_de_compra_detalle "
+                    + "inner join impuesto on impuesto.id_impuesto = factura_de_compra_detalle.id_impuesto "
                     + "inner join cuenta on cuenta.id_cuenta = factura_de_compra_detalle.id_cuenta "
+                    + "inner join tipo_de_iva on tipo_de_iva.id_tipo_de_iva = factura_de_compra_detalle.id_tipo_de_iva "
                     + "where id_factura_de_compra = '" + id_factura_de_compra + "' order by id_factura_de_compra_detalle ASC");
             ResultSet rs2 = ps2.executeQuery();
             ResultSetMetaData rsm = rs2.getMetaData();
@@ -587,7 +661,15 @@ public class Metodos {
             while (rs2.next()) {
                 Object[] rows = new Object[rsm.getColumnCount()];
                 for (int i = 0; i < rows.length; i++) {
-                    rows[i] = rs2.getObject(i + 1).toString().trim();
+
+                    String cadena = rs2.getObject(i + 1).toString().trim().replace("....", "                    ");
+                    cadena = cadena.replace(".0.0.0.0", " ");
+                    cadena = cadena.replace(".0.0.0", " ");
+                    cadena = cadena.replace(".0.0", " ");
+                    cadena = cadena.replace(".0", " ");
+                    rows[i] = cadena;
+
+//                    rows[i] = rs2.getObject(i + 1).toString().trim();
                 }
                 data2.add(rows);
             }
@@ -615,23 +697,23 @@ public class Metodos {
                         id_cuenta = result.getInt(1) + 1;
                     }
                     int nv1 = 0;
-                    if(Cuentas_ABM.jTextField_nv1.getText().length() > 0){
+                    if (Cuentas_ABM.jTextField_nv1.getText().length() > 0) {
                         nv1 = Integer.parseInt(Cuentas_ABM.jTextField_nv1.getText());
                     }
                     int nv2 = 0;
-                    if(Cuentas_ABM.jTextField_nv2.getText().length() > 0){
+                    if (Cuentas_ABM.jTextField_nv2.getText().length() > 0) {
                         nv2 = Integer.parseInt(Cuentas_ABM.jTextField_nv2.getText());
                     }
                     int nv3 = 0;
-                    if(Cuentas_ABM.jTextField_nv3.getText().length() > 0){
+                    if (Cuentas_ABM.jTextField_nv3.getText().length() > 0) {
                         nv3 = Integer.parseInt(Cuentas_ABM.jTextField_nv3.getText());
                     }
                     int nv4 = 0;
-                    if(Cuentas_ABM.jTextField_nv4.getText().length() > 0){
+                    if (Cuentas_ABM.jTextField_nv4.getText().length() > 0) {
                         nv4 = Integer.parseInt(Cuentas_ABM.jTextField_nv4.getText());
                     }
                     int nv5 = 0;
-                    if(Cuentas_ABM.jTextField_nv5.getText().length() > 0){
+                    if (Cuentas_ABM.jTextField_nv5.getText().length() > 0) {
                         nv5 = Integer.parseInt(Cuentas_ABM.jTextField_nv5.getText());
                     }
                     PreparedStatement stUpdateProducto = conexion.prepareStatement("INSERT INTO cuenta VALUES(?,?,?,?,?,?,?,?)");
@@ -842,23 +924,38 @@ public class Metodos {
 
     public static void Compras_agregar_detalle_calculo_gravada10() {
         String gravada_10_str = Compras_agregar_detalle.jTextField_gravadas10.getText().replace(".", "");
-        long gravada_10_long = Long.parseLong(gravada_10_str);
-        long iva_10 = gravada_10_long / 11;
+        gravada_10_long = Long.parseLong(gravada_10_str);
+        iva_10 = gravada_10_long / 11;
         gravada_10_long = gravada_10_long - iva_10;
         Compras_agregar_detalle.jTextField_gravadas10.setText(getSepararMiles(String.valueOf(gravada_10_long)));
         Compras_agregar_detalle.jTextField_iva10.setText(getSepararMiles(String.valueOf(iva_10)));
-        long total = gravada_10_long + iva_10;
+        total = gravada_5_long + iva_5 + gravada_10_long + iva_10 + exentas;
         Compras_agregar_detalle.jTextField_total.setText(getSepararMiles(String.valueOf(total)));
     }
-    
+
+    public static void Compras_agregar_detalle_calculo_exentas() {
+        String exentas_str = Compras_agregar_detalle.jTextField_exentas.getText().replace(".", "");
+        exentas = Long.parseLong(exentas_str);
+        Compras_agregar_detalle.jTextField_exentas.setText(getSepararMiles(exentas_str));
+        total = gravada_5_long + iva_5 + gravada_10_long + iva_10 + exentas;
+        Compras_agregar_detalle.jTextField_total.setText(getSepararMiles(String.valueOf(total)));
+    }
+
+    public static long exentas = 0;
+    public static long gravada_10_long = 0;
+    public static long gravada_5_long = 0;
+    public static long iva_5 = 0;
+    public static long iva_10 = 0;
+    public static long total = 0;
+
     public static void Compras_agregar_detalle_calculo_gravada5() {
-        String gravada_10_str = Compras_agregar_detalle.jTextField_gravadas10.getText().replace(".", "");
-        long gravada_10_long = Long.parseLong(gravada_10_str);
-        long iva_10 = gravada_10_long / 11;
-        gravada_10_long = gravada_10_long - iva_10;
-        Compras_agregar_detalle.jTextField_gravadas10.setText(getSepararMiles(String.valueOf(gravada_10_long)));
-        Compras_agregar_detalle.jTextField_iva10.setText(getSepararMiles(String.valueOf(iva_10)));
-        long total = gravada_10_long + iva_10;
+        String gravada_5_str = Compras_agregar_detalle.jTextField_gravadas_5.getText().replace(".", "");
+        gravada_5_long = Long.parseLong(gravada_5_str);
+        iva_5 = gravada_5_long / 21;
+        gravada_5_long = gravada_5_long - iva_5;
+        Compras_agregar_detalle.jTextField_gravadas_5.setText(getSepararMiles(String.valueOf(gravada_5_long)));
+        Compras_agregar_detalle.jTextField_iva5.setText(getSepararMiles(String.valueOf(iva_5)));
+        total = gravada_5_long + iva_5 + gravada_10_long + iva_10 + exentas;
         Compras_agregar_detalle.jTextField_total.setText(getSepararMiles(String.valueOf(total)));
     }
 
@@ -980,7 +1077,7 @@ public class Metodos {
             while (rs2.next()) {
                 Object[] rows = new Object[rsm.getColumnCount()];
                 for (int i = 0; i < rows.length; i++) {
-                    
+
                     String cadena = rs2.getObject(i + 1).toString().trim().replace("....", "                    ");
                     cadena = cadena.replace(".0.0.0.0", " ");
                     cadena = cadena.replace(".0.0.0", " ");
@@ -1410,13 +1507,21 @@ public class Metodos {
             cuenta_iva_10 = Integer.parseInt(String.valueOf(tm.getValueAt(Parametros_buscar_cuentas.jTable1.getSelectedRow(), 0)));
             Parametros.jTextField_iva_10.setText(String.valueOf(tm.getValueAt(Parametros_buscar_cuentas.jTable1.getSelectedRow(), 1)));
             Metodos.Parametros_cuenta_iva_10_update();
-
         }
         if (cuenta_parametros == 2) {
             cuenta_caja = Integer.parseInt(String.valueOf(tm.getValueAt(Parametros_buscar_cuentas.jTable1.getSelectedRow(), 0)));
             Parametros.jTextField_caja.setText(String.valueOf(tm.getValueAt(Parametros_buscar_cuentas.jTable1.getSelectedRow(), 1)));
             Metodos.Parametros_caja_update();
-
+        }
+        if (cuenta_parametros == 3) {
+            cuenta_iva_5 = Integer.parseInt(String.valueOf(tm.getValueAt(Parametros_buscar_cuentas.jTable1.getSelectedRow(), 0)));
+            Parametros.jTextField_iva_5.setText(String.valueOf(tm.getValueAt(Parametros_buscar_cuentas.jTable1.getSelectedRow(), 1)));
+            Metodos.Parametros_iva_5_update();
+        }
+        if (cuenta_parametros == 4) {
+            cuenta_exentas = Integer.parseInt(String.valueOf(tm.getValueAt(Parametros_buscar_cuentas.jTable1.getSelectedRow(), 0)));
+            Parametros.jTextField_exentas.setText(String.valueOf(tm.getValueAt(Parametros_buscar_cuentas.jTable1.getSelectedRow(), 1)));
+            Metodos.Parametros_exentas_update();
         }
     }
 

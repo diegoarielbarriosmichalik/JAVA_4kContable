@@ -10,7 +10,7 @@ public class Proveedores_ABM extends javax.swing.JFrame {
     public Proveedores_ABM() {
         initComponents();
         setLocationRelativeTo(null);
-        setTitle("Clientes");
+        setTitle("Proveedores");
         new File(".").getAbsolutePath();
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/icon.png")).getImage());
 
@@ -146,7 +146,7 @@ public class Proveedores_ABM extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
- Metodos.Proveedores_guardar();
+        Metodos.Proveedores_guardar();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jTextField_razon_socialKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_razon_socialKeyPressed
