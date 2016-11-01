@@ -5,12 +5,12 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import javax.swing.ImageIcon;
 
-public class Compras extends javax.swing.JFrame {
+public class Ventas extends javax.swing.JFrame {
 
-    public Compras() {
+    public Ventas() {
         initComponents();
         setLocationRelativeTo(null);
-        setTitle("Compras");
+        setTitle("Ventas");
         new File(".").getAbsolutePath();
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/icon.png")).getImage());
 
@@ -18,9 +18,9 @@ public class Compras extends javax.swing.JFrame {
         Metodos.id_moneda = 1;
         Metodos.id_comprobante = 1;
 
-        Metodos.Facturas_de_compra_max();
-        Metodos.Facturas_de_compra_buscar();
-        jTextField_proveedor.requestFocus();
+//        Metodos.Facturas_de_compra_max();
+//        Metodos.Facturas_de_compra_buscar();
+//        jTextField_proveedor.requestFocus();
     }
 
     @SuppressWarnings("unchecked")
@@ -40,13 +40,13 @@ public class Compras extends javax.swing.JFrame {
         jTextField_condicion = new javax.swing.JTextField();
         jTextField_descripcion = new javax.swing.JTextField();
         jTextField_timbrado = new javax.swing.JTextField();
-        jTextField_ruc = new javax.swing.JTextField();
         jTextField_moneda = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jTextField_cuenta = new javax.swing.JTextField();
         jTextField_total = new javax.swing.JTextField();
         jTextField_proveedor1 = new javax.swing.JTextField();
+        jTextField_proveedor2 = new javax.swing.JTextField();
 
         setUndecorated(true);
         setResizable(false);
@@ -170,7 +170,7 @@ public class Compras extends javax.swing.JFrame {
             }
         });
 
-        jTextField_proveedor.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Razón social (ENTER para buscar)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(102, 102, 255)));
+        jTextField_proveedor.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Sucursal (ENTER para buscar)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(102, 102, 255)));
         jTextField_proveedor.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTextField_proveedorFocusLost(evt);
@@ -203,10 +203,6 @@ public class Compras extends javax.swing.JFrame {
                 jTextField_timbradoFocusLost(evt);
             }
         });
-
-        jTextField_ruc.setEditable(false);
-        jTextField_ruc.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField_ruc.setBorder(javax.swing.BorderFactory.createTitledBorder("R.U.C."));
 
         jTextField_moneda.setText("GUARANIES");
         jTextField_moneda.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Moneda", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(102, 102, 255)));
@@ -256,7 +252,12 @@ public class Compras extends javax.swing.JFrame {
         jTextField_total.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTextField_total.setBorder(javax.swing.BorderFactory.createTitledBorder("Total"));
 
-        jTextField_proveedor1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Sucursal (ENTER para buscar)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(102, 102, 255)));
+        jTextField_proveedor1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Razón Social (ENTER para buscar)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(102, 102, 255)));
+        jTextField_proveedor1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField_proveedor1ActionPerformed(evt);
+            }
+        });
         jTextField_proveedor1.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTextField_proveedor1FocusLost(evt);
@@ -265,6 +266,23 @@ public class Compras extends javax.swing.JFrame {
         jTextField_proveedor1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jTextField_proveedor1KeyPressed(evt);
+            }
+        });
+
+        jTextField_proveedor2.setBorder(javax.swing.BorderFactory.createTitledBorder("R.U.C."));
+        jTextField_proveedor2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField_proveedor2ActionPerformed(evt);
+            }
+        });
+        jTextField_proveedor2.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField_proveedor2FocusLost(evt);
+            }
+        });
+        jTextField_proveedor2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField_proveedor2KeyPressed(evt);
             }
         });
 
@@ -280,43 +298,46 @@ public class Compras extends javax.swing.JFrame {
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jTextField_total, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jTextField_cuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 976, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextField_cuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 976, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTextField_proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jTextField_proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jTextField_timbrado))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jDateChooser_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField_ruc)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jTextField_condicion, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jTextField_moneda, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jTextField_proveedor1))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField_timbrado)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField_proveedor1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(319, 319, 319))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jDateChooser_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField_condicion, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField_moneda, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField_comprobante, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(220, 220, 220)))
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jTextField_comprobante, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
+                                    .addComponent(jTextField_proveedor2))
+                                .addGap(220, 220, 220)
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addGap(17, 17, 17)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField_proveedor)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTextField_proveedor)
                         .addComponent(jTextField_timbrado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextField_ruc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextField_proveedor1))
+                        .addComponent(jTextField_proveedor1)
+                        .addComponent(jTextField_proveedor2))
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -472,6 +493,22 @@ public class Compras extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField_proveedor1KeyPressed
 
+    private void jTextField_proveedor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_proveedor1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField_proveedor1ActionPerformed
+
+    private void jTextField_proveedor2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_proveedor2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField_proveedor2ActionPerformed
+
+    private void jTextField_proveedor2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_proveedor2FocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField_proveedor2FocusLost
+
+    private void jTextField_proveedor2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_proveedor2KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField_proveedor2KeyPressed
+
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -481,11 +518,11 @@ public class Compras extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Compras.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ventas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
 
         java.awt.EventQueue.invokeLater(() -> {
-            new Compras().setVisible(true);
+            new Ventas().setVisible(true);
         });
     }
 
@@ -507,7 +544,7 @@ public class Compras extends javax.swing.JFrame {
     public static javax.swing.JTextField jTextField_moneda;
     public static javax.swing.JTextField jTextField_proveedor;
     public static javax.swing.JTextField jTextField_proveedor1;
-    public static javax.swing.JTextField jTextField_ruc;
+    public static javax.swing.JTextField jTextField_proveedor2;
     public static javax.swing.JTextField jTextField_timbrado;
     public static javax.swing.JTextField jTextField_total;
     // End of variables declaration//GEN-END:variables

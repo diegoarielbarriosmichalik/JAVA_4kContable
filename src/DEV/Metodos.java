@@ -889,6 +889,19 @@ public class Metodos {
                     stUpdateProducto.setString(5, Empresas_ABM.jTextField_direccion.getText());
                     stUpdateProducto.setInt(6, id_cliente);
                     stUpdateProducto.executeUpdate();
+                    
+                    Statement st2 = conexion.createStatement();
+                    ResultSet result2 = st2.executeQuery("SELECT MAX(id_sucursal) FROM sucursal");
+                    if (result2.next()) {
+                        id = result2.getInt(1) + 1;
+                    }
+                    PreparedStatement stUpdateProducto2 = conexion.prepareStatement("INSERT INTO sucursal VALUES(?,?,?,?)");
+                    stUpdateProducto2.setInt(1, id);
+                    stUpdateProducto2.setString(2, "Casa Matriz");
+                    stUpdateProducto2.setInt(3, id_empresa);
+                    stUpdateProducto2.setInt(4, 0);
+                    stUpdateProducto2.executeUpdate();
+                    
                     JOptionPane.showMessageDialog(null, "Guardado correctamente");
                 }
 //            } else if (Clientes.jDateChooser_cumpleanos.getDate() != null) {

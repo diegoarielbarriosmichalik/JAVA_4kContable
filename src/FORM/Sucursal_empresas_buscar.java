@@ -14,15 +14,15 @@ import javax.swing.ImageIcon;
  *
  * @author user
  */
-public class Empresas extends javax.swing.JFrame {
+public class Sucursal_empresas_buscar extends javax.swing.JFrame {
 
     /**
      * Creates new form Empresas
      */
-    public Empresas() {
+    public Sucursal_empresas_buscar() {
         initComponents();
-        this.setLocationRelativeTo(null);
-        this.setTitle("Sistema contable");
+        setLocationRelativeTo(null);
+        setTitle("Sucursal");
         new File(".").getAbsolutePath();
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/icon.png")).getImage());
     }
@@ -189,20 +189,21 @@ public class Empresas extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Empresas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Sucursal_empresas_buscar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Empresas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Sucursal_empresas_buscar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Empresas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Sucursal_empresas_buscar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Empresas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Sucursal_empresas_buscar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Empresas().setVisible(true);
+                new Sucursal_empresas_buscar().setVisible(true);
             }
         });
     }
