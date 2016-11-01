@@ -7,12 +7,15 @@ INSERT INTO parametro VALUES
 ('1');
 
 INSERT INTO tipo_de_iva VALUES 
+('0', '---'),
 ('1', 'Indistinto');
 
 INSERT INTO ventas VALUES 
+('0', '---'),
 ('1', 'Ventas al 5%, 10%');
 
 INSERT INTO impuesto VALUES 
+('0', '---'),
 ('1', 'IVA 10%'),
 ('2', 'IVA 5%'),
 ('3', 'EXENTAS');

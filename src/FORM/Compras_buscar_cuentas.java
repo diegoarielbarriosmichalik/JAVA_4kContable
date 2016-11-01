@@ -13,7 +13,8 @@ public class Compras_buscar_cuentas extends javax.swing.JFrame {
         this.setTitle("Cuentas");
         new File(".").getAbsolutePath();
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/icon.png")).getImage());
-
+        
+        jTextField_buscar.selectAll();
         //    Metodos.Cuentas_cargar_jtable();
     }
 
@@ -72,6 +73,9 @@ public class Compras_buscar_cuentas extends javax.swing.JFrame {
         jTextField_buscar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jTextField_buscarKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField_buscarKeyReleased(evt);
             }
         });
 
@@ -158,7 +162,7 @@ public class Compras_buscar_cuentas extends javax.swing.JFrame {
         if ((evt.getKeyCode() == KeyEvent.VK_DOWN)) {
             jTable1.requestFocus();
         }
-        Metodos.Compras_cuentas_cargar_jtable();
+        // Metodos.Compras_cuentas_cargar_jtable();
     }//GEN-LAST:event_jTextField_buscarKeyPressed
 
     private void jTextField_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_buscarActionPerformed
@@ -172,6 +176,10 @@ public class Compras_buscar_cuentas extends javax.swing.JFrame {
             new Compras_agregar_detalle().setVisible(true);
         }
     }//GEN-LAST:event_jTable1KeyPressed
+
+    private void jTextField_buscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_buscarKeyReleased
+        Metodos.Compras_cuentas_cargar_jtable();
+    }//GEN-LAST:event_jTextField_buscarKeyReleased
 
     public static void main(String args[]) {
 

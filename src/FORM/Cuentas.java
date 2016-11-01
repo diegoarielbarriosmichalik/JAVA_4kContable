@@ -73,6 +73,9 @@ public class Cuentas extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jTextField_buscarKeyPressed(evt);
             }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField_buscarKeyReleased(evt);
+            }
         });
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/exit1.png"))); // NOI18N
@@ -156,7 +159,7 @@ public class Cuentas extends javax.swing.JFrame {
         if ((evt.getKeyCode() == KeyEvent.VK_DOWN)) {
             jTable1.requestFocus();
         }
-        Metodos.Cuentas_cargar_jtable();
+
     }//GEN-LAST:event_jTextField_buscarKeyPressed
 
     private void jTextField_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_buscarActionPerformed
@@ -173,6 +176,10 @@ public class Cuentas extends javax.swing.JFrame {
             Metodos.Cuentas_seleccionar();
         }
     }//GEN-LAST:event_jTable1KeyPressed
+
+    private void jTextField_buscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_buscarKeyReleased
+        Metodos.Cuentas_cargar_jtable();
+    }//GEN-LAST:event_jTextField_buscarKeyReleased
 
     public static void main(String args[]) {
 

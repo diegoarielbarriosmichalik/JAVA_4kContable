@@ -45,19 +45,18 @@ public class Compras_agregar_detalle extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jTextField_gravadas10.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jTextField_gravadas10.setText("0");
         jTextField_gravadas10.setBorder(javax.swing.BorderFactory.createTitledBorder("Gravadas 10%"));
-        jTextField_gravadas10.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jTextField_gravadas10FocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextField_gravadas10FocusLost(evt);
-            }
-        });
         jTextField_gravadas10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_gravadas10ActionPerformed(evt);
+            }
+        });
+        jTextField_gravadas10.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField_gravadas10FocusLost(evt);
+            }
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextField_gravadas10FocusGained(evt);
             }
         });
         jTextField_gravadas10.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -70,31 +69,32 @@ public class Compras_agregar_detalle extends javax.swing.JFrame {
         });
 
         jTextField_gravadas_5.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jTextField_gravadas_5.setText("0");
         jTextField_gravadas_5.setBorder(javax.swing.BorderFactory.createTitledBorder("Gravadas 5%"));
-        jTextField_gravadas_5.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jTextField_gravadas_5FocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextField_gravadas_5FocusLost(evt);
-            }
-        });
         jTextField_gravadas_5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_gravadas_5ActionPerformed(evt);
+            }
+        });
+        jTextField_gravadas_5.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField_gravadas_5FocusLost(evt);
+            }
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextField_gravadas_5FocusGained(evt);
             }
         });
         jTextField_gravadas_5.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jTextField_gravadas_5KeyPressed(evt);
             }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField_gravadas_5KeyReleased(evt);
+            }
         });
 
         jTextField_iva5.setEditable(false);
         jTextField_iva5.setBackground(new java.awt.Color(255, 255, 255));
         jTextField_iva5.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jTextField_iva5.setText("0");
         jTextField_iva5.setBorder(javax.swing.BorderFactory.createTitledBorder("I.V.A. 5%"));
         jTextField_iva5.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -108,26 +108,32 @@ public class Compras_agregar_detalle extends javax.swing.JFrame {
         });
 
         jTextField_exentas.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jTextField_exentas.setText("0");
         jTextField_exentas.setBorder(javax.swing.BorderFactory.createTitledBorder("Exentas"));
-        jTextField_exentas.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jTextField_exentasFocusGained(evt);
+        jTextField_exentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField_exentasActionPerformed(evt);
             }
+        });
+        jTextField_exentas.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTextField_exentasFocusLost(evt);
+            }
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextField_exentasFocusGained(evt);
             }
         });
         jTextField_exentas.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jTextField_exentasKeyPressed(evt);
             }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField_exentasKeyReleased(evt);
+            }
         });
 
         jTextField_iva10.setEditable(false);
         jTextField_iva10.setBackground(new java.awt.Color(255, 255, 255));
         jTextField_iva10.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jTextField_iva10.setText("0");
         jTextField_iva10.setBorder(javax.swing.BorderFactory.createTitledBorder("I.V.A. 10%"));
         jTextField_iva10.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -152,7 +158,6 @@ public class Compras_agregar_detalle extends javax.swing.JFrame {
         jTextField_total.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jTextField_total.setForeground(new java.awt.Color(0, 102, 0));
         jTextField_total.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jTextField_total.setText("0");
         jTextField_total.setBorder(javax.swing.BorderFactory.createTitledBorder("Total"));
         jTextField_total.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -328,6 +333,18 @@ public class Compras_agregar_detalle extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         jTextField_gravadas10.selectAll();
     }//GEN-LAST:event_formWindowOpened
+
+    private void jTextField_exentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_exentasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField_exentasActionPerformed
+
+    private void jTextField_gravadas_5KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_gravadas_5KeyReleased
+        jTextField_gravadas_5.setText(Metodos.getSepararMiles(jTextField_gravadas_5.getText().replace(".", "")));
+    }//GEN-LAST:event_jTextField_gravadas_5KeyReleased
+
+    private void jTextField_exentasKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_exentasKeyReleased
+        jTextField_exentas.setText(Metodos.getSepararMiles(jTextField_exentas.getText().replace(".", "")));
+    }//GEN-LAST:event_jTextField_exentasKeyReleased
 
     public static void main(String args[]) {
         try {

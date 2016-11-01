@@ -204,10 +204,10 @@ public class Metodos {
                     Parametros.jTextField_iva_5.setText(result4.getString("cuenta").trim());
                 }
 
-                ResultSet result5 = st2.executeQuery("SELECT * FROM cuenta where id_cuenta = '" + id_cuenta_exentas + "'");
-                if (result5.next()) {
-                    Parametros.jTextField_exentas.setText(result5.getString("cuenta").trim());
-                }
+//                ResultSet result5 = st2.executeQuery("SELECT * FROM cuenta where id_cuenta = '" + id_cuenta_exentas + "'");
+//                if (result5.next()) {
+                 //   Parametros.jTextField_exentas.setText(result5.getString("cuenta").trim());
+//                }
             }
         } catch (SQLException ex) {
             System.err.println(ex);
@@ -217,11 +217,27 @@ public class Metodos {
     public synchronized static void Compras_detalle_guardar() {
         try {
 
-            long gravada_10 = Long.valueOf(Compras_agregar_detalle.jTextField_gravadas10.getText().replace(".", ""));
-            long iva_10 = Long.valueOf(Compras_agregar_detalle.jTextField_iva10.getText().replace(".", ""));
-            long iva_5 = Long.valueOf(Compras_agregar_detalle.jTextField_iva5.getText().replace(".", ""));
-            long gravada_5 = Long.valueOf(Compras_agregar_detalle.jTextField_gravadas_5.getText().replace(".", ""));
-            long exentas = Long.valueOf(Compras_agregar_detalle.jTextField_exentas.getText().replace(".", ""));
+            long gravada_10 = 0;
+            long iva_10 = 0;
+            long iva_5 = 0;
+            long gravada_5 = 0;
+            long exentas = 0;
+
+            if (Compras_agregar_detalle.jTextField_gravadas10.getText().length() > 0) {
+                gravada_10 = Long.valueOf(Compras_agregar_detalle.jTextField_gravadas10.getText().replace(".", ""));
+            }
+            if (Compras_agregar_detalle.jTextField_iva10.getText().length() > 0) {
+                iva_10 = Long.valueOf(Compras_agregar_detalle.jTextField_iva10.getText().replace(".", ""));
+            }
+            if (Compras_agregar_detalle.jTextField_iva5.getText().length() > 0) {
+                iva_5 = Long.valueOf(Compras_agregar_detalle.jTextField_iva5.getText().replace(".", ""));
+            }
+            if (Compras_agregar_detalle.jTextField_gravadas_5.getText().length() > 0) {
+                gravada_5 = Long.valueOf(Compras_agregar_detalle.jTextField_gravadas_5.getText().replace(".", ""));
+            }
+            if (Compras_agregar_detalle.jTextField_exentas.getText().length() > 0) {
+                exentas = Long.valueOf(Compras_agregar_detalle.jTextField_exentas.getText().replace(".", ""));
+            }
 
             Statement st1 = conexion.createStatement();
             ResultSet result = st1.executeQuery("SELECT MAX(id_factura_de_compra_detalle) FROM factura_de_compra_detalle");
@@ -250,7 +266,7 @@ public class Metodos {
                 stUpdateProducto.setInt(7, 1);
                 stUpdateProducto.setInt(8, id_factura_de_compra);
                 stUpdateProducto.executeUpdate();
-                
+
                 id_factura_de_compra_detalle++;
                 PreparedStatement stUpdateProducto2 = conexion.prepareStatement("INSERT INTO factura_de_compra_detalle VALUES(?,?,?,?,?,?,?,?)");
                 stUpdateProducto2.setInt(1, id_factura_de_compra_detalle);
@@ -262,7 +278,7 @@ public class Metodos {
                 stUpdateProducto2.setInt(7, 1);
                 stUpdateProducto2.setInt(8, id_factura_de_compra);
                 stUpdateProducto2.executeUpdate();
-                
+
             }
             if (gravada_5 > 0) {
 
@@ -306,7 +322,6 @@ public class Metodos {
                 stUpdateProducto.executeUpdate();
             }
 
-
             long total = Long.valueOf(Compras_agregar_detalle.jTextField_total.getText().replace(".", ""));
             id_factura_de_compra_detalle++;
             PreparedStatement stUpdateProducto2 = conexion.prepareStatement("INSERT INTO factura_de_compra_detalle VALUES(?,?,?,?,?,?,?,?)");
@@ -314,9 +329,9 @@ public class Metodos {
             stUpdateProducto2.setInt(2, id_cuenta_caja);
             stUpdateProducto2.setLong(3, 0);
             stUpdateProducto2.setLong(4, total);
-            stUpdateProducto2.setInt(5, 1);
-            stUpdateProducto2.setInt(6, 1);
-            stUpdateProducto2.setInt(7, 1);
+            stUpdateProducto2.setInt(5, 0);
+            stUpdateProducto2.setInt(6, 0);
+            stUpdateProducto2.setInt(7, 0);
             stUpdateProducto2.setInt(8, id_factura_de_compra);
             stUpdateProducto2.executeUpdate();
 
@@ -1106,7 +1121,8 @@ public class Metodos {
             PreparedStatement ps2 = conexion.prepareStatement(""
                     + "select id_cuenta,  (nv1 || '.' || nv2|| '.' || nv3|| '.' || nv4|| '.' || nv5|| ' ' || cuenta) AS cuenta  "
                     + "from cuenta "
-                    + "where cuenta ilike '%" + Factura_compra_detalle_modificar_cuentas_buscar.jTextField_buscar.getText() + "%'");
+                    + "where cuenta ilike '%" + Factura_compra_detalle_modificar_cuentas_buscar.jTextField_buscar.getText() + "%' "
+                    + "order by nv1,nv2,nv3,nv4,nv5");
             ResultSet rs2 = ps2.executeQuery();
             ResultSetMetaData rsm = rs2.getMetaData();
             ArrayList<Object[]> data2 = new ArrayList<>();
@@ -1136,7 +1152,8 @@ public class Metodos {
             PreparedStatement ps2 = conexion.prepareStatement(""
                     + "select id_cuenta,  (nv1 || '.' || nv2|| '.' || nv3|| '.' || nv4|| '.' || nv5|| ' ' || cuenta) AS cuenta  "
                     + "from cuenta "
-                    + "where cuenta ilike '%" + Parametros_buscar_cuentas.jTextField_buscar.getText() + "%'");
+                    + "where cuenta ilike '%" + Parametros_buscar_cuentas.jTextField_buscar.getText() + "%' "
+                    + "order by nv1,nv2,nv3,nv4,nv5");
             ResultSet rs2 = ps2.executeQuery();
             ResultSetMetaData rsm = rs2.getMetaData();
             ArrayList<Object[]> data2 = new ArrayList<>();
@@ -1166,7 +1183,8 @@ public class Metodos {
             PreparedStatement ps2 = conexion.prepareStatement(""
                     + "select id_cuenta,  (nv1 || '.' || nv2|| '.' || nv3|| '.' || nv4|| '.' || nv5|| ' ' || cuenta) AS cuenta  "
                     + "from cuenta "
-                    + "where cuenta ilike '%" + Cuentas_asociadas_agregar_detalle_buscar_cuenta.jTextField_buscar.getText() + "%'");
+                    + "where cuenta ilike '%" + Cuentas_asociadas_agregar_detalle_buscar_cuenta.jTextField_buscar.getText() + "%' "
+                    + "order by nv1,nv2,nv3,nv4,nv5");
             ResultSet rs2 = ps2.executeQuery();
             ResultSetMetaData rsm = rs2.getMetaData();
             ArrayList<Object[]> data2 = new ArrayList<>();
@@ -1196,7 +1214,8 @@ public class Metodos {
             PreparedStatement ps2 = conexion.prepareStatement(""
                     + "select id_cuenta,  (nv1 || '.' || nv2|| '.' || nv3|| '.' || nv4|| '.' || nv5|| ' ' || cuenta) AS cuenta  "
                     + "from cuenta "
-                    + "where cuenta ilike '%" + Cuentas_asociadas.jTextField_buscar.getText() + "%'");
+                    + "where cuenta ilike '%" + Cuentas_asociadas.jTextField_buscar.getText() + "%' "
+                    + "order by nv1,nv2,nv3,nv4,nv5");
             ResultSet rs2 = ps2.executeQuery();
             ResultSetMetaData rsm = rs2.getMetaData();
             ArrayList<Object[]> data2 = new ArrayList<>();
@@ -1463,7 +1482,8 @@ public class Metodos {
             PreparedStatement ps2 = conexion.prepareStatement(""
                     + "select id_cuenta,  (nv1 || '.' || nv2|| '.' || nv3|| '.' || nv4|| '.' || nv5|| ' ' || cuenta) AS cuenta  "
                     + "from cuenta "
-                    + "where cuenta ilike '%" + Compras_buscar_cuentas.jTextField_buscar.getText() + "%'");
+                    + "where cuenta ilike '%" + Compras_buscar_cuentas.jTextField_buscar.getText() + "%' "
+                    + "order by nv1,nv2,nv3,nv4,nv5");
             ResultSet rs2 = ps2.executeQuery();
             ResultSetMetaData rsm = rs2.getMetaData();
             ArrayList<Object[]> data2 = new ArrayList<>();
@@ -1518,11 +1538,11 @@ public class Metodos {
             Parametros.jTextField_iva_5.setText(String.valueOf(tm.getValueAt(Parametros_buscar_cuentas.jTable1.getSelectedRow(), 1)));
             Metodos.Parametros_iva_5_update();
         }
-        if (cuenta_parametros == 4) {
-            cuenta_exentas = Integer.parseInt(String.valueOf(tm.getValueAt(Parametros_buscar_cuentas.jTable1.getSelectedRow(), 0)));
-            Parametros.jTextField_exentas.setText(String.valueOf(tm.getValueAt(Parametros_buscar_cuentas.jTable1.getSelectedRow(), 1)));
-            Metodos.Parametros_exentas_update();
-        }
+//        if (cuenta_parametros == 4) {
+//            cuenta_exentas = Integer.parseInt(String.valueOf(tm.getValueAt(Parametros_buscar_cuentas.jTable1.getSelectedRow(), 0)));
+//            Parametros.jTextField_exentas.setText(String.valueOf(tm.getValueAt(Parametros_buscar_cuentas.jTable1.getSelectedRow(), 1)));
+//            Metodos.Parametros_exentas_update();
+//        }
     }
 
     public synchronized static void Empresas_cliente_seleccionar() {
