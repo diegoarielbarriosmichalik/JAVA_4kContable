@@ -21,8 +21,12 @@ import FORM.Factura_compra_detalle_modificar_cuentas_buscar;
 import FORM.Moneda;
 import FORM.Parametros;
 import FORM.Parametros_buscar_cuentas;
+import FORM.Principal;
 import FORM.Proveedores_ABM;
 import FORM.Seleccionar_empresa;
+import FORM.Sucursal_ABM;
+import FORM.Sucursal_empresas_buscar;
+import FORM.Ventas;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -44,13 +48,15 @@ public class Metodos {
     public static int id_cuenta = 0;
     public static int id_cuenta_asociada = 0;
     public static int id_cuenta_asociada_max = 0;
-    public static int id_factura_de_compra = 0;
+    public static int id_factura = 0;
+    public static int id_factura_de_venta = 0;
     public static int id_cuenta_iva_10 = 0;
     public static int id_cuenta_iva_5 = 0;
     public static int id_cuenta_exentas = 0;
     public static int id_cuenta_caja = 0;
     public static int id_cliente = 0;
     public static int cuenta_iva_10 = 0;
+    public static int form_compra = 0;
     public static int cuenta_caja = 0;
     public static int cuenta_iva_5 = 0;
     public static int cuenta_exentas = 0;
@@ -62,8 +68,10 @@ public class Metodos {
     public static int id_moneda = 0;
     public static int id_empresa = 0;
     public static int id = 0;
-    public static int id_factura_de_compra_detalle = 0;
+    public static int id_factura_detalle = 0;
     public static int empresa = 0;
+    public static int form_venta = 0;
+    public static int id_sucursal = 0;
     public static String empresa_razon_social = "Selecciona una empresa...";
     public static String cuenta = null;
     public static boolean existe = false;
@@ -96,7 +104,7 @@ public class Metodos {
     public synchronized static void Compras_detalle_modificar_borrar() {
         try {
             PreparedStatement stUpdateAuxiliar2 = conexion.prepareStatement(""
-                    + "delete from factura_de_compra_detalle WHERE id_factura_de_compra_detalle ='" + id_factura_de_compra_detalle + "'");
+                    + "delete from factura_detalle WHERE id_factura_detalle ='" + id_factura_detalle + "'");
             stUpdateAuxiliar2.executeUpdate();
             Facturas_de_compra_buscar();
         } catch (SQLException ex) {
@@ -131,51 +139,54 @@ public class Metodos {
                     stUpdateProducto.setString(6, Clientes_ABM.jTextField_email.getText());
                     stUpdateProducto.setInt(7, 0);
                     stUpdateProducto.executeUpdate();
+                    JOptionPane.showMessageDialog(null, "Guardado correctamente");
 
                 }
-//            } else if (Clientes.jDateChooser_cumpleanos.getDate() != null) {
-//                java.util.Date utilDate = Clientes.jDateChooser_cumpleanos.getDate();
-//                java.sql.Date cumple = new java.sql.Date(utilDate.getTime());
-//                PreparedStatement st = conexion.prepareStatement(""
-//                        + "UPDATE cliente "
-//                        + "SET nombre ='" + jt_nombre.getText() + "', "
-//                        + "direccion ='" + jt_direccion.getText() + "', "
-//                        + "telefono ='" + jt_telefono.getText() + "', "
-//                        + "ruc ='" + jt_ruc.getText() + "', "
-//                        + "email = '" + jt_email.getText() + "', "
-//                        + "cumpleanos = '" + cumple + "', "
-//                        + "ci = '" + Integer.parseInt(Clientes.jTextField_ci.getText()) + "' "
-//                        + "WHERE id_cliente = '" + id_cliente + "'");
-//                st.executeUpdate();
-////                    Clientes.jt_nombre.setEditable(false);
-////                    JOptionPane.showMessageDialog(null, "Cliente actualizado correctamente");
-//                Clientes.jLabel_mensaje.setText("Actualizado correctamente");
-//                Clientes.jLabel_mensaje.setVisible(true);
-////                    Clientes.jt_nombre.requestFocus();
-//
-//            } else {
-//                int ci = 0;
-//                if (Clientes.jTextField_ci.getText().length() > 1) {
-//                    ci = Integer.parseInt(Clientes.jTextField_ci.getText());
-//                }
-//
-//                PreparedStatement st = conexion.prepareStatement(""
-//                        + "UPDATE cliente "
-//                        + "SET nombre ='" + jt_nombre.getText() + "', "
-//                        + "direccion ='" + jt_direccion.getText() + "', "
-//                        + "telefono ='" + jt_telefono.getText() + "', "
-//                        + "ruc ='" + jt_ruc.getText() + "', "
-//                        + "email = '" + jt_email.getText() + "', "
-//                        + "ci = '" + ci + "' "
-//                        + "WHERE id_cliente = '" + id_cliente + "'");
-//                st.executeUpdate();
-//                Clientes.jLabel_mensaje.setText("Actualizado correctamente");
-//                Clientes.jLabel_mensaje.setVisible(true);
-////                    Clientes.jt_nombre.requestFocus();
+            } else if ((Clientes_ABM.jTextField_nombre.getText().length() < 1)
+                    || (Clientes_ABM.jTextField_ci.getText().length() < 1)
+                    || (Clientes_ABM.jTextField_direccion.getText().length() < 1)
+                    || (Clientes_ABM.jTextField_telefono.getText().length() < 1)
+                    || (Clientes_ABM.jTextField_email.getText().length() < 1)) {
+                JOptionPane.showMessageDialog(null, "Complete todos los campos");
+            } else {
+
+                PreparedStatement st = conexion.prepareStatement(""
+                        + "UPDATE cliente "
+                        + "SET nombre = '" + Clientes_ABM.jTextField_nombre.getText() + "', "
+                        + "ci = '" + Clientes_ABM.jTextField_ci.getText() + "', "
+                        + "direccion = '" + Clientes_ABM.jTextField_direccion.getText() + "', "
+                        + "email = '" + Clientes_ABM.jTextField_email.getText() + "', "
+                        + "telefono = '" + Clientes_ABM.jTextField_telefono.getText() + "' "
+                        + "where id_cliente = '" + id_cliente + "'");
+                st.executeUpdate();
+
+                JOptionPane.showMessageDialog(null, "Guardado correctamente");
             }
 
-            JOptionPane.showMessageDialog(null, "Guardado correctamente");
+        } catch (NumberFormatException | SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
 
+    public synchronized static void Sucursal_guardar() {
+        try {
+            if ((Sucursal_ABM.jTextField_empresa.getText().length() < 1)
+                    || (id_empresa > 0)) {
+                JOptionPane.showMessageDialog(null, "Complete todos los campos");
+            } else {
+                Statement st1 = conexion.createStatement();
+                ResultSet result = st1.executeQuery("SELECT MAX(id_sucursal) FROM sucursal");
+                if (result.next()) {
+                    id = result.getInt(1) + 1;
+                }
+                PreparedStatement stUpdateProducto = conexion.prepareStatement("INSERT INTO cliente VALUES(?,?,?,?)");
+                stUpdateProducto.setInt(1, id);
+                stUpdateProducto.setString(2, Sucursal_ABM.jTextField_sucursal.getText().trim());
+                stUpdateProducto.setInt(3, id_empresa);
+                stUpdateProducto.setInt(4, 0);
+                stUpdateProducto.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Guardado correctamente");
+            }
         } catch (NumberFormatException | SQLException e) {
             JOptionPane.showMessageDialog(null, e);
         }
@@ -203,11 +214,6 @@ public class Metodos {
                 if (result4.next()) {
                     Parametros.jTextField_iva_5.setText(result4.getString("cuenta").trim());
                 }
-
-//                ResultSet result5 = st2.executeQuery("SELECT * FROM cuenta where id_cuenta = '" + id_cuenta_exentas + "'");
-//                if (result5.next()) {
-                 //   Parametros.jTextField_exentas.setText(result5.getString("cuenta").trim());
-//                }
             }
         } catch (SQLException ex) {
             System.err.println(ex);
@@ -240,9 +246,9 @@ public class Metodos {
             }
 
             Statement st1 = conexion.createStatement();
-            ResultSet result = st1.executeQuery("SELECT MAX(id_factura_de_compra_detalle) FROM factura_de_compra_detalle");
+            ResultSet result = st1.executeQuery("SELECT MAX(id_factura_detalle) FROM factura_detalle");
             if (result.next()) {
-                id_factura_de_compra_detalle = result.getInt(1);
+                id_factura_detalle = result.getInt(1);
             }
 
             Statement st123 = conexion.createStatement();
@@ -255,90 +261,91 @@ public class Metodos {
             }
 
             if (gravada_10 > 0) {
-                id_factura_de_compra_detalle++;
-                PreparedStatement stUpdateProducto = conexion.prepareStatement("INSERT INTO factura_de_compra_detalle VALUES(?,?,?,?,?,?,?,?)");
-                stUpdateProducto.setInt(1, id_factura_de_compra_detalle);
+                id_factura_detalle++;
+                PreparedStatement stUpdateProducto = conexion.prepareStatement("INSERT INTO factura_detalle VALUES(?,?,?,?,?,?,?,?)");
+                stUpdateProducto.setInt(1, id_factura_detalle);
                 stUpdateProducto.setInt(2, id_cuenta);
                 stUpdateProducto.setLong(3, gravada_10);
                 stUpdateProducto.setLong(4, 0);
                 stUpdateProducto.setInt(5, 1);
                 stUpdateProducto.setInt(6, 1);
                 stUpdateProducto.setInt(7, 1);
-                stUpdateProducto.setInt(8, id_factura_de_compra);
+                stUpdateProducto.setInt(8, id_factura);
                 stUpdateProducto.executeUpdate();
 
-                id_factura_de_compra_detalle++;
-                PreparedStatement stUpdateProducto2 = conexion.prepareStatement("INSERT INTO factura_de_compra_detalle VALUES(?,?,?,?,?,?,?,?)");
-                stUpdateProducto2.setInt(1, id_factura_de_compra_detalle);
+                id_factura_detalle++;
+                PreparedStatement stUpdateProducto2 = conexion.prepareStatement("INSERT INTO factura_detalle VALUES(?,?,?,?,?,?,?,?)");
+                stUpdateProducto2.setInt(1, id_factura_detalle);
                 stUpdateProducto2.setInt(2, id_cuenta_iva_10);
                 stUpdateProducto2.setLong(3, iva_10);
                 stUpdateProducto2.setLong(4, 0);
                 stUpdateProducto2.setInt(5, 1);
                 stUpdateProducto2.setInt(6, 1);
                 stUpdateProducto2.setInt(7, 1);
-                stUpdateProducto2.setInt(8, id_factura_de_compra);
+                stUpdateProducto2.setInt(8, id_factura);
                 stUpdateProducto2.executeUpdate();
 
             }
             if (gravada_5 > 0) {
 
-                id_factura_de_compra_detalle++;
-                PreparedStatement stUpdateProducto = conexion.prepareStatement("INSERT INTO factura_de_compra_detalle VALUES(?,?,?,?,?,?,?,?)");
-                stUpdateProducto.setInt(1, id_factura_de_compra_detalle);
+                id_factura_detalle++;
+                PreparedStatement stUpdateProducto = conexion.prepareStatement("INSERT INTO factura_detalle VALUES(?,?,?,?,?,?,?,?)");
+                stUpdateProducto.setInt(1, id_factura_detalle);
                 stUpdateProducto.setInt(2, id_cuenta);
                 stUpdateProducto.setLong(3, gravada_5);
                 stUpdateProducto.setLong(4, 0);
                 stUpdateProducto.setInt(5, 1);
                 stUpdateProducto.setInt(6, 2);
                 stUpdateProducto.setInt(7, 1);
-                stUpdateProducto.setInt(8, id_factura_de_compra);
+                stUpdateProducto.setInt(8, id_factura);
                 stUpdateProducto.executeUpdate();
 
-                id_factura_de_compra_detalle++;
-                PreparedStatement stUpdateProducto23 = conexion.prepareStatement("INSERT INTO factura_de_compra_detalle VALUES(?,?,?,?,?,?,?,?)");
-                stUpdateProducto23.setInt(1, id_factura_de_compra_detalle);
+                id_factura_detalle++;
+                PreparedStatement stUpdateProducto23 = conexion.prepareStatement("INSERT INTO factura_detalle VALUES(?,?,?,?,?,?,?,?)");
+                stUpdateProducto23.setInt(1, id_factura_detalle);
                 stUpdateProducto23.setInt(2, id_cuenta_iva_5);
                 stUpdateProducto23.setLong(3, iva_5);
                 stUpdateProducto23.setLong(4, 0);
                 stUpdateProducto23.setInt(5, 1);
                 stUpdateProducto23.setInt(6, 2);
                 stUpdateProducto23.setInt(7, 1);
-                stUpdateProducto23.setInt(8, id_factura_de_compra);
+                stUpdateProducto23.setInt(8, id_factura);
                 stUpdateProducto23.executeUpdate();
 
             }
             if (exentas > 0) {
 
-                id_factura_de_compra_detalle++;
-                PreparedStatement stUpdateProducto = conexion.prepareStatement("INSERT INTO factura_de_compra_detalle VALUES(?,?,?,?,?,?,?,?)");
-                stUpdateProducto.setInt(1, id_factura_de_compra_detalle);
+                id_factura_detalle++;
+                PreparedStatement stUpdateProducto = conexion.prepareStatement("INSERT INTO factura_detalle VALUES(?,?,?,?,?,?,?,?)");
+                stUpdateProducto.setInt(1, id_factura_detalle);
                 stUpdateProducto.setInt(2, id_cuenta);
                 stUpdateProducto.setLong(3, exentas);
                 stUpdateProducto.setLong(4, 0);
                 stUpdateProducto.setInt(5, 1);
                 stUpdateProducto.setInt(6, 3);
                 stUpdateProducto.setInt(7, 1);
-                stUpdateProducto.setInt(8, id_factura_de_compra);
+                stUpdateProducto.setInt(8, id_factura);
                 stUpdateProducto.executeUpdate();
             }
 
             long total = Long.valueOf(Compras_agregar_detalle.jTextField_total.getText().replace(".", ""));
-            id_factura_de_compra_detalle++;
-            PreparedStatement stUpdateProducto2 = conexion.prepareStatement("INSERT INTO factura_de_compra_detalle VALUES(?,?,?,?,?,?,?,?)");
-            stUpdateProducto2.setInt(1, id_factura_de_compra_detalle);
+            id_factura_detalle++;
+            PreparedStatement stUpdateProducto2 = conexion.prepareStatement("INSERT INTO factura_detalle VALUES(?,?,?,?,?,?,?,?)");
+            stUpdateProducto2.setInt(1, id_factura_detalle);
             stUpdateProducto2.setInt(2, id_cuenta_caja);
             stUpdateProducto2.setLong(3, 0);
             stUpdateProducto2.setLong(4, total);
             stUpdateProducto2.setInt(5, 0);
             stUpdateProducto2.setInt(6, 0);
             stUpdateProducto2.setInt(7, 0);
-            stUpdateProducto2.setInt(8, id_factura_de_compra);
+            stUpdateProducto2.setInt(8, id_factura);
             stUpdateProducto2.executeUpdate();
 
             PreparedStatement st = conexion.prepareStatement(""
-                    + "UPDATE factura_de_compra "
-                    + "SET total_debe = '" + (gravada_10 + iva_10) + "', "
-                    + "total_haber = '" + (gravada_5 + iva_5) + "'");
+                    + "UPDATE factura "
+                    + "SET total_debe = '" + total + "', "
+                    + "total_haber = '" + total + "' "
+                    + "where id_factura = '" + id_factura + "'");
             st.executeUpdate();
             Facturas_de_compra_buscar();
         } catch (NumberFormatException | SQLException e) {
@@ -349,10 +356,10 @@ public class Metodos {
     public synchronized static void Compras_actualizar_fecha() {
         try {
             PreparedStatement st = conexion.prepareStatement(""
-                    + "UPDATE factura_de_compra "
+                    + "UPDATE factura "
                     + "SET fecha ='" + util_Date_to_sql_date(Compras.jDateChooser_fecha.getDate()) + "', "
                     + "descripcion ='" + Compras.jTextField_descripcion.getText() + "' "
-                    + "WHERE id_factura_de_compra = '" + id_factura_de_compra + "'");
+                    + "WHERE id_factura = '" + id_factura + "'");
             st.executeUpdate();
         } catch (SQLException ex) {
             System.err.println(ex);
@@ -414,14 +421,15 @@ public class Metodos {
 
     public synchronized static void Factura_de_compra_guardar() {
         try {
+
             existe = false;
             Statement st4 = conexion.createStatement();
-            ResultSet result4 = st4.executeQuery("SELECT * FROM factura_de_compra "
+            ResultSet result4 = st4.executeQuery("SELECT * FROM factura "
                     + "where id_proveedor = '" + id_proveedor + "' "
                     + "and factura_sucursal = '" + Compras.jTextField_fac_sucursal.getText() + "' "
                     + "and factura_caja = '" + Compras.jTextField_fac_caja.getText() + "' "
                     + "and factura_numero = '" + Compras.jTextField_fac_numero.getText() + "' "
-                    + "and borrado != '1' ");
+                    + "and borrado != '1' and id_empresa = '" + empresa + "' ");
             if (result4.next()) {
                 existe = true;
             }
@@ -429,14 +437,14 @@ public class Metodos {
             if (existe == false) {
 
                 Statement st1 = conexion.createStatement();
-                ResultSet result = st1.executeQuery("SELECT MAX(id_factura_de_compra) FROM factura_de_compra");
+                ResultSet result = st1.executeQuery("SELECT MAX(id_factura) FROM factura");
                 if (result.next()) {
-                    id_factura_de_compra = result.getInt(1) + 1;
+                    id_factura = result.getInt(1) + 1;
                 }
 
                 PreparedStatement stUpdateProducto = conexion.prepareStatement(""
-                        + "INSERT INTO factura_de_compra VALUES(?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,? )");
-                stUpdateProducto.setInt(1, id_factura_de_compra);
+                        + "INSERT INTO factura VALUES(?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ? )");
+                stUpdateProducto.setInt(1, id_factura);
                 stUpdateProducto.setLong(2, Long.parseLong(Compras.jTextField_fac_sucursal.getText()));
                 stUpdateProducto.setLong(3, Long.parseLong(Compras.jTextField_fac_caja.getText()));
                 stUpdateProducto.setLong(4, Long.parseLong(Compras.jTextField_fac_numero.getText()));
@@ -459,51 +467,18 @@ public class Metodos {
                 stUpdateProducto.setInt(21, 0);
                 stUpdateProducto.setInt(22, 0);
                 stUpdateProducto.setInt(23, 0);
+                stUpdateProducto.setInt(24, 1); // compra
+                stUpdateProducto.setInt(25, 0);
+                stUpdateProducto.setInt(26, id_sucursal);
                 stUpdateProducto.executeUpdate();
             } else {
-                JOptionPane.showMessageDialog(null, "Factura de compra registrada");
+                JOptionPane.showMessageDialog(null, "Factura de compra duplicada");
                 Compras.jTextField_fac_numero.requestFocus();
             }
 
         } catch (SQLException ex) {
             System.err.println(ex);
         }
-
-    }
-
-    public synchronized static void Cuentas_asociadas_guardar() {
-//        try {
-//
-//            Statement st1 = conexion.createStatement();
-//            ResultSet result = st1.executeQuery("SELECT MAX(id_cuentas_asociadas) FROM cuentas_asociadas");
-//            if (result.next()) {
-//                id_cuenta_asociada_max = result.getInt(1) + 1;
-//            }
-//            int iva = 0;
-//            if (Cuentas_asociadas_agregar_detalle.jCheckBox_iva.isSelected() == true) {
-//                iva = 1;
-//            }
-//            int gravada = 0;
-//            if (Cuentas_asociadas_agregar_detalle.jCheckBox_gravada.isSelected() == true) {
-//                gravada = 1;
-//            }
-//            int deducible = 0;
-//            if (Cuentas_asociadas_agregar_detalle.jCheckBox_deducible.isSelected() == true) {
-//                deducible = 1;
-//            }
-//
-//            PreparedStatement stUpdateProducto = conexion.prepareStatement(""
-//                    + "INSERT INTO cuenta_asociada VALUES(?,?,?,?,?)");
-//            stUpdateProducto.setInt(1, id_cuenta_asociada);
-//            stUpdateProducto.setInt(2, id_cuenta);
-//            stUpdateProducto.setLong(3, Long.parseLong(Compras.jTextField_fac_caja.getText()));
-//            stUpdateProducto.setLong(4, Long.parseLong(Compras.jTextField_fac_numero.getText()));
-//            stUpdateProducto.setDate(5, null);
-//            stUpdateProducto.executeUpdate();
-//
-//        } catch (SQLException ex) {
-//            System.err.println(ex);
-//        }
 
     }
 
@@ -547,11 +522,28 @@ public class Metodos {
         try {
             Statement st1 = conexion.createStatement();
             ResultSet result = st1.executeQuery(""
-                    + "SELECT MAX(id_factura_de_compra) "
-                    + "FROM factura_de_compra "
-                    + "where id_empresa = '" + empresa + "'");
+                    + "SELECT MAX(id_factura) "
+                    + "FROM factura "
+                    + "where id_empresa = '" + empresa + "' "
+                    + "and compra = '1' ");
             if (result.next()) {
-                id_factura_de_compra = result.getInt(1);
+                id_factura = result.getInt(1);
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+    }
+
+    public synchronized static void Factura_de_venta_max() {
+        try {
+            Statement st1 = conexion.createStatement();
+            ResultSet result = st1.executeQuery(""
+                    + "SELECT MAX(id_factura) "
+                    + "FROM factura "
+                    + "where id_empresa = '" + empresa + "' "
+                    + "and venta = '1' ");
+            if (result.next()) {
+                id_factura = result.getInt(1);
             }
         } catch (SQLException ex) {
             System.err.println(ex);
@@ -562,14 +554,26 @@ public class Metodos {
         try {
             Statement st1 = conexion.createStatement();
             ResultSet result = st1.executeQuery(""
-                    + "SELECT * FROM factura_de_compra "
-                    + "inner join proveedor on proveedor.id_proveedor = factura_de_compra.id_proveedor "
-                    + "inner join condicion on condicion.id_condicion = factura_de_compra.id_condicion "
-                    + "inner join moneda on moneda.id_moneda = factura_de_compra.id_moneda "
-                    + "inner join comprobante on comprobante.id_comprobante = factura_de_compra.id_comprobante "
-                    + "where id_factura_de_compra = '" + id_factura_de_compra + "' "
-                    + "and id_empresa = '" + empresa + "'");
+                    + "SELECT * FROM factura "
+                    + "inner join proveedor on proveedor.id_proveedor = factura.id_proveedor "
+                    + "inner join condicion on condicion.id_condicion = factura.id_condicion "
+                    + "inner join moneda on moneda.id_moneda = factura.id_moneda "
+                    + "inner join comprobante on comprobante.id_comprobante = factura.id_comprobante "
+                    + "where id_factura = '" + id_factura + "' "
+                    + "and id_empresa = '" + empresa + "' and compra = '1' ");
             while (result.next()) {
+
+                System.err.println("ID factura " + result.getString("id_factura"));
+
+                Statement st13 = conexion.createStatement();
+                ResultSet result3 = st13.executeQuery(""
+                        + "SELECT * FROM sucursal "
+                        + "where id_empresa = '" + empresa + "' order by id_sucursal ASC");
+                if (result3.next()) {
+                    Compras.jTextField_sucursal.setText(result3.getString("sucursal").trim());
+                    System.err.println("sucursal id " + result3.getString("id_sucursal"));
+                }
+
                 String factura_sucursal = result.getString("factura_sucursal");
                 if (result.getString("factura_sucursal").length() == 1) {
                     factura_sucursal = "00" + result.getString("factura_sucursal");
@@ -601,60 +605,102 @@ public class Metodos {
                 if (RS2.next()) {
                     Compras.jTextField_timbrado.setText(RS2.getString("timbrado"));
                 }
-
                 Compras.jDateChooser_fecha.setDate(result.getDate("fecha"));
-
                 id_condicion = result.getInt("id_condicion");
                 Compras.jTextField_condicion.setText(result.getString("condicion"));
-
                 id_moneda = result.getInt("id_moneda");
                 Compras.jTextField_moneda.setText(result.getString("moneda"));
-
                 id_comprobante = result.getInt("id_comprobante");
                 Compras.jTextField_comprobante.setText(result.getString("comprobante"));
-
-                long total = result.getLong("total_debe") + result.getLong("total_haber");
+                long total = result.getLong("total_debe");
                 System.err.println(total);
                 String total_str = String.valueOf(total);
-
                 Compras.jTextField_total.setText(getSepararMiles(total_str));
-
-                Compras_clear_jtable();
-
-//                
-//                //-------------------------------------------
-//                DefaultTableModel dtm = (DefaultTableModel) Compras.jTable_compras_detalle.getModel();
-//                for (int j = 0; j < Compras.jTable_compras_detalle.getRowCount(); j++) {
-//                    dtm.removeRow(j);
-//                    j -= 1;
-//                }
-//                PreparedStatement ps2 = conexion.prepareStatement(""
-//                        + "select id_factura_de_compra_detalle, "
-//                        + "(nv1 || '.' || nv2|| '.' || nv3|| '.' || nv4|| '.' || nv5|| ' ' || cuenta) AS cuenta, debe, haber "
-//                        + "from factura_de_compra_detalle "
-//                        + "inner join cuenta on cuenta.id_cuenta = factura_de_compra_detalle.id_cuenta "
-//                        + "where id_factura_de_compra = '" + id_factura_de_compra + "' order by id_factura_de_compra_detalle ASC");
-//                ResultSet rs2 = ps2.executeQuery();
-//                ResultSetMetaData rsm = rs2.getMetaData();
-//                ArrayList<Object[]> data2 = new ArrayList<>();
-//                while (rs2.next()) {
-//                    Object[] rows = new Object[rsm.getColumnCount()];
-//                    for (int i = 0; i < rows.length; i++) {
-//                        rows[i] = rs2.getObject(i + 1).toString().trim();
-//                    }
-//                    data2.add(rows);
-//                }
-//                dtm = (DefaultTableModel) Compras.jTable_compras_detalle.getModel();
-//                for (int i = 0; i < data2.size(); i++) {
-//                    dtm.addRow(data2.get(i));
-//                }
+                Compras_detalle_cargar_jtable();
             }
         } catch (SQLException ex) {
             System.err.println(ex);
         }
     }
 
-    public static void Compras_clear_jtable() {
+    public synchronized static void Facturas_de_venta_buscar() {
+        try {
+
+            Statement st13 = conexion.createStatement();
+            ResultSet result3 = st13.executeQuery(""
+                    + "SELECT * FROM sucursal "
+                    + "where id_empresa = '" + empresa + "' order by id_sucursal ");
+            if (result3.next()) {
+                Ventas.jTextField_sucursal.setText(result3.getString("sucursal").trim());
+                id_sucursal = result3.getInt("id_sucursal");
+            }
+
+            Statement st1 = conexion.createStatement();
+            ResultSet result = st1.executeQuery(""
+                    + "SELECT * FROM factura "
+                    + "inner join proveedor on proveedor.id_proveedor = factura.id_proveedor "
+                    + "inner join condicion on condicion.id_condicion = factura.id_condicion "
+                    + "inner join moneda on moneda.id_moneda = factura.id_moneda "
+                    + "inner join comprobante on comprobante.id_comprobante = factura.id_comprobante "
+                    + "where id_factura = '" + id_factura + "' "
+                    + "and id_empresa = '" + empresa + "' "
+                    + "and venta = '1' ");
+            if (result.next()) {
+                String factura_sucursal = result.getString("factura_sucursal");
+                if (result.getString("factura_sucursal").length() == 1) {
+                    factura_sucursal = "00" + result.getString("factura_sucursal");
+                }
+                if (result.getString("factura_sucursal").length() == 2) {
+                    factura_sucursal = "0" + result.getString("factura_sucursal");
+                }
+                String factura_caja = result.getString("factura_caja");
+                if (result.getString("factura_caja").length() == 1) {
+                    factura_caja = "00" + result.getString("factura_caja");
+                }
+                if (result.getString("factura_caja").length() == 2) {
+                    factura_caja = "0" + result.getString("factura_caja");
+                }
+                Ventas.jTextField_fac_numero.setText(result.getString("factura_numero"));
+                Ventas.jTextField_fac_sucursal.setText(factura_sucursal);
+                Ventas.jTextField_fac_caja.setText(factura_caja);
+                id_proveedor = result.getInt("id_proveedor");
+                Ventas.jTextField_razon_social.setText(result.getString("nombre"));
+                Ventas.jTextField_ruc.setText(result.getString("ruc"));
+                Ventas.jTextField_descripcion.setText(result.getString("descripcion"));
+
+                Statement ST2 = conexion.createStatement();
+                ResultSet RS2 = ST2.executeQuery(""
+                        + "SELECT * FROM timbrado "
+                        + "where id_proveedor = '" + id_proveedor + "' order by vencimiento DESC");
+                if (RS2.next()) {
+                    Ventas.jTextField_timbrado.setText(RS2.getString("timbrado"));
+                }
+
+                Ventas.jDateChooser_fecha.setDate(result.getDate("fecha"));
+
+                id_condicion = result.getInt("id_condicion");
+                Ventas.jTextField_condicion.setText(result.getString("condicion"));
+
+                id_moneda = result.getInt("id_moneda");
+                Ventas.jTextField_moneda.setText(result.getString("moneda"));
+
+                id_comprobante = result.getInt("id_comprobante");
+                Ventas.jTextField_comprobante.setText(result.getString("comprobante"));
+
+                long total_long = result.getLong("total_debe");
+              //  System.err.println(total);
+                String total_str = String.valueOf(total_long);
+
+                Ventas.jTextField_total.setText(getSepararMiles(total_str));
+
+//                Compras_detalle_cargar_jtable();
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+    }
+
+    public static void Compras_detalle_cargar_jtable() {
         try {
             //-------------------------------------------
             DefaultTableModel dtm = (DefaultTableModel) Compras.jTable_compras_detalle.getModel();
@@ -663,13 +709,14 @@ public class Metodos {
                 j -= 1;
             }
             PreparedStatement ps2 = conexion.prepareStatement(""
-                    + "select id_factura_de_compra_detalle, "
+                    + "select id_factura_detalle, "
                     + "(nv1 || '.' || nv2|| '.' || nv3|| '.' || nv4|| '.' || nv5|| ' ' || cuenta) AS cuenta, debe, haber, tipo_de_iva, impuesto  "
-                    + "from factura_de_compra_detalle "
-                    + "inner join impuesto on impuesto.id_impuesto = factura_de_compra_detalle.id_impuesto "
-                    + "inner join cuenta on cuenta.id_cuenta = factura_de_compra_detalle.id_cuenta "
-                    + "inner join tipo_de_iva on tipo_de_iva.id_tipo_de_iva = factura_de_compra_detalle.id_tipo_de_iva "
-                    + "where id_factura_de_compra = '" + id_factura_de_compra + "' order by id_factura_de_compra_detalle ASC");
+                    + "from factura_detalle "
+                    + "inner join impuesto on impuesto.id_impuesto = factura_detalle.id_impuesto "
+                    + "inner join cuenta on cuenta.id_cuenta = factura_detalle.id_cuenta "
+                    + "inner join tipo_de_iva on tipo_de_iva.id_tipo_de_iva = factura_detalle.id_tipo_de_iva "
+                    + "where id_factura = '" + id_factura + "' "
+                    + "order by id_factura_detalle ASC");
             ResultSet rs2 = ps2.executeQuery();
             ResultSetMetaData rsm = rs2.getMetaData();
             ArrayList<Object[]> data2 = new ArrayList<>();
@@ -693,7 +740,7 @@ public class Metodos {
                 dtm.addRow(data2.get(i));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Metodos.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println(ex);
         }
     }
 
@@ -743,45 +790,41 @@ public class Metodos {
                     stUpdateProducto.executeUpdate();
 
                 }
-//            } else if (Clientes.jDateChooser_cumpleanos.getDate() != null) {
-//                java.util.Date utilDate = Clientes.jDateChooser_cumpleanos.getDate();
-//                java.sql.Date cumple = new java.sql.Date(utilDate.getTime());
-//                PreparedStatement st = conexion.prepareStatement(""
-//                        + "UPDATE cliente "
-//                        + "SET nombre ='" + jt_nombre.getText() + "', "
-//                        + "direccion ='" + jt_direccion.getText() + "', "
-//                        + "telefono ='" + jt_telefono.getText() + "', "
-//                        + "ruc ='" + jt_ruc.getText() + "', "
-//                        + "email = '" + jt_email.getText() + "', "
-//                        + "cumpleanos = '" + cumple + "', "
-//                        + "ci = '" + Integer.parseInt(Clientes.jTextField_ci.getText()) + "' "
-//                        + "WHERE id_cliente = '" + id_cliente + "'");
-//                st.executeUpdate();
-////                    Clientes.jt_nombre.setEditable(false);
-////                    JOptionPane.showMessageDialog(null, "Cliente actualizado correctamente");
-//                Clientes.jLabel_mensaje.setText("Actualizado correctamente");
-//                Clientes.jLabel_mensaje.setVisible(true);
-////                    Clientes.jt_nombre.requestFocus();
-//
-//            } else {
-//                int ci = 0;
-//                if (Clientes.jTextField_ci.getText().length() > 1) {
-//                    ci = Integer.parseInt(Clientes.jTextField_ci.getText());
-//                }
-//
-//                PreparedStatement st = conexion.prepareStatement(""
-//                        + "UPDATE cliente "
-//                        + "SET nombre ='" + jt_nombre.getText() + "', "
-//                        + "direccion ='" + jt_direccion.getText() + "', "
-//                        + "telefono ='" + jt_telefono.getText() + "', "
-//                        + "ruc ='" + jt_ruc.getText() + "', "
-//                        + "email = '" + jt_email.getText() + "', "
-//                        + "ci = '" + ci + "' "
-//                        + "WHERE id_cliente = '" + id_cliente + "'");
-//                st.executeUpdate();
-//                Clientes.jLabel_mensaje.setText("Actualizado correctamente");
-//                Clientes.jLabel_mensaje.setVisible(true);
-////                    Clientes.jt_nombre.requestFocus();
+            } else if (Cuentas_ABM.jTextField_cuenta.getText().length() > 0) {
+
+                int nv1 = 0;
+                if (Cuentas_ABM.jTextField_nv1.getText().length() > 0) {
+                    nv1 = Integer.parseInt(Cuentas_ABM.jTextField_nv1.getText());
+                }
+                int nv2 = 0;
+                if (Cuentas_ABM.jTextField_nv2.getText().length() > 0) {
+                    nv2 = Integer.parseInt(Cuentas_ABM.jTextField_nv2.getText());
+                }
+                int nv3 = 0;
+                if (Cuentas_ABM.jTextField_nv3.getText().length() > 0) {
+                    nv3 = Integer.parseInt(Cuentas_ABM.jTextField_nv3.getText());
+                }
+                int nv4 = 0;
+                if (Cuentas_ABM.jTextField_nv4.getText().length() > 0) {
+                    nv4 = Integer.parseInt(Cuentas_ABM.jTextField_nv4.getText());
+                }
+                int nv5 = 0;
+                if (Cuentas_ABM.jTextField_nv5.getText().length() > 0) {
+                    nv5 = Integer.parseInt(Cuentas_ABM.jTextField_nv5.getText());
+                }
+
+                PreparedStatement st = conexion.prepareStatement(""
+                        + "UPDATE cuenta "
+                        + "SET cuenta ='" + Cuentas_ABM.jTextField_cuenta.getText().trim() + "', "
+                        + "nv1 ='" + nv1 + "', "
+                        + "nv2 ='" + nv2 + "', "
+                        + "nv3 ='" + nv3 + "', "
+                        + "nv4 = '" + nv4 + "', "
+                        + "nv5 = '" + nv5 + "' "
+                        + "WHERE id_cuenta = '" + id_cuenta + "'");
+                st.executeUpdate();
+            } else {
+                JOptionPane.showMessageDialog(null, "Complete todos los campos");
             }
 
             JOptionPane.showMessageDialog(null, "Guardado correctamente");
@@ -889,7 +932,7 @@ public class Metodos {
                     stUpdateProducto.setString(5, Empresas_ABM.jTextField_direccion.getText());
                     stUpdateProducto.setInt(6, id_cliente);
                     stUpdateProducto.executeUpdate();
-                    
+
                     Statement st2 = conexion.createStatement();
                     ResultSet result2 = st2.executeQuery("SELECT MAX(id_sucursal) FROM sucursal");
                     if (result2.next()) {
@@ -901,7 +944,7 @@ public class Metodos {
                     stUpdateProducto2.setInt(3, id_empresa);
                     stUpdateProducto2.setInt(4, 0);
                     stUpdateProducto2.executeUpdate();
-                    
+
                     JOptionPane.showMessageDialog(null, "Guardado correctamente");
                 }
 //            } else if (Clientes.jDateChooser_cumpleanos.getDate() != null) {
@@ -1020,7 +1063,7 @@ public class Metodos {
     }
 
     public static void Facturas_de_compra_clear() {
-        id_factura_de_compra = 0;
+        id_factura = 0;
         id_moneda = 1;
         id_condicion = 1;
         id_comprobante = 1;
@@ -1345,7 +1388,7 @@ public class Metodos {
             PreparedStatement ps2 = conexion.prepareStatement(""
                     + "select id_proveedor, nombre, ruc, telefono "
                     + "from proveedor "
-                    + "where nombre ilike '%" + Compras_proveedores_buscar.jTextField_buscar.getText() + "%'");
+                    + "where nombre ilike '%" + Compras_proveedores_buscar.jTextField_buscar.getText() + "%' and id_proveedor > '0' ");
             ResultSet rs2 = ps2.executeQuery();
             ResultSetMetaData rsm = rs2.getMetaData();
             ArrayList<Object[]> data2 = new ArrayList<>();
@@ -1375,7 +1418,9 @@ public class Metodos {
             PreparedStatement ps2 = conexion.prepareStatement(""
                     + "select id_empresa, razon_social, cliente.nombre  "
                     + "from empresa "
-                    + "inner join cliente on cliente.id_cliente = empresa.id_cliente ");
+                    + "inner join cliente on cliente.id_cliente = empresa.id_cliente "
+                    + "where razon_social ilike '%" + Seleccionar_empresa.jTextField_buscar.getText() + "%' "
+                    + "or nombre ilike '%" + Seleccionar_empresa.jTextField_buscar.getText() + "%'");
             ResultSet rs2 = ps2.executeQuery();
             ResultSetMetaData rsm = rs2.getMetaData();
             ArrayList<Object[]> data2 = new ArrayList<>();
@@ -1417,6 +1462,37 @@ public class Metodos {
                 data2.add(rows);
             }
             dtm = (DefaultTableModel) Empresas.jTable1.getModel();
+            for (int i = 0; i < data2.size(); i++) {
+                dtm.addRow(data2.get(i));
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+    }
+
+    public synchronized static void Sucursal_empresas_cargar_jtable() {
+        try {
+            DefaultTableModel dtm = (DefaultTableModel) Sucursal_empresas_buscar.jTable1.getModel();
+            for (int j = 0; j < Sucursal_empresas_buscar.jTable1.getRowCount(); j++) {
+                dtm.removeRow(j);
+                j -= 1;
+            }
+            PreparedStatement ps2 = conexion.prepareStatement(""
+                    + "select id_empresa, razon_social, nombre  "
+                    + "from empresa "
+                    + "inner join cliente on cliente.id_cliente = empresa.id_cliente "
+                    + "where razon_social ilike '%" + Sucursal_empresas_buscar.jTextField_buscar.getText() + "%'");
+            ResultSet rs2 = ps2.executeQuery();
+            ResultSetMetaData rsm = rs2.getMetaData();
+            ArrayList<Object[]> data2 = new ArrayList<>();
+            while (rs2.next()) {
+                Object[] rows = new Object[rsm.getColumnCount()];
+                for (int i = 0; i < rows.length; i++) {
+                    rows[i] = rs2.getObject(i + 1).toString().trim();
+                }
+                data2.add(rows);
+            }
+            dtm = (DefaultTableModel) Sucursal_empresas_buscar.jTable1.getModel();
             for (int i = 0; i < data2.size(); i++) {
                 dtm.addRow(data2.get(i));
             }
@@ -1570,9 +1646,9 @@ public class Metodos {
         Compras.jTextField_condicion.setText(String.valueOf(tm.getValueAt(Condicion.jTable1.getSelectedRow(), 1)));
         try {
             PreparedStatement st = conexion.prepareStatement(""
-                    + "UPDATE factura_de_compra "
+                    + "UPDATE factura "
                     + "SET id_condicion ='" + id_condicion + "' "
-                    + "WHERE id_factura_de_compra = '" + id_factura_de_compra + "'");
+                    + "WHERE id_factura = '" + id_factura + "'");
             st.executeUpdate();
         } catch (SQLException ex) {
             System.err.println(ex);
@@ -1587,9 +1663,9 @@ public class Metodos {
 
         try {
             PreparedStatement st = conexion.prepareStatement(""
-                    + "UPDATE factura_de_compra "
+                    + "UPDATE factura "
                     + "SET id_comprobante ='" + id_comprobante + "' "
-                    + "WHERE id_factura_de_compra = '" + id_factura_de_compra + "'");
+                    + "WHERE id_factura = '" + id_factura + "'");
             st.executeUpdate();
         } catch (SQLException ex) {
             System.err.println(ex);
@@ -1604,9 +1680,9 @@ public class Metodos {
 //
 //        try {
 //            PreparedStatement st = conexion.prepareStatement(""
-//                    + "UPDATE factura_de_compra "
+//                    + "UPDATE factura "
 //                    + "SET id_comprobante ='" + id_comprobante + "' "
-//                    + "WHERE id_factura_de_compra = '" + id_factura_de_compra + "'");
+//                    + "WHERE id_factura = '" + id_factura + "'");
 //            st.executeUpdate();
 //        } catch (SQLException ex) {
 //            System.err.println(ex);
@@ -1620,12 +1696,32 @@ public class Metodos {
 
         try {
             PreparedStatement st = conexion.prepareStatement(""
-                    + "UPDATE factura_de_compra "
+                    + "UPDATE factura "
                     + "SET id_moneda ='" + id_moneda + "' "
-                    + "WHERE id_factura_de_compra = '" + id_factura_de_compra + "'");
+                    + "WHERE id_factura = '" + id_factura + "'");
             st.executeUpdate();
         } catch (SQLException ex) {
             System.err.println(ex);
+        }
+
+    }
+
+    public synchronized static void Clientes_seleccionar() {
+        DefaultTableModel tm = (DefaultTableModel) Clientes.jTable1.getModel();
+        id_cliente = Integer.parseInt((String.valueOf(tm.getValueAt(Clientes.jTable1.getSelectedRow(), 0))));
+
+        try {
+            Statement ST = conexion.createStatement();
+            ResultSet RS = ST.executeQuery("SELECT * FROM cliente where id_cliente = '" + id_cliente + "'");
+            if (RS.next()) {
+                Clientes_ABM.jTextField_nombre.setText(RS.getString("nombre").trim());
+                Clientes_ABM.jTextField_ci.setText(RS.getString("ci"));
+                Clientes_ABM.jTextField_direccion.setText(RS.getString("direccion").trim());
+                Clientes_ABM.jTextField_email.setText(RS.getString("email").trim());
+                Clientes_ABM.jTextField_telefono.setText(RS.getString("telefono").trim());
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
         }
 
     }
@@ -1637,9 +1733,23 @@ public class Metodos {
     }
 
     public synchronized static void Seleccionar_empresa() {
-        DefaultTableModel tm = (DefaultTableModel) Seleccionar_empresa.jTable1.getModel();
-        empresa = Integer.parseInt(String.valueOf(tm.getValueAt(Seleccionar_empresa.jTable1.getSelectedRow(), 0)));
-        empresa_razon_social = "Empresa activa: " + String.valueOf(tm.getValueAt(Seleccionar_empresa.jTable1.getSelectedRow(), 1));
+        try {
+            DefaultTableModel tm = (DefaultTableModel) Seleccionar_empresa.jTable1.getModel();
+            empresa = Integer.parseInt(String.valueOf(tm.getValueAt(Seleccionar_empresa.jTable1.getSelectedRow(), 0)));
+            empresa_razon_social = "Empresa activa: " + String.valueOf(tm.getValueAt(Seleccionar_empresa.jTable1.getSelectedRow(), 1));
+
+            Statement st14 = conexion.createStatement();
+            ResultSet result44 = st14.executeQuery("SELECT * FROM sucursal where id_empresa = '" + empresa + "' order by id_sucursal ASC");
+            if (result44.next()) {
+                id_sucursal = result44.getInt(1);
+            }
+
+            System.err.println("Empresa " + empresa);
+
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+
     }
 
     public synchronized static void Cuentas_seleccionar() {
@@ -1663,15 +1773,21 @@ public class Metodos {
 
     }
 
+    public synchronized static void Sucursal_empresas_buscar_cuentas_seleccionar() {
+        DefaultTableModel tm = (DefaultTableModel) Sucursal_empresas_buscar.jTable1.getModel();
+        id_empresa = Integer.parseInt(String.valueOf(tm.getValueAt(Sucursal_empresas_buscar.jTable1.getSelectedRow(), 0)));
+        Sucursal_ABM.jTextField_empresa.setText((String.valueOf(tm.getValueAt(Sucursal_empresas_buscar.jTable1.getSelectedRow(), 0))));
+    }
+
     public synchronized static void Factura_compra_detalle_modificar_cuentas_seleccionar() {
         DefaultTableModel tm = (DefaultTableModel) Factura_compra_detalle_modificar_cuentas_buscar.jTable1.getModel();
         id_cuenta = Integer.parseInt(String.valueOf(tm.getValueAt(Factura_compra_detalle_modificar_cuentas_buscar.jTable1.getSelectedRow(), 0)));
 
         try {
             PreparedStatement st = conexion.prepareStatement(""
-                    + "UPDATE factura_de_compra_detalle "
+                    + "UPDATE factura_detalle "
                     + "SET id_cuenta ='" + id_cuenta + "' "
-                    + "WHERE id_factura_de_compra_detalle = '" + id_factura_de_compra_detalle + "'");
+                    + "WHERE id_factura_detalle = '" + id_factura_detalle + "'");
             st.executeUpdate();
 
             Facturas_de_compra_buscar();
@@ -1710,7 +1826,7 @@ public class Metodos {
 
     public synchronized static void Compras_detalle_seleccionar_detalle() {
         DefaultTableModel tm = (DefaultTableModel) Compras.jTable_compras_detalle.getModel();
-        id_factura_de_compra_detalle = Integer.parseInt(String.valueOf(tm.getValueAt(Compras.jTable_compras_detalle.getSelectedRow(), 0)));
+        id_factura_detalle = Integer.parseInt(String.valueOf(tm.getValueAt(Compras.jTable_compras_detalle.getSelectedRow(), 0)));
         Compras_detalle_modificar.jTextField_cuenta.setText(String.valueOf(tm.getValueAt(Compras.jTable_compras_detalle.getSelectedRow(), 1)));
     }
 }

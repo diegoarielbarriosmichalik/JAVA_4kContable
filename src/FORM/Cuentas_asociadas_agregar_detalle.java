@@ -12,10 +12,10 @@ public class Cuentas_asociadas_agregar_detalle extends javax.swing.JFrame {
         setTitle("Clientes");
         new File(".").getAbsolutePath();
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/icon.png")).getImage());
-        
+
         jTextField_cuenta.setText(Metodos.cuenta);
         jTextField_asociar.requestFocus();
-        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -111,7 +111,7 @@ public class Cuentas_asociadas_agregar_detalle extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-Metodos.Cuentas_asociadas_guardar();
+       // Metodos.Cuentas_asociadas_guardar();
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -120,7 +120,7 @@ Metodos.Cuentas_asociadas_guardar();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextField_asociarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_asociarKeyPressed
-    new Cuentas_asociadas_agregar_detalle_buscar_cuenta().setVisible(true);
+        new Cuentas_asociadas_agregar_detalle_buscar_cuenta().setVisible(true);
     }//GEN-LAST:event_jTextField_asociarKeyPressed
 
     public static void main(String args[]) {

@@ -1,8 +1,12 @@
 package FORM;
 
 import DEV.Metodos;
+import java.awt.AWTException;
+import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 public class Compras_buscar_cuentas extends javax.swing.JFrame {
@@ -13,7 +17,7 @@ public class Compras_buscar_cuentas extends javax.swing.JFrame {
         this.setTitle("Cuentas");
         new File(".").getAbsolutePath();
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/icon.png")).getImage());
-        
+
         jTextField_buscar.selectAll();
         //    Metodos.Cuentas_cargar_jtable();
     }
@@ -109,10 +113,8 @@ public class Compras_buscar_cuentas extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 694, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTextField_buscar, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
-                        .addGap(509, 509, 509)))
-                .addContainerGap())
+                    .addComponent(jTextField_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -160,7 +162,13 @@ public class Compras_buscar_cuentas extends javax.swing.JFrame {
             this.setVisible(false);
         }
         if ((evt.getKeyCode() == KeyEvent.VK_DOWN)) {
-            jTable1.requestFocus();
+            try {
+                jTable1.requestFocus();
+                Robot r = new Robot();
+                r.keyPress(KeyEvent.VK_DOWN);
+            } catch (AWTException ex) {
+                System.err.println(ex);
+            }
         }
         // Metodos.Compras_cuentas_cargar_jtable();
     }//GEN-LAST:event_jTextField_buscarKeyPressed

@@ -15,7 +15,6 @@ public class Clientes extends javax.swing.JFrame {
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/icon.png")).getImage());
     }
 
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -67,6 +66,9 @@ public class Clientes extends javax.swing.JFrame {
         jTextField_buscar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jTextField_buscarKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField_buscarKeyReleased(evt);
             }
         });
 
@@ -148,19 +150,29 @@ public class Clientes extends javax.swing.JFrame {
         if ((evt.getKeyCode() == KeyEvent.VK_ESCAPE)) {
             this.setVisible(false);
         }
-        
-        Metodos.Clientes_buscar_cliente_cargar_jtable();
-        
+        if ((evt.getKeyCode() == KeyEvent.VK_DOWN)) {
+            jTable1.requestFocus();
+        }
+
+
     }//GEN-LAST:event_jTextField_buscarKeyPressed
 
     private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
-      if ((evt.getKeyCode() == KeyEvent.VK_ESCAPE)) {
-          this.setVisible(false);
-      }
+        if ((evt.getKeyCode() == KeyEvent.VK_ESCAPE)) {
+            this.setVisible(false);
+        }
+        if ((evt.getKeyCode() == KeyEvent.VK_ENTER)) {
+            this.setVisible(false);
+            Metodos.Clientes_seleccionar();
+        }
     }//GEN-LAST:event_jTable1KeyPressed
 
+    private void jTextField_buscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_buscarKeyReleased
+        Metodos.Clientes_buscar_cliente_cargar_jtable();
+    }//GEN-LAST:event_jTextField_buscarKeyReleased
+
     public static void main(String args[]) {
-      
+
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -171,7 +183,7 @@ public class Clientes extends javax.swing.JFrame {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Clientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-       
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Clientes().setVisible(true);

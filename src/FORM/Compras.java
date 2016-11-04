@@ -46,7 +46,7 @@ public class Compras extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jTextField_cuenta = new javax.swing.JTextField();
         jTextField_total = new javax.swing.JTextField();
-        jTextField_proveedor1 = new javax.swing.JTextField();
+        jTextField_sucursal = new javax.swing.JTextField();
 
         setUndecorated(true);
         setResizable(false);
@@ -91,6 +91,7 @@ public class Compras extends javax.swing.JFrame {
 
         jTextField_fac_sucursal.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTextField_fac_sucursal.setText("001");
+        jTextField_fac_sucursal.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jTextField_fac_sucursal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_fac_sucursalActionPerformed(evt);
@@ -104,6 +105,7 @@ public class Compras extends javax.swing.JFrame {
 
         jTextField_fac_caja.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTextField_fac_caja.setText("001");
+        jTextField_fac_caja.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jTextField_fac_caja.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jTextField_fac_cajaFocusGained(evt);
@@ -111,6 +113,7 @@ public class Compras extends javax.swing.JFrame {
         });
 
         jTextField_fac_numero.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTextField_fac_numero.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jTextField_fac_numero.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTextField_fac_numeroFocusLost(evt);
@@ -198,6 +201,11 @@ public class Compras extends javax.swing.JFrame {
         });
 
         jTextField_timbrado.setBorder(javax.swing.BorderFactory.createTitledBorder("Timbrado"));
+        jTextField_timbrado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField_timbradoActionPerformed(evt);
+            }
+        });
         jTextField_timbrado.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTextField_timbradoFocusLost(evt);
@@ -251,20 +259,21 @@ public class Compras extends javax.swing.JFrame {
 
         jTextField_total.setEditable(false);
         jTextField_total.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField_total.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextField_total.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jTextField_total.setForeground(new java.awt.Color(0, 102, 51));
         jTextField_total.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jTextField_total.setBorder(javax.swing.BorderFactory.createTitledBorder("Total"));
+        jTextField_total.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jTextField_proveedor1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Sucursal (ENTER para buscar)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(102, 102, 255)));
-        jTextField_proveedor1.addFocusListener(new java.awt.event.FocusAdapter() {
+        jTextField_sucursal.setText("Casa Matriz");
+        jTextField_sucursal.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Sucursal (ENTER para buscar)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(102, 102, 255)));
+        jTextField_sucursal.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextField_proveedor1FocusLost(evt);
+                jTextField_sucursalFocusLost(evt);
             }
         });
-        jTextField_proveedor1.addKeyListener(new java.awt.event.KeyAdapter() {
+        jTextField_sucursal.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextField_proveedor1KeyPressed(evt);
+                jTextField_sucursalKeyPressed(evt);
             }
         });
 
@@ -291,7 +300,7 @@ public class Compras extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTextField_timbrado)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField_proveedor1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField_sucursal, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(319, 319, 319))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -316,7 +325,7 @@ public class Compras extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jTextField_timbrado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jTextField_ruc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextField_proveedor1))
+                        .addComponent(jTextField_sucursal))
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -334,7 +343,7 @@ public class Compras extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField_total, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField_total, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -362,9 +371,9 @@ public class Compras extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        Metodos.id_factura_de_compra = 0;
+        Metodos.id_factura = 0;
         Metodos.Facturas_de_compra_clear();
-        Metodos.Compras_clear_jtable();
+        Metodos.Compras_detalle_cargar_jtable();
         jTextField_proveedor.requestFocus();
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -373,7 +382,7 @@ public class Compras extends javax.swing.JFrame {
             new Compras_buscar_cuentas().setVisible(true);
             Compras_buscar_cuentas.jTextField_buscar.setText(jTextField_cuenta.getText());
         }
-        
+
     }//GEN-LAST:event_jTextField_cuentaKeyPressed
 
     private void jTextField_proveedorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_proveedorKeyPressed
@@ -383,9 +392,7 @@ public class Compras extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField_proveedorKeyPressed
 
     private void jTextField_fac_numeroFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_fac_numeroFocusLost
-
         Metodos.Factura_de_compra_guardar();
-
         jDateChooser_fecha.requestFocus();
     }//GEN-LAST:event_jTextField_fac_numeroFocusLost
 
@@ -398,7 +405,7 @@ public class Compras extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField_comprobanteFocusLost
 
     private void jTextField_proveedorFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_proveedorFocusLost
-//        jTextField_timbrado.requestFocus();
+      //  jTextField_sucursal.requestFocus();
     }//GEN-LAST:event_jTextField_proveedorFocusLost
 
     private void jTextField_descripcionFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_descripcionFocusLost
@@ -419,7 +426,7 @@ public class Compras extends javax.swing.JFrame {
 
     private void jTextField_timbradoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_timbradoFocusLost
         Metodos.Timbrado_guardar();
-        jTextField_fac_sucursal.requestFocus();
+        jTextField_sucursal.requestFocus();
     }//GEN-LAST:event_jTextField_timbradoFocusLost
 
     private void jTextField_condicionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_condicionKeyPressed
@@ -464,13 +471,17 @@ public class Compras extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField_cuentaFocusGained
 
-    private void jTextField_proveedor1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_proveedor1FocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField_proveedor1FocusLost
+    private void jTextField_sucursalFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_sucursalFocusLost
+        jTextField_fac_sucursal.requestFocus();
+    }//GEN-LAST:event_jTextField_sucursalFocusLost
 
-    private void jTextField_proveedor1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_proveedor1KeyPressed
+    private void jTextField_sucursalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_sucursalKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField_proveedor1KeyPressed
+    }//GEN-LAST:event_jTextField_sucursalKeyPressed
+
+    private void jTextField_timbradoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_timbradoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField_timbradoActionPerformed
 
     public static void main(String args[]) {
         try {
@@ -506,8 +517,8 @@ public class Compras extends javax.swing.JFrame {
     public static javax.swing.JTextField jTextField_fac_sucursal;
     public static javax.swing.JTextField jTextField_moneda;
     public static javax.swing.JTextField jTextField_proveedor;
-    public static javax.swing.JTextField jTextField_proveedor1;
     public static javax.swing.JTextField jTextField_ruc;
+    public static javax.swing.JTextField jTextField_sucursal;
     public static javax.swing.JTextField jTextField_timbrado;
     public static javax.swing.JTextField jTextField_total;
     // End of variables declaration//GEN-END:variables

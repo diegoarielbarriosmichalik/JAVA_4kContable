@@ -70,6 +70,9 @@ public class Compras_proveedores_buscar extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jTextField_buscarKeyPressed(evt);
             }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField_buscarKeyReleased(evt);
+            }
         });
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/exit1.png"))); // NOI18N
@@ -143,7 +146,7 @@ public class Compras_proveedores_buscar extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.setVisible(false);
-        new Proveedores().setVisible(true);
+        new Proveedores_ABM().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField_buscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_buscarKeyPressed
@@ -153,7 +156,7 @@ public class Compras_proveedores_buscar extends javax.swing.JFrame {
         if ((evt.getKeyCode() == KeyEvent.VK_DOWN)) {
             jTable1.requestFocus();
         }
-        Metodos.Compras_proveedores_buscar_cargar_jtable();
+
     }//GEN-LAST:event_jTextField_buscarKeyPressed
 
     private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
@@ -170,6 +173,10 @@ public class Compras_proveedores_buscar extends javax.swing.JFrame {
     private void jTable1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyReleased
         // TODO add your handling code here:
     }//GEN-LAST:event_jTable1KeyReleased
+
+    private void jTextField_buscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_buscarKeyReleased
+        Metodos.Compras_proveedores_buscar_cargar_jtable();
+    }//GEN-LAST:event_jTextField_buscarKeyReleased
 
     public static void main(String args[]) {
 

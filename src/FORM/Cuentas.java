@@ -50,6 +50,11 @@ public class Cuentas extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jTable1KeyPressed(evt);
@@ -180,6 +185,12 @@ public class Cuentas extends javax.swing.JFrame {
     private void jTextField_buscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_buscarKeyReleased
         Metodos.Cuentas_cargar_jtable();
     }//GEN-LAST:event_jTextField_buscarKeyReleased
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        this.setVisible(false);
+        new Cuentas_ABM().setVisible(true);
+        Metodos.Cuentas_seleccionar();
+    }//GEN-LAST:event_jTable1MouseClicked
 
     public static void main(String args[]) {
 

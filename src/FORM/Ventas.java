@@ -18,8 +18,8 @@ public class Ventas extends javax.swing.JFrame {
         Metodos.id_moneda = 1;
         Metodos.id_comprobante = 1;
 
-//        Metodos.Facturas_de_compra_max();
-//        Metodos.Facturas_de_compra_buscar();
+        Metodos.Factura_de_venta_max();
+        Metodos.Facturas_de_venta_buscar();
 //        jTextField_proveedor.requestFocus();
     }
 
@@ -36,7 +36,7 @@ public class Ventas extends javax.swing.JFrame {
         jTextField_fac_numero = new javax.swing.JTextField();
         jTextField_comprobante = new javax.swing.JTextField();
         jDateChooser_fecha = new com.toedter.calendar.JDateChooser();
-        jTextField_proveedor = new javax.swing.JTextField();
+        jTextField_sucursal = new javax.swing.JTextField();
         jTextField_condicion = new javax.swing.JTextField();
         jTextField_descripcion = new javax.swing.JTextField();
         jTextField_timbrado = new javax.swing.JTextField();
@@ -45,8 +45,8 @@ public class Ventas extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jTextField_cuenta = new javax.swing.JTextField();
         jTextField_total = new javax.swing.JTextField();
-        jTextField_proveedor1 = new javax.swing.JTextField();
-        jTextField_proveedor2 = new javax.swing.JTextField();
+        jTextField_razon_social = new javax.swing.JTextField();
+        jTextField_ruc = new javax.swing.JTextField();
 
         setUndecorated(true);
         setResizable(false);
@@ -91,6 +91,7 @@ public class Ventas extends javax.swing.JFrame {
 
         jTextField_fac_sucursal.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTextField_fac_sucursal.setText("001");
+        jTextField_fac_sucursal.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jTextField_fac_sucursal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_fac_sucursalActionPerformed(evt);
@@ -104,6 +105,7 @@ public class Ventas extends javax.swing.JFrame {
 
         jTextField_fac_caja.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTextField_fac_caja.setText("001");
+        jTextField_fac_caja.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jTextField_fac_caja.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jTextField_fac_cajaFocusGained(evt);
@@ -111,6 +113,7 @@ public class Ventas extends javax.swing.JFrame {
         });
 
         jTextField_fac_numero.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTextField_fac_numero.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jTextField_fac_numero.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTextField_fac_numeroFocusLost(evt);
@@ -170,15 +173,15 @@ public class Ventas extends javax.swing.JFrame {
             }
         });
 
-        jTextField_proveedor.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Sucursal (ENTER para buscar)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(102, 102, 255)));
-        jTextField_proveedor.addFocusListener(new java.awt.event.FocusAdapter() {
+        jTextField_sucursal.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Sucursal (ENTER para buscar)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(102, 102, 255)));
+        jTextField_sucursal.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextField_proveedorFocusLost(evt);
+                jTextField_sucursalFocusLost(evt);
             }
         });
-        jTextField_proveedor.addKeyListener(new java.awt.event.KeyAdapter() {
+        jTextField_sucursal.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextField_proveedorKeyPressed(evt);
+                jTextField_sucursalKeyPressed(evt);
             }
         });
 
@@ -252,37 +255,39 @@ public class Ventas extends javax.swing.JFrame {
         jTextField_total.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTextField_total.setBorder(javax.swing.BorderFactory.createTitledBorder("Total"));
 
-        jTextField_proveedor1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Razón Social (ENTER para buscar)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(102, 102, 255)));
-        jTextField_proveedor1.addActionListener(new java.awt.event.ActionListener() {
+        jTextField_razon_social.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Razón Social (ENTER para buscar)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(102, 102, 255)));
+        jTextField_razon_social.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField_proveedor1ActionPerformed(evt);
+                jTextField_razon_socialActionPerformed(evt);
             }
         });
-        jTextField_proveedor1.addFocusListener(new java.awt.event.FocusAdapter() {
+        jTextField_razon_social.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextField_proveedor1FocusLost(evt);
+                jTextField_razon_socialFocusLost(evt);
             }
         });
-        jTextField_proveedor1.addKeyListener(new java.awt.event.KeyAdapter() {
+        jTextField_razon_social.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextField_proveedor1KeyPressed(evt);
+                jTextField_razon_socialKeyPressed(evt);
             }
         });
 
-        jTextField_proveedor2.setBorder(javax.swing.BorderFactory.createTitledBorder("R.U.C."));
-        jTextField_proveedor2.addActionListener(new java.awt.event.ActionListener() {
+        jTextField_ruc.setEditable(false);
+        jTextField_ruc.setBackground(new java.awt.Color(255, 255, 255));
+        jTextField_ruc.setBorder(javax.swing.BorderFactory.createTitledBorder("R.U.C."));
+        jTextField_ruc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField_proveedor2ActionPerformed(evt);
+                jTextField_rucActionPerformed(evt);
             }
         });
-        jTextField_proveedor2.addFocusListener(new java.awt.event.FocusAdapter() {
+        jTextField_ruc.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextField_proveedor2FocusLost(evt);
+                jTextField_rucFocusLost(evt);
             }
         });
-        jTextField_proveedor2.addKeyListener(new java.awt.event.KeyAdapter() {
+        jTextField_ruc.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextField_proveedor2KeyPressed(evt);
+                jTextField_rucKeyPressed(evt);
             }
         });
 
@@ -305,7 +310,7 @@ public class Ventas extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jTextField_proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jTextField_sucursal, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jTextField_timbrado))
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
@@ -318,11 +323,11 @@ public class Ventas extends javax.swing.JFrame {
                                         .addComponent(jTextField_condicion, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jTextField_moneda, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jTextField_proveedor1))
+                                    .addComponent(jTextField_razon_social))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jTextField_comprobante, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
-                                    .addComponent(jTextField_proveedor2))
+                                    .addComponent(jTextField_ruc))
                                 .addGap(220, 220, 220)
                                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -334,10 +339,10 @@ public class Ventas extends javax.swing.JFrame {
                 .addGap(17, 17, 17)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField_proveedor)
+                        .addComponent(jTextField_sucursal)
                         .addComponent(jTextField_timbrado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextField_proveedor1)
-                        .addComponent(jTextField_proveedor2))
+                        .addComponent(jTextField_razon_social)
+                        .addComponent(jTextField_ruc))
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -383,31 +388,29 @@ public class Ventas extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        Metodos.id_factura_de_compra = 0;
-        Metodos.Facturas_de_compra_clear();
-        Metodos.Compras_clear_jtable();
-        jTextField_proveedor.requestFocus();
+//        Metodos.id_factura = 0;
+//        Metodos.Facturas_de_compra_clear();
+//        Metodos.Compras_clear_jtable();
+//        jTextField_sucursal.requestFocus();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jTextField_cuentaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_cuentaKeyPressed
-        if ((evt.getKeyCode() == KeyEvent.VK_ENTER)) {
-            new Compras_buscar_cuentas().setVisible(true);
-            Compras_buscar_cuentas.jTextField_buscar.setText(jTextField_cuenta.getText());
-        }
-        
+//        if ((evt.getKeyCode() == KeyEvent.VK_ENTER)) {
+//            new Compras_buscar_cuentas().setVisible(true);
+//            Compras_buscar_cuentas.jTextField_buscar.setText(jTextField_cuenta.getText());
+//        }
+
     }//GEN-LAST:event_jTextField_cuentaKeyPressed
 
-    private void jTextField_proveedorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_proveedorKeyPressed
-        if ((evt.getKeyCode() == KeyEvent.VK_ENTER)) {
-            new Compras_proveedores_buscar().setVisible(true);
-        }
-    }//GEN-LAST:event_jTextField_proveedorKeyPressed
+    private void jTextField_sucursalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_sucursalKeyPressed
+//        if ((evt.getKeyCode() == KeyEvent.VK_ENTER)) {
+//            new Compras_proveedores_buscar().setVisible(true);
+//        }
+    }//GEN-LAST:event_jTextField_sucursalKeyPressed
 
     private void jTextField_fac_numeroFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_fac_numeroFocusLost
-
-        Metodos.Factura_de_compra_guardar();
-
-        jDateChooser_fecha.requestFocus();
+//        Metodos.Factura_de_compra_guardar();
+//        jDateChooser_fecha.requestFocus();
     }//GEN-LAST:event_jTextField_fac_numeroFocusLost
 
     private void jDateChooser_fechaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jDateChooser_fechaFocusGained
@@ -418,9 +421,9 @@ public class Ventas extends javax.swing.JFrame {
 //        Compras.jTextField_proveedor.requestFocus();
     }//GEN-LAST:event_jTextField_comprobanteFocusLost
 
-    private void jTextField_proveedorFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_proveedorFocusLost
+    private void jTextField_sucursalFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_sucursalFocusLost
 //        jTextField_timbrado.requestFocus();
-    }//GEN-LAST:event_jTextField_proveedorFocusLost
+    }//GEN-LAST:event_jTextField_sucursalFocusLost
 
     private void jTextField_descripcionFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_descripcionFocusLost
         Metodos.Compras_actualizar_fecha();
@@ -440,7 +443,7 @@ public class Ventas extends javax.swing.JFrame {
 
     private void jTextField_timbradoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_timbradoFocusLost
         Metodos.Timbrado_guardar();
-        jTextField_fac_sucursal.requestFocus();
+        jTextField_razon_social.requestFocus();
     }//GEN-LAST:event_jTextField_timbradoFocusLost
 
     private void jTextField_condicionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_condicionKeyPressed
@@ -485,29 +488,29 @@ public class Ventas extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField_cuentaFocusGained
 
-    private void jTextField_proveedor1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_proveedor1FocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField_proveedor1FocusLost
+    private void jTextField_razon_socialFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_razon_socialFocusLost
+        jTextField_fac_sucursal.requestFocus();
+    }//GEN-LAST:event_jTextField_razon_socialFocusLost
 
-    private void jTextField_proveedor1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_proveedor1KeyPressed
+    private void jTextField_razon_socialKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_razon_socialKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField_proveedor1KeyPressed
+    }//GEN-LAST:event_jTextField_razon_socialKeyPressed
 
-    private void jTextField_proveedor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_proveedor1ActionPerformed
+    private void jTextField_razon_socialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_razon_socialActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField_proveedor1ActionPerformed
+    }//GEN-LAST:event_jTextField_razon_socialActionPerformed
 
-    private void jTextField_proveedor2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_proveedor2ActionPerformed
+    private void jTextField_rucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_rucActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField_proveedor2ActionPerformed
+    }//GEN-LAST:event_jTextField_rucActionPerformed
 
-    private void jTextField_proveedor2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_proveedor2FocusLost
+    private void jTextField_rucFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_rucFocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField_proveedor2FocusLost
+    }//GEN-LAST:event_jTextField_rucFocusLost
 
-    private void jTextField_proveedor2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_proveedor2KeyPressed
+    private void jTextField_rucKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_rucKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField_proveedor2KeyPressed
+    }//GEN-LAST:event_jTextField_rucKeyPressed
 
     public static void main(String args[]) {
         try {
@@ -542,9 +545,9 @@ public class Ventas extends javax.swing.JFrame {
     public static javax.swing.JTextField jTextField_fac_numero;
     public static javax.swing.JTextField jTextField_fac_sucursal;
     public static javax.swing.JTextField jTextField_moneda;
-    public static javax.swing.JTextField jTextField_proveedor;
-    public static javax.swing.JTextField jTextField_proveedor1;
-    public static javax.swing.JTextField jTextField_proveedor2;
+    public static javax.swing.JTextField jTextField_razon_social;
+    public static javax.swing.JTextField jTextField_ruc;
+    public static javax.swing.JTextField jTextField_sucursal;
     public static javax.swing.JTextField jTextField_timbrado;
     public static javax.swing.JTextField jTextField_total;
     // End of variables declaration//GEN-END:variables
