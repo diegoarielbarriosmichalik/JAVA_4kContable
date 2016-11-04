@@ -476,14 +476,14 @@ public class Ventas extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField_comprobanteActionPerformed
 
     private void jTable_compras_detalleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_compras_detalleMouseClicked
-        new Compras_detalle_modificar().setVisible(true);
-        Metodos.Compras_detalle_seleccionar_detalle();
+        new Ventas_detalle_modificar().setVisible(true);
+        Metodos.Ventas_detalle_seleccionar_detalle();
     }//GEN-LAST:event_jTable_compras_detalleMouseClicked
 
     private void jTable_compras_detalleKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable_compras_detalleKeyPressed
         if ((evt.getKeyCode() == KeyEvent.VK_ENTER)) {
-            new Compras_detalle_modificar().setVisible(true);
-            Metodos.Compras_detalle_seleccionar_detalle();
+         new Ventas_detalle_modificar().setVisible(true);
+        Metodos.Ventas_detalle_seleccionar_detalle();
         }
     }//GEN-LAST:event_jTable_compras_detalleKeyPressed
 

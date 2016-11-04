@@ -10,7 +10,7 @@ public class Ventas_detalle_modificar extends javax.swing.JFrame {
     public Ventas_detalle_modificar() {
         initComponents();
         setLocationRelativeTo(null);
-        setTitle("Compras modificar");
+        setTitle("Modificar");
         new File(".").getAbsolutePath();
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/icon.png")).getImage());
     }
@@ -113,11 +113,11 @@ public class Ventas_detalle_modificar extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.setVisible(false);
-        Metodos.Compras_detalle_modificar_borrar();
+        Metodos.Ventas_detalle_modificar_borrar();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // Metodos.Compras_detalle_guardar();
+         Metodos.Ventas_detalle_guardar();
         this.setVisible(false);
     }//GEN-LAST:event_jButton3ActionPerformed
 
