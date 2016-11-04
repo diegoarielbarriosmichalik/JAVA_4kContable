@@ -78,6 +78,8 @@ public class Metodos {
     public static boolean existe = false;
     public static int cuenta_gravada_10 = 0;
     public static int cuenta_parametros = 0;
+    public static boolean enter_press = false;
+    
 
     public synchronized static void Iniciar_Conexion() {
         try {

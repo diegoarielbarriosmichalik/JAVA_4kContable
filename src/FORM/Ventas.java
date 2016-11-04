@@ -262,6 +262,9 @@ public class Ventas extends javax.swing.JFrame {
             }
         });
         jTextField_razon_social.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextField_razon_socialFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTextField_razon_socialFocusLost(evt);
             }
@@ -401,6 +404,8 @@ public class Ventas extends javax.swing.JFrame {
         if ((evt.getKeyCode() == KeyEvent.VK_ENTER)) {
             new Ventas_buscar_cuentas().setVisible(true);
             Ventas_buscar_cuentas.jTextField_buscar.setText(jTextField_cuenta.getText());
+            Metodos.enter_press = true;
+
         }
 
     }//GEN-LAST:event_jTextField_cuentaKeyPressed
@@ -482,8 +487,8 @@ public class Ventas extends javax.swing.JFrame {
 
     private void jTable_compras_detalleKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable_compras_detalleKeyPressed
         if ((evt.getKeyCode() == KeyEvent.VK_ENTER)) {
-         new Ventas_detalle_modificar().setVisible(true);
-        Metodos.Ventas_detalle_seleccionar_detalle();
+            new Ventas_detalle_modificar().setVisible(true);
+            Metodos.Ventas_detalle_seleccionar_detalle();
         }
     }//GEN-LAST:event_jTable_compras_detalleKeyPressed
 
@@ -492,12 +497,15 @@ public class Ventas extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField_cuentaFocusGained
 
     private void jTextField_razon_socialFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_razon_socialFocusLost
-//        jTextField_fac_sucursal.requestFocus();
+        if (Metodos.enter_press == false) {
+            jTextField_fac_sucursal.requestFocus();
+        }
     }//GEN-LAST:event_jTextField_razon_socialFocusLost
 
     private void jTextField_razon_socialKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_razon_socialKeyPressed
         if ((evt.getKeyCode() == KeyEvent.VK_ENTER)) {
             new Ventas_proveedores_buscar().setVisible(true);
+            Metodos.enter_press = true;
         }
     }//GEN-LAST:event_jTextField_razon_socialKeyPressed
 
@@ -516,6 +524,10 @@ public class Ventas extends javax.swing.JFrame {
     private void jTextField_rucKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_rucKeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField_rucKeyPressed
+
+    private void jTextField_razon_socialFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_razon_socialFocusGained
+        Metodos.enter_press = false;
+    }//GEN-LAST:event_jTextField_razon_socialFocusGained
 
     public static void main(String args[]) {
         try {
