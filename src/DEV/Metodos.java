@@ -31,6 +31,7 @@ import FORM.Ventas_agregar_detalle;
 import FORM.Ventas_buscar_cuentas;
 import FORM.Ventas_detalle_modificar;
 import FORM.Ventas_proveedores_buscar;
+import FORM.Ventas_sucursal_buscar;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -40,6 +41,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -79,7 +82,6 @@ public class Metodos {
     public static int cuenta_gravada_10 = 0;
     public static int cuenta_parametros = 0;
     public static boolean enter_press = false;
-    
 
     public synchronized static void Iniciar_Conexion() {
         try {
@@ -114,7 +116,7 @@ public class Metodos {
             System.err.println(ex);
         }
     }
-    
+
     public synchronized static void Ventas_detalle_modificar_borrar() {
         try {
             PreparedStatement stUpdateAuxiliar2 = conexion.prepareStatement(""
@@ -185,7 +187,7 @@ public class Metodos {
     public synchronized static void Sucursal_guardar() {
         try {
             if ((Sucursal_ABM.jTextField_empresa.getText().length() < 1)
-                    || (id_empresa > 0)) {
+                    || (id_empresa < 1)) {
                 JOptionPane.showMessageDialog(null, "Complete todos los campos");
             } else {
                 Statement st1 = conexion.createStatement();
@@ -193,7 +195,7 @@ public class Metodos {
                 if (result.next()) {
                     id = result.getInt(1) + 1;
                 }
-                PreparedStatement stUpdateProducto = conexion.prepareStatement("INSERT INTO cliente VALUES(?,?,?,?)");
+                PreparedStatement stUpdateProducto = conexion.prepareStatement("INSERT INTO sucursal VALUES(?,?,?,?)");
                 stUpdateProducto.setInt(1, id);
                 stUpdateProducto.setString(2, Sucursal_ABM.jTextField_sucursal.getText().trim());
                 stUpdateProducto.setInt(3, id_empresa);
@@ -366,6 +368,7 @@ public class Metodos {
             JOptionPane.showMessageDialog(null, e);
         }
     }
+
     public synchronized static void Ventas_detalle_guardar() {
         try {
 
@@ -520,6 +523,20 @@ public class Metodos {
                     + "descripcion ='" + Ventas.jTextField_descripcion.getText() + "' "
                     + "WHERE id_factura = '" + id_factura + "'");
             st.executeUpdate();
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+    }
+
+    public synchronized static void Ventas_actualizar_sucursal() {
+        try {
+            if (id_factura > 0) {
+                PreparedStatement st = conexion.prepareStatement(""
+                        + "UPDATE factura "
+                        + "SET id_sucursal ='" + id_sucursal + "' "
+                        + "WHERE id_factura = '" + id_factura + "'");
+                st.executeUpdate();
+            }
         } catch (SQLException ex) {
             System.err.println(ex);
         }
@@ -882,10 +899,9 @@ public class Metodos {
             System.err.println(ex);
         }
     }
-
-    public synchronized static void Facturas_de_venta_buscar() {
+    
+    public static void Sucursal_empresa() {
         try {
-
             Statement st13 = conexion.createStatement();
             ResultSet result3 = st13.executeQuery(""
                     + "SELECT * FROM sucursal "
@@ -894,6 +910,14 @@ public class Metodos {
                 Ventas.jTextField_sucursal.setText(result3.getString("sucursal").trim());
                 id_sucursal = result3.getInt("id_sucursal");
             }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+    }
+    public synchronized static void Facturas_de_venta_buscar() {
+        try {
+
+          
 
             Statement st1 = conexion.createStatement();
             ResultSet result = st1.executeQuery(""
@@ -906,6 +930,16 @@ public class Metodos {
                     + "and id_empresa = '" + empresa + "' "
                     + "and venta = '1' ");
             if (result.next()) {
+
+                Statement st137 = conexion.createStatement();
+                ResultSet result37 = st137.executeQuery(""
+                        + "SELECT * FROM sucursal "
+                        + "where id_sucursal = '" + result.getInt("id_sucursal") + "'");
+                if (result37.next()) {
+                    Ventas.jTextField_sucursal.setText(result37.getString("sucursal").trim());
+                    id_sucursal = result37.getInt("id_sucursal");
+                }
+
                 String factura_sucursal = result.getString("factura_sucursal");
                 if (result.getString("factura_sucursal").length() == 1) {
                     factura_sucursal = "00" + result.getString("factura_sucursal");
@@ -1003,6 +1037,7 @@ public class Metodos {
             System.err.println(ex);
         }
     }
+
     public static void Ventas_detalle_cargar_jtable() {
         try {
             //-------------------------------------------
@@ -1306,6 +1341,7 @@ public class Metodos {
         total = gravada_5_long + iva_5 + gravada_10_long + iva_10 + exentas;
         Compras_agregar_detalle.jTextField_total.setText(getSepararMiles(String.valueOf(total)));
     }
+
     public static void Ventas_agregar_detalle_calculo_gravada10() {
         String gravada_10_str = Ventas_agregar_detalle.jTextField_gravadas10.getText().replace(".", "");
         gravada_10_long = Long.parseLong(gravada_10_str);
@@ -1324,6 +1360,7 @@ public class Metodos {
         total = gravada_5_long + iva_5 + gravada_10_long + iva_10 + exentas;
         Compras_agregar_detalle.jTextField_total.setText(getSepararMiles(String.valueOf(total)));
     }
+
     public static void Ventas_agregar_detalle_calculo_exentas() {
         String exentas_str = Ventas_agregar_detalle.jTextField_exentas.getText().replace(".", "");
         exentas = Long.parseLong(exentas_str);
@@ -1349,6 +1386,7 @@ public class Metodos {
         total = gravada_5_long + iva_5 + gravada_10_long + iva_10 + exentas;
         Compras_agregar_detalle.jTextField_total.setText(getSepararMiles(String.valueOf(total)));
     }
+
     public static void Ventas_agregar_detalle_calculo_gravada5() {
         String gravada_5_str = Ventas_agregar_detalle.jTextField_gravadas_5.getText().replace(".", "");
         gravada_5_long = Long.parseLong(gravada_5_str);
@@ -1411,6 +1449,28 @@ public class Metodos {
         Compras.jTextField_timbrado.setText("");
         Compras.jDateChooser_fecha.setDate(null);
         Compras.jTextField_total.setText("");
+
+    }
+    public static void Facturas_de_venta_clear() {
+        id_factura = 0;
+        id_moneda = 1;
+        id_condicion = 1;
+        id_comprobante = 1;
+
+        Ventas.jTextField_fac_sucursal.setText("001");
+        Ventas.jTextField_fac_caja.setText("001");
+        Ventas.jTextField_fac_numero.setText("");
+        Ventas.jTextField_moneda.setText("GUARANIES");
+        Ventas.jTextField_condicion.setText("CONTADO");
+        Ventas.jTextField_comprobante.setText("FACTURA");
+        Ventas.jTextField_descripcion.setText("");
+        Ventas.jTextField_cuenta.setText("");
+        Ventas.jTextField_razon_social.setText("");
+        Ventas.jTextField_ruc.setText("");
+        Ventas.jTextField_timbrado.setText("");
+        Ventas.jDateChooser_fecha.setDate(null);
+        Ventas.jTextField_total.setText("");
+        Ventas.jTextField_sucursal.setText("Casa matriz");
 
     }
 
@@ -1527,6 +1587,7 @@ public class Metodos {
             System.err.println(ex);
         }
     }
+
     public synchronized static void Factura_venta_detalle_modificar_cuentas_cargar_jtable() {
         try {
             DefaultTableModel dtm = (DefaultTableModel) Factura_venta_detalle_modificar_cuentas_buscar.jTable1.getModel();
@@ -1891,6 +1952,35 @@ public class Metodos {
         }
     }
 
+    public synchronized static void Ventas_sucursal_cargar_jtable() {
+        try {
+            DefaultTableModel dtm = (DefaultTableModel) Ventas_sucursal_buscar.jTable1.getModel();
+            for (int j = 0; j < Ventas_sucursal_buscar.jTable1.getRowCount(); j++) {
+                dtm.removeRow(j);
+                j -= 1;
+            }
+            PreparedStatement ps2 = conexion.prepareStatement(""
+                    + "select id_sucursal, sucursal  "
+                    + "from sucursal where id_empresa = '" + empresa + "' ");
+            ResultSet rs2 = ps2.executeQuery();
+            ResultSetMetaData rsm = rs2.getMetaData();
+            ArrayList<Object[]> data2 = new ArrayList<>();
+            while (rs2.next()) {
+                Object[] rows = new Object[rsm.getColumnCount()];
+                for (int i = 0; i < rows.length; i++) {
+                    rows[i] = rs2.getObject(i + 1).toString().trim();
+                }
+                data2.add(rows);
+            }
+            dtm = (DefaultTableModel) Ventas_sucursal_buscar.jTable1.getModel();
+            for (int i = 0; i < data2.size(); i++) {
+                dtm.addRow(data2.get(i));
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+    }
+
     public synchronized static void Clientes_buscar_cliente_cargar_jtable() {
         try {
             DefaultTableModel dtm = (DefaultTableModel) Clientes.jTable1.getModel();
@@ -2030,6 +2120,7 @@ public class Metodos {
         }
 
     }
+
     public synchronized static void Ventas_buscar_cuentas_seleccionar_cuenta() {
 
         DefaultTableModel tm = (DefaultTableModel) Ventas_buscar_cuentas.jTable1.getModel();
@@ -2214,7 +2305,13 @@ public class Metodos {
     public synchronized static void Sucursal_empresas_buscar_cuentas_seleccionar() {
         DefaultTableModel tm = (DefaultTableModel) Sucursal_empresas_buscar.jTable1.getModel();
         id_empresa = Integer.parseInt(String.valueOf(tm.getValueAt(Sucursal_empresas_buscar.jTable1.getSelectedRow(), 0)));
-        Sucursal_ABM.jTextField_empresa.setText((String.valueOf(tm.getValueAt(Sucursal_empresas_buscar.jTable1.getSelectedRow(), 0))));
+        Sucursal_ABM.jTextField_empresa.setText((String.valueOf(tm.getValueAt(Sucursal_empresas_buscar.jTable1.getSelectedRow(), 1))));
+    }
+
+    public synchronized static void Ventas_sucursal_buscar_sucursal_seleccionar() {
+        DefaultTableModel tm = (DefaultTableModel) Ventas_sucursal_buscar.jTable1.getModel();
+        id_sucursal = Integer.parseInt(String.valueOf(tm.getValueAt(Ventas_sucursal_buscar.jTable1.getSelectedRow(), 0)));
+        Ventas.jTextField_sucursal.setText((String.valueOf(tm.getValueAt(Ventas_sucursal_buscar.jTable1.getSelectedRow(), 1))));
     }
 
     public synchronized static void Factura_compra_detalle_modificar_cuentas_seleccionar() {
@@ -2235,6 +2332,7 @@ public class Metodos {
         }
 
     }
+
     public synchronized static void Factura_venta_detalle_modificar_cuentas_seleccionar() {
         DefaultTableModel tm = (DefaultTableModel) Factura_venta_detalle_modificar_cuentas_buscar.jTable1.getModel();
         id_cuenta = Integer.parseInt(String.valueOf(tm.getValueAt(Factura_venta_detalle_modificar_cuentas_buscar.jTable1.getSelectedRow(), 0)));
@@ -2311,6 +2409,7 @@ public class Metodos {
         id_factura_detalle = Integer.parseInt(String.valueOf(tm.getValueAt(Compras.jTable_compras_detalle.getSelectedRow(), 0)));
         Compras_detalle_modificar.jTextField_cuenta.setText(String.valueOf(tm.getValueAt(Compras.jTable_compras_detalle.getSelectedRow(), 1)));
     }
+
     public synchronized static void Ventas_detalle_seleccionar_detalle() {
         DefaultTableModel tm = (DefaultTableModel) Ventas.jTable_compras_detalle.getModel();
         id_factura_detalle = Integer.parseInt(String.valueOf(tm.getValueAt(Ventas.jTable_compras_detalle.getSelectedRow(), 0)));

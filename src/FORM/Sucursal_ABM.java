@@ -1,6 +1,7 @@
 package FORM;
 
 import DEV.Metodos;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import javax.swing.ImageIcon;
 
@@ -57,6 +58,11 @@ public class Sucursal_ABM extends javax.swing.JFrame {
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
+            }
+        });
+        jButton3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jButton3KeyPressed(evt);
             }
         });
 
@@ -141,6 +147,12 @@ public class Sucursal_ABM extends javax.swing.JFrame {
     private void jTextField_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_empresaKeyPressed
         new Sucursal_empresas_buscar().setVisible(true);
     }//GEN-LAST:event_jTextField_empresaKeyPressed
+
+    private void jButton3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton3KeyPressed
+        if ((evt.getKeyCode() == KeyEvent.VK_ESCAPE)) {
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_jButton3KeyPressed
 
     public static void main(String args[]) {
         try {

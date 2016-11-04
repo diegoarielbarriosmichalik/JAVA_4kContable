@@ -19,6 +19,7 @@ public class Ventas extends javax.swing.JFrame {
         Metodos.id_comprobante = 1;
 
         Metodos.Factura_de_venta_max();
+        Metodos.Sucursal_empresa();
         Metodos.Facturas_de_venta_buscar();
 //        jTextField_proveedor.requestFocus();
     }
@@ -394,10 +395,11 @@ public class Ventas extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-//        Metodos.id_factura = 0;
-//        Metodos.Facturas_de_compra_clear();
-//        Metodos.Compras_clear_jtable();
-//        jTextField_sucursal.requestFocus();
+        Metodos.id_factura = 0;
+        Metodos.Facturas_de_venta_clear();
+        Metodos.Ventas_detalle_cargar_jtable();
+        Metodos.Sucursal_empresa();
+        jTextField_sucursal.requestFocus();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jTextField_cuentaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_cuentaKeyPressed
@@ -411,9 +413,9 @@ public class Ventas extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField_cuentaKeyPressed
 
     private void jTextField_sucursalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_sucursalKeyPressed
-//        if ((evt.getKeyCode() == KeyEvent.VK_ENTER)) {
-//            new Compras_proveedores_buscar().setVisible(true);
-//        }
+        if ((evt.getKeyCode() == KeyEvent.VK_ENTER)) {
+            new Ventas_sucursal_buscar().setVisible(true);
+        }
     }//GEN-LAST:event_jTextField_sucursalKeyPressed
 
     private void jTextField_fac_numeroFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_fac_numeroFocusLost
@@ -430,7 +432,7 @@ public class Ventas extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField_comprobanteFocusLost
 
     private void jTextField_sucursalFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_sucursalFocusLost
-//        jTextField_timbrado.requestFocus();
+        Metodos.Ventas_actualizar_sucursal();
     }//GEN-LAST:event_jTextField_sucursalFocusLost
 
     private void jTextField_descripcionFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_descripcionFocusLost
