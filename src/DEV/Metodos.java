@@ -141,59 +141,59 @@ public class Metodos {
             Statement ST = conexion.createStatement();
             ST.executeUpdate("truncate table reporte_libro_de_compras");
 
-            Statement st12 = conexion.createStatement();
-            ResultSet result12 = st12.executeQuery("SELECT * FROM cuenta order by nv1, nv2, nv3, nv4,nv5, cuenta");
-            while (result12.next()) {
+//            Statement st12 = conexion.createStatement();
+//            ResultSet result12 = st12.executeQuery("SELECT * FROM cuenta order by nv1, nv2, nv3, nv4,nv5, cuenta");
+//            while (result12.next()) {
+            Statement st122 = conexion.createStatement();
+            ResultSet result122 = st122.executeQuery(""
+                    + "SELECT  distinct(factura.id_factura), razon_social, ruc, descripcion FROM factura "
+                    + "inner join empresa on empresa.id_empresa = factura.id_empresa "
+                    + "where compra = '1' "
+                    + "and factura.id_empresa = '" + empresa + "'");
+            while (result122.next()) {
 
-                Statement st122 = conexion.createStatement();
-                ResultSet result122 = st122.executeQuery(""
-                        + "SELECT * FROM factura "
-                        + "inner join factura_detalle on factura.id_factura = factura_detalle.id_factura "
-                        + "inner join empresa on empresa.id_empresa = factura.id_empresa "
-                        + "where compra = '1' "
-                        + "and id_cuenta = '" + result12.getString("id_cuenta") + "'"
-                        + "and factura.id_empresa = '" + empresa + "'");
-                while (result122.next()) {
+                long g_10 = 0;
+                long i_10 = 0;
+                long g_5 = 0;
+                long i_5 = 0;
+                long ex = 0;
 
-                    Statement st1 = conexion.createStatement();
-                    ResultSet result = st1.executeQuery("SELECT MAX(id_reporte_libro_de_compras) FROM reporte_libro_de_compras");
-                    if (result.next()) {
-                        id = result.getInt(1) + 1;
-                    }
-
-                    if (result122.getLong("haber") > 0) {
-                        PreparedStatement stUpdateProducto = conexion.prepareStatement(""
-                                + "INSERT INTO reporte_libro_de_compras VALUES(?,?,?,?,?, ?,?,?,?,?)");
-                        stUpdateProducto.setInt(1, id);
-                        stUpdateProducto.setString(2, result122.getString("razon_social"));
-                        stUpdateProducto.setString(3, result122.getString("ruc"));
-                        stUpdateProducto.setString(4, result122.getString("descripcion"));
-                        stUpdateProducto.setLong(5, 0);
-                        stUpdateProducto.setLong(6, 0);
-                        stUpdateProducto.setLong(7, 0);
-                        stUpdateProducto.setLong(8, 0);
-                        stUpdateProducto.setLong(9, 0);
-                        stUpdateProducto.setLong(10, result122.getLong("haber"));
-                        stUpdateProducto.executeUpdate();
-                    } else {
-
-                        PreparedStatement stUpdateProducto = conexion.prepareStatement(""
-                                + "INSERT INTO reporte_libro_de_compras VALUES(?,?,?,?,?, ?,?,?,?,?)");
-                        stUpdateProducto.setInt(1, id);
-                        stUpdateProducto.setString(2, result122.getString("razon_social"));
-                        stUpdateProducto.setString(3, result122.getString("ruc"));
-                        stUpdateProducto.setString(4, result122.getString("descripcion"));
-                        stUpdateProducto.setLong(5, result122.getLong("gravada_10"));
-                        stUpdateProducto.setLong(6, result122.getLong("iva_10"));
-                        stUpdateProducto.setLong(7, result122.getLong("gravada_5"));
-                        stUpdateProducto.setLong(8, result122.getLong("iva_5"));
-                        stUpdateProducto.setLong(9, result122.getLong("exentas"));
-                        stUpdateProducto.setInt(10, 0);
-                        stUpdateProducto.executeUpdate();
-                    }
-
+                Statement st1222 = conexion.createStatement();
+                ResultSet result1222 = st1222.executeQuery(""
+                        + "SELECT  * FROM factura_detalle "
+                        + "where id_factura = '" + result122.getInt("id_factura") + "'");
+                while (result1222.next()) {
+                    i_10 = result1222.getLong("iva_10") + i_10;
+                    i_5 = result1222.getLong("iva_5") + i_5;
+                    g_10 = result1222.getLong("gravada_10") + g_10;
+                    g_5 = result1222.getLong("gravada_5") + g_5;
+                    ex = result1222.getLong("exentas") + ex;
                 }
+//                    if (g_10 > 0) {
+
+                Statement st1 = conexion.createStatement();
+                ResultSet result = st1.executeQuery("SELECT MAX(id_reporte_libro_de_compras) FROM reporte_libro_de_compras");
+                if (result.next()) {
+                    id = result.getInt(1) + 1;
+                }
+
+                PreparedStatement stUpdateProducto = conexion.prepareStatement(""
+                        + "INSERT INTO reporte_libro_de_compras VALUES(?,?,?,?,?, ?,?,?,?,?)");
+                stUpdateProducto.setInt(1, id);
+                stUpdateProducto.setString(2, result122.getString("razon_social"));
+                stUpdateProducto.setString(3, result122.getString("ruc"));
+                stUpdateProducto.setString(4, result122.getString("descripcion"));
+                stUpdateProducto.setLong(5, g_10);
+                stUpdateProducto.setLong(6, i_10);
+                stUpdateProducto.setLong(7, g_5);
+                stUpdateProducto.setLong(8, i_5);
+                stUpdateProducto.setLong(9, ex);
+                stUpdateProducto.setLong(10, g_10+g_5+i_10+i_5+ex);
+                stUpdateProducto.executeUpdate();
+//                    }
+
             }
+//            }
 
             String ubicacion_proyecto = new File("").getAbsolutePath();
             String path = ubicacion_proyecto + "\\reports\\libro_de_compras.jasper";

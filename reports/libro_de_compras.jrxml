@@ -20,7 +20,7 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch"/>
+		<band height="25" splitType="Stretch"/>
 	</title>
 	<pageHeader>
 		<band splitType="Stretch"/>
@@ -49,43 +49,43 @@
 				<text><![CDATA[Artículo]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="409" y="0" width="65" height="15" uuid="9f18075e-a40b-4925-bd74-c43da4cb1226"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<reportElement x="416" y="0" width="65" height="15" uuid="9f18075e-a40b-4925-bd74-c43da4cb1226"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Gravada 10%]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="474" y="0" width="65" height="15" uuid="760dda1f-1b61-46e5-840f-0967b7fb9469"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<reportElement x="481" y="0" width="65" height="15" uuid="760dda1f-1b61-46e5-840f-0967b7fb9469"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[IVA 10%]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="539" y="0" width="65" height="15" uuid="43db9e03-5e80-4c43-a036-a42775bf8108"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<reportElement x="546" y="0" width="65" height="15" uuid="43db9e03-5e80-4c43-a036-a42775bf8108"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Gravada 5%]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="604" y="0" width="65" height="15" uuid="c3e45017-404a-4830-90a1-61f950da2f65"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<reportElement x="611" y="0" width="65" height="15" uuid="c3e45017-404a-4830-90a1-61f950da2f65"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[IVA 5%]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="669" y="0" width="65" height="15" uuid="a91fd6dd-afa2-47f7-b939-b219c39fa01a"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<reportElement x="674" y="0" width="65" height="15" uuid="a91fd6dd-afa2-47f7-b939-b219c39fa01a"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Exentas	]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="734" y="0" width="65" height="15" uuid="4d49deb1-4cbf-4a00-b183-dad1798663a5"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<reportElement x="733" y="0" width="58" height="15" uuid="4d49deb1-4cbf-4a00-b183-dad1798663a5"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total]]></text>
@@ -154,7 +154,7 @@
 				<textFieldExpression><![CDATA[$F{exentas}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0;-#,##0">
-				<reportElement x="734" y="0" width="65" height="12" uuid="b69276df-f65c-42bc-b705-1fe506e0eeab"/>
+				<reportElement x="726" y="0" width="63" height="12" uuid="b69276df-f65c-42bc-b705-1fe506e0eeab"/>
 				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
