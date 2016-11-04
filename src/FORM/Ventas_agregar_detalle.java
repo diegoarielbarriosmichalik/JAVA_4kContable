@@ -30,7 +30,7 @@ public class Ventas_agregar_detalle extends javax.swing.JFrame {
         jTextField_exentas = new javax.swing.JTextField();
         jTextField_iva10 = new javax.swing.JTextField();
         jTextField_total = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
+        jButton_terminar = new javax.swing.JButton();
 
         setAlwaysOnTop(true);
         setUndecorated(true);
@@ -52,11 +52,11 @@ public class Ventas_agregar_detalle extends javax.swing.JFrame {
             }
         });
         jTextField_gravadas10.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextField_gravadas10FocusLost(evt);
-            }
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jTextField_gravadas10FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField_gravadas10FocusLost(evt);
             }
         });
         jTextField_gravadas10.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -76,11 +76,11 @@ public class Ventas_agregar_detalle extends javax.swing.JFrame {
             }
         });
         jTextField_gravadas_5.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextField_gravadas_5FocusLost(evt);
-            }
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jTextField_gravadas_5FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField_gravadas_5FocusLost(evt);
             }
         });
         jTextField_gravadas_5.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -115,11 +115,11 @@ public class Ventas_agregar_detalle extends javax.swing.JFrame {
             }
         });
         jTextField_exentas.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextField_exentasFocusLost(evt);
-            }
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jTextField_exentasFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField_exentasFocusLost(evt);
             }
         });
         jTextField_exentas.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -170,12 +170,12 @@ public class Ventas_agregar_detalle extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/terminar_mini.jpg"))); // NOI18N
-        jButton3.setMnemonic('g');
-        jButton3.setToolTipText("Alt + G");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jButton_terminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/terminar_mini.jpg"))); // NOI18N
+        jButton_terminar.setMnemonic('g');
+        jButton_terminar.setToolTipText("Alt + G");
+        jButton_terminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jButton_terminarActionPerformed(evt);
             }
         });
 
@@ -186,17 +186,22 @@ public class Ventas_agregar_detalle extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField_exentas, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jTextField_gravadas_5, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextField_gravadas10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jTextField_total, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField_iva5, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField_iva10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jTextField_iva10, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTextField_iva5))
+                            .addComponent(jTextField_exentas, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jTextField_gravadas_5, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField_gravadas10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jTextField_total, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton_terminar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -208,13 +213,13 @@ public class Ventas_agregar_detalle extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jTextField_exentas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField_iva10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField_iva5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField_iva10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField_iva5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField_total, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton_terminar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -234,19 +239,27 @@ public class Ventas_agregar_detalle extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        Metodos.Compras_detalle_guardar();
+    private void jButton_terminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_terminarActionPerformed
+        Metodos.Ventas_detalle_guardar();
         this.setVisible(false);
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_jButton_terminarActionPerformed
 
     private void jTextField_gravadas10KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_gravadas10KeyPressed
         if ((evt.getKeyCode() == KeyEvent.VK_ESCAPE)) {
             this.setVisible(false);
+            Ventas.jTextField_cuenta.requestFocus();
+            Ventas.jTextField_cuenta.selectAll();
+        }
+
+        if ((evt.getKeyCode() == KeyEvent.VK_ENTER)) {
+            Metodos.Ventas_agregar_detalle_calculo_gravada10();
+            jTextField_gravadas_5.requestFocus();
+            jTextField_gravadas_5.selectAll();
         }
     }//GEN-LAST:event_jTextField_gravadas10KeyPressed
 
     private void jTextField_gravadas10FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_gravadas10FocusLost
-        Metodos.Compras_agregar_detalle_calculo_gravada10();
+
     }//GEN-LAST:event_jTextField_gravadas10FocusLost
 
     private void jTextField_gravadas10KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_gravadas10KeyReleased
@@ -285,6 +298,11 @@ public class Ventas_agregar_detalle extends javax.swing.JFrame {
         if ((evt.getKeyCode() == KeyEvent.VK_ESCAPE)) {
             this.setVisible(false);
         }
+        if ((evt.getKeyCode() == KeyEvent.VK_ENTER)) {
+            Metodos.Ventas_agregar_detalle_calculo_gravada5();
+            jTextField_exentas.requestFocus();
+            jTextField_exentas.selectAll();
+        }
     }//GEN-LAST:event_jTextField_gravadas_5KeyPressed
 
     private void jTextField_iva10CaretPositionChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_jTextField_iva10CaretPositionChanged
@@ -309,6 +327,10 @@ public class Ventas_agregar_detalle extends javax.swing.JFrame {
         if ((evt.getKeyCode() == KeyEvent.VK_ESCAPE)) {
             this.setVisible(false);
         }
+        if ((evt.getKeyCode() == KeyEvent.VK_ENTER)) {
+            Metodos.Ventas_agregar_detalle_calculo_exentas();
+            jButton_terminar.requestFocus();
+        }
 
     }//GEN-LAST:event_jTextField_exentasKeyPressed
 
@@ -319,7 +341,7 @@ public class Ventas_agregar_detalle extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField_totalKeyPressed
 
     private void jTextField_gravadas_5FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_gravadas_5FocusLost
-        Metodos.Compras_agregar_detalle_calculo_gravada5();
+
     }//GEN-LAST:event_jTextField_gravadas_5FocusLost
 
     private void jTextField_gravadas_5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_gravadas_5ActionPerformed
@@ -327,7 +349,7 @@ public class Ventas_agregar_detalle extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField_gravadas_5ActionPerformed
 
     private void jTextField_exentasFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_exentasFocusLost
-        Metodos.Compras_agregar_detalle_calculo_exentas();
+
     }//GEN-LAST:event_jTextField_exentasFocusLost
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -363,7 +385,7 @@ public class Ventas_agregar_detalle extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton_terminar;
     private javax.swing.JPanel jPanel1;
     public static javax.swing.JTextField jTextField_exentas;
     public static javax.swing.JTextField jTextField_gravadas10;

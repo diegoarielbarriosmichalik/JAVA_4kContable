@@ -171,14 +171,14 @@ public class Ventas_buscar_cuentas extends javax.swing.JFrame {
 
     private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
         if ((evt.getKeyCode() == KeyEvent.VK_ENTER)) {
-            Metodos.Compras_buscar_cuentas_seleccionar_cuenta();
+            Metodos.Ventas_buscar_cuentas_seleccionar_cuenta();
             this.setVisible(false);
-            new Compras_agregar_detalle().setVisible(true);
+            new Ventas_agregar_detalle().setVisible(true);
         }
     }//GEN-LAST:event_jTable1KeyPressed
 
     private void jTextField_buscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_buscarKeyReleased
-        Metodos.Compras_cuentas_cargar_jtable();
+        Metodos.Ventas_cuentas_cargar_jtable();
     }//GEN-LAST:event_jTextField_buscarKeyReleased
 
     public static void main(String args[]) {

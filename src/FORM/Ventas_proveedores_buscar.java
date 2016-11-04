@@ -10,7 +10,7 @@ public class Ventas_proveedores_buscar extends javax.swing.JFrame {
     public Ventas_proveedores_buscar() {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.setTitle("Clientes");
+        this.setTitle("Proveedores");
         new File(".").getAbsolutePath();
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/icon.png")).getImage());
     }
@@ -153,7 +153,7 @@ public class Ventas_proveedores_buscar extends javax.swing.JFrame {
         if ((evt.getKeyCode() == KeyEvent.VK_DOWN)) {
             jTable1.requestFocus();
         }
-        Metodos.Compras_proveedores_buscar_cargar_jtable();
+        Metodos.Ventas_proveedores_buscar_cargar_jtable();
     }//GEN-LAST:event_jTextField_buscarKeyPressed
 
     private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
@@ -162,8 +162,8 @@ public class Ventas_proveedores_buscar extends javax.swing.JFrame {
         }
         if ((evt.getKeyCode() == KeyEvent.VK_ENTER)) {
             this.setVisible(false);
-            Metodos.Compras_proveedores_selecionar();
-            Compras.jTextField_timbrado.requestFocus();
+            Metodos.Ventas_proveedores_selecionar();
+            Ventas.jTextField_fac_sucursal.requestFocus();
         }
     }//GEN-LAST:event_jTable1KeyPressed
 

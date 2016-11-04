@@ -242,6 +242,8 @@ public class Compras_agregar_detalle extends javax.swing.JFrame {
     private void jTextField_gravadas10KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_gravadas10KeyPressed
         if ((evt.getKeyCode() == KeyEvent.VK_ESCAPE)) {
             this.setVisible(false);
+            Compras.jTextField_cuenta.requestFocus();
+            Compras.jTextField_cuenta.selectAll();
         }
     }//GEN-LAST:event_jTextField_gravadas10KeyPressed
 

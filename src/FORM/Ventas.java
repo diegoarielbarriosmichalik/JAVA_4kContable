@@ -235,11 +235,11 @@ public class Ventas extends javax.swing.JFrame {
 
         jTextField_cuenta.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cuentas (ENTER para buscar)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(102, 102, 255)));
         jTextField_cuenta.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextField_cuentaFocusLost(evt);
-            }
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jTextField_cuentaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField_cuentaFocusLost(evt);
             }
         });
         jTextField_cuenta.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -336,14 +336,17 @@ public class Ventas extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField_sucursal)
-                        .addComponent(jTextField_timbrado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextField_razon_social)
-                        .addComponent(jTextField_ruc))
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
+                            .addComponent(jTextField_sucursal)
+                            .addComponent(jTextField_timbrado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField_razon_social)
+                            .addComponent(jTextField_ruc)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -395,10 +398,10 @@ public class Ventas extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jTextField_cuentaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_cuentaKeyPressed
-//        if ((evt.getKeyCode() == KeyEvent.VK_ENTER)) {
-//            new Compras_buscar_cuentas().setVisible(true);
-//            Compras_buscar_cuentas.jTextField_buscar.setText(jTextField_cuenta.getText());
-//        }
+        if ((evt.getKeyCode() == KeyEvent.VK_ENTER)) {
+            new Ventas_buscar_cuentas().setVisible(true);
+            Ventas_buscar_cuentas.jTextField_buscar.setText(jTextField_cuenta.getText());
+        }
 
     }//GEN-LAST:event_jTextField_cuentaKeyPressed
 
@@ -409,7 +412,7 @@ public class Ventas extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField_sucursalKeyPressed
 
     private void jTextField_fac_numeroFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_fac_numeroFocusLost
-//        Metodos.Factura_de_compra_guardar();
+        Metodos.Factura_de_venta_guardar();
 //        jDateChooser_fecha.requestFocus();
     }//GEN-LAST:event_jTextField_fac_numeroFocusLost
 
@@ -426,7 +429,7 @@ public class Ventas extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField_sucursalFocusLost
 
     private void jTextField_descripcionFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_descripcionFocusLost
-        Metodos.Compras_actualizar_fecha();
+        Metodos.Ventas_actualizar_fecha_descripcion();
     }//GEN-LAST:event_jTextField_descripcionFocusLost
 
     private void jTextField_cuentaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_cuentaFocusLost
@@ -442,7 +445,7 @@ public class Ventas extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField_fac_cajaFocusGained
 
     private void jTextField_timbradoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_timbradoFocusLost
-        Metodos.Timbrado_guardar();
+        Metodos.Ventas_timbrado_guardar();
         jTextField_razon_social.requestFocus();
     }//GEN-LAST:event_jTextField_timbradoFocusLost
 
@@ -489,11 +492,13 @@ public class Ventas extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField_cuentaFocusGained
 
     private void jTextField_razon_socialFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_razon_socialFocusLost
-        jTextField_fac_sucursal.requestFocus();
+//        jTextField_fac_sucursal.requestFocus();
     }//GEN-LAST:event_jTextField_razon_socialFocusLost
 
     private void jTextField_razon_socialKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_razon_socialKeyPressed
-        // TODO add your handling code here:
+        if ((evt.getKeyCode() == KeyEvent.VK_ENTER)) {
+            new Ventas_proveedores_buscar().setVisible(true);
+        }
     }//GEN-LAST:event_jTextField_razon_socialKeyPressed
 
     private void jTextField_razon_socialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_razon_socialActionPerformed
