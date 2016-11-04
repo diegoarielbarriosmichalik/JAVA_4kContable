@@ -32,6 +32,7 @@ import FORM.Ventas_buscar_cuentas;
 import FORM.Ventas_detalle_modificar;
 import FORM.Ventas_proveedores_buscar;
 import FORM.Ventas_sucursal_buscar;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -45,6 +46,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 public class Metodos {
 
@@ -125,6 +132,78 @@ public class Metodos {
             Facturas_de_venta_buscar();
         } catch (SQLException ex) {
             System.err.println(ex);
+        }
+    }
+
+    public synchronized static void Libro_de_compras_print() {
+        try {
+
+            Statement ST = conexion.createStatement();
+            ST.executeUpdate("truncate table reporte_libro_de_compras");
+
+            Statement st12 = conexion.createStatement();
+            ResultSet result12 = st12.executeQuery("SELECT * FROM cuenta order by nv1, nv2, nv3, nv4,nv5, cuenta");
+            while (result12.next()) {
+
+                Statement st122 = conexion.createStatement();
+                ResultSet result122 = st122.executeQuery(""
+                        + "SELECT * FROM factura "
+                        + "inner join factura_detalle on factura.id_factura = factura_detalle.id_factura "
+                        + "inner join empresa on empresa.id_empresa = factura.id_empresa "
+                        + "where compra = '1' "
+                        + "and id_cuenta = '" + result12.getString("id_cuenta") + "'"
+                        + "and factura.id_empresa = '" + empresa + "'");
+                while (result122.next()) {
+
+                    Statement st1 = conexion.createStatement();
+                    ResultSet result = st1.executeQuery("SELECT MAX(id_reporte_libro_de_compras) FROM reporte_libro_de_compras");
+                    if (result.next()) {
+                        id = result.getInt(1) + 1;
+                    }
+
+                    if (result122.getLong("haber") > 0) {
+                        PreparedStatement stUpdateProducto = conexion.prepareStatement(""
+                                + "INSERT INTO reporte_libro_de_compras VALUES(?,?,?,?,?, ?,?,?,?,?)");
+                        stUpdateProducto.setInt(1, id);
+                        stUpdateProducto.setString(2, result122.getString("razon_social"));
+                        stUpdateProducto.setString(3, result122.getString("ruc"));
+                        stUpdateProducto.setString(4, result122.getString("descripcion"));
+                        stUpdateProducto.setLong(5, 0);
+                        stUpdateProducto.setLong(6, 0);
+                        stUpdateProducto.setLong(7, 0);
+                        stUpdateProducto.setLong(8, 0);
+                        stUpdateProducto.setLong(9, 0);
+                        stUpdateProducto.setLong(10, result122.getLong("haber"));
+                        stUpdateProducto.executeUpdate();
+                    } else {
+
+                        PreparedStatement stUpdateProducto = conexion.prepareStatement(""
+                                + "INSERT INTO reporte_libro_de_compras VALUES(?,?,?,?,?, ?,?,?,?,?)");
+                        stUpdateProducto.setInt(1, id);
+                        stUpdateProducto.setString(2, result122.getString("razon_social"));
+                        stUpdateProducto.setString(3, result122.getString("ruc"));
+                        stUpdateProducto.setString(4, result122.getString("descripcion"));
+                        stUpdateProducto.setLong(5, result122.getLong("gravada_10"));
+                        stUpdateProducto.setLong(6, result122.getLong("iva_10"));
+                        stUpdateProducto.setLong(7, result122.getLong("gravada_5"));
+                        stUpdateProducto.setLong(8, result122.getLong("iva_5"));
+                        stUpdateProducto.setLong(9, result122.getLong("exentas"));
+                        stUpdateProducto.setInt(10, 0);
+                        stUpdateProducto.executeUpdate();
+                    }
+
+                }
+            }
+
+            String ubicacion_proyecto = new File("").getAbsolutePath();
+            String path = ubicacion_proyecto + "\\reports\\libro_de_compras.jasper";
+            JasperReport jr = (JasperReport) JRLoader.loadObjectFromFile(path);
+            JasperPrint jp = JasperFillManager.fillReport(jr, null, conexion);
+            JasperViewer jv = new JasperViewer(jp, false);
+            jv.setVisible(true);
+
+        } catch (JRException | SQLException ex) {
+            Logger.getLogger(Metodos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -278,7 +357,8 @@ public class Metodos {
 
             if (gravada_10 > 0) {
                 id_factura_detalle++;
-                PreparedStatement stUpdateProducto = conexion.prepareStatement("INSERT INTO factura_detalle VALUES(?,?,?,?,?,?,?,?)");
+                PreparedStatement stUpdateProducto = conexion.prepareStatement(""
+                        + "INSERT INTO factura_detalle VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)");
                 stUpdateProducto.setInt(1, id_factura_detalle);
                 stUpdateProducto.setInt(2, id_cuenta);
                 stUpdateProducto.setLong(3, gravada_10);
@@ -287,10 +367,16 @@ public class Metodos {
                 stUpdateProducto.setInt(6, 1);
                 stUpdateProducto.setInt(7, 1);
                 stUpdateProducto.setInt(8, id_factura);
+                stUpdateProducto.setLong(9, gravada_10);
+                stUpdateProducto.setLong(10, 0);
+                stUpdateProducto.setLong(11, 0);
+                stUpdateProducto.setLong(12, 0);
+                stUpdateProducto.setLong(13, 0);
                 stUpdateProducto.executeUpdate();
 
                 id_factura_detalle++;
-                PreparedStatement stUpdateProducto2 = conexion.prepareStatement("INSERT INTO factura_detalle VALUES(?,?,?,?,?,?,?,?)");
+                PreparedStatement stUpdateProducto2 = conexion.prepareStatement(""
+                        + "INSERT INTO factura_detalle VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)");
                 stUpdateProducto2.setInt(1, id_factura_detalle);
                 stUpdateProducto2.setInt(2, id_cuenta_iva_10);
                 stUpdateProducto2.setLong(3, iva_10);
@@ -299,13 +385,18 @@ public class Metodos {
                 stUpdateProducto2.setInt(6, 1);
                 stUpdateProducto2.setInt(7, 1);
                 stUpdateProducto2.setInt(8, id_factura);
+                stUpdateProducto2.setLong(9, 0);
+                stUpdateProducto2.setLong(10, 0);
+                stUpdateProducto2.setLong(11, iva_10);
+                stUpdateProducto2.setLong(12, 0);
+                stUpdateProducto2.setLong(13, 0);
                 stUpdateProducto2.executeUpdate();
 
             }
             if (gravada_5 > 0) {
 
                 id_factura_detalle++;
-                PreparedStatement stUpdateProducto = conexion.prepareStatement("INSERT INTO factura_detalle VALUES(?,?,?,?,?,?,?,?)");
+                PreparedStatement stUpdateProducto = conexion.prepareStatement("INSERT INTO factura_detalle VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)");
                 stUpdateProducto.setInt(1, id_factura_detalle);
                 stUpdateProducto.setInt(2, id_cuenta);
                 stUpdateProducto.setLong(3, gravada_5);
@@ -314,10 +405,15 @@ public class Metodos {
                 stUpdateProducto.setInt(6, 2);
                 stUpdateProducto.setInt(7, 1);
                 stUpdateProducto.setInt(8, id_factura);
+                stUpdateProducto.setLong(9, 0);
+                stUpdateProducto.setLong(10, gravada_5);
+                stUpdateProducto.setLong(11, 0);
+                stUpdateProducto.setLong(12, 0);
+                stUpdateProducto.setLong(13, 0);
                 stUpdateProducto.executeUpdate();
 
                 id_factura_detalle++;
-                PreparedStatement stUpdateProducto23 = conexion.prepareStatement("INSERT INTO factura_detalle VALUES(?,?,?,?,?,?,?,?)");
+                PreparedStatement stUpdateProducto23 = conexion.prepareStatement("INSERT INTO factura_detalle VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)");
                 stUpdateProducto23.setInt(1, id_factura_detalle);
                 stUpdateProducto23.setInt(2, id_cuenta_iva_5);
                 stUpdateProducto23.setLong(3, iva_5);
@@ -326,13 +422,18 @@ public class Metodos {
                 stUpdateProducto23.setInt(6, 2);
                 stUpdateProducto23.setInt(7, 1);
                 stUpdateProducto23.setInt(8, id_factura);
+                stUpdateProducto23.setLong(9, 0);
+                stUpdateProducto23.setLong(10, 0);
+                stUpdateProducto23.setLong(11, 0);
+                stUpdateProducto23.setLong(12, iva_5);
+                stUpdateProducto23.setLong(13, 0);
                 stUpdateProducto23.executeUpdate();
 
             }
             if (exentas > 0) {
 
                 id_factura_detalle++;
-                PreparedStatement stUpdateProducto = conexion.prepareStatement("INSERT INTO factura_detalle VALUES(?,?,?,?,?,?,?,?)");
+                PreparedStatement stUpdateProducto = conexion.prepareStatement("INSERT INTO factura_detalle VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)");
                 stUpdateProducto.setInt(1, id_factura_detalle);
                 stUpdateProducto.setInt(2, id_cuenta);
                 stUpdateProducto.setLong(3, exentas);
@@ -341,12 +442,17 @@ public class Metodos {
                 stUpdateProducto.setInt(6, 3);
                 stUpdateProducto.setInt(7, 1);
                 stUpdateProducto.setInt(8, id_factura);
+                stUpdateProducto.setLong(9, 0);
+                stUpdateProducto.setLong(10, 0);
+                stUpdateProducto.setLong(11, 0);
+                stUpdateProducto.setLong(12, 0);
+                stUpdateProducto.setLong(13, exentas);
                 stUpdateProducto.executeUpdate();
             }
 
             long total = Long.valueOf(Compras_agregar_detalle.jTextField_total.getText().replace(".", ""));
             id_factura_detalle++;
-            PreparedStatement stUpdateProducto2 = conexion.prepareStatement("INSERT INTO factura_detalle VALUES(?,?,?,?,?,?,?,?)");
+            PreparedStatement stUpdateProducto2 = conexion.prepareStatement("INSERT INTO factura_detalle VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)");
             stUpdateProducto2.setInt(1, id_factura_detalle);
             stUpdateProducto2.setInt(2, id_cuenta_caja);
             stUpdateProducto2.setLong(3, 0);
@@ -355,6 +461,11 @@ public class Metodos {
             stUpdateProducto2.setInt(6, 0);
             stUpdateProducto2.setInt(7, 0);
             stUpdateProducto2.setInt(8, id_factura);
+            stUpdateProducto2.setLong(9, 0);
+            stUpdateProducto2.setLong(10, 0);
+            stUpdateProducto2.setLong(11, 0);
+            stUpdateProducto2.setLong(12, 0);
+            stUpdateProducto2.setLong(13, 0);
             stUpdateProducto2.executeUpdate();
 
             PreparedStatement st = conexion.prepareStatement(""
@@ -621,7 +732,7 @@ public class Metodos {
                 }
 
                 PreparedStatement stUpdateProducto = conexion.prepareStatement(""
-                        + "INSERT INTO factura VALUES(?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ? )");
+                        + "INSERT INTO factura VALUES(?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?)");
                 stUpdateProducto.setInt(1, id_factura);
                 stUpdateProducto.setLong(2, Long.parseLong(Compras.jTextField_fac_sucursal.getText()));
                 stUpdateProducto.setLong(3, Long.parseLong(Compras.jTextField_fac_caja.getText()));
@@ -640,14 +751,9 @@ public class Metodos {
                 stUpdateProducto.setInt(16, 0);
                 stUpdateProducto.setInt(17, 0);
                 stUpdateProducto.setInt(18, 0);
-                stUpdateProducto.setInt(19, 0);
+                stUpdateProducto.setInt(19, 1);
                 stUpdateProducto.setInt(20, 0);
-                stUpdateProducto.setInt(21, 0);
-                stUpdateProducto.setInt(22, 0);
-                stUpdateProducto.setInt(23, 0);
-                stUpdateProducto.setInt(24, 1); // compra
-                stUpdateProducto.setInt(25, 0);
-                stUpdateProducto.setInt(26, id_sucursal);
+                stUpdateProducto.setInt(21, id_sucursal);
                 stUpdateProducto.executeUpdate();
             } else {
                 JOptionPane.showMessageDialog(null, "Factura de compra duplicada");
@@ -706,13 +812,8 @@ public class Metodos {
                 stUpdateProducto.setInt(17, 0);
                 stUpdateProducto.setInt(18, 0);
                 stUpdateProducto.setInt(19, 0);
-                stUpdateProducto.setInt(20, 0);
-                stUpdateProducto.setInt(21, 0);
-                stUpdateProducto.setInt(22, 0);
-                stUpdateProducto.setInt(23, 0);
-                stUpdateProducto.setInt(24, 0); // compra
-                stUpdateProducto.setInt(25, 1); // venta
-                stUpdateProducto.setInt(26, id_sucursal);
+                stUpdateProducto.setInt(20, 1);
+                stUpdateProducto.setInt(21, id_sucursal);
                 stUpdateProducto.executeUpdate();
             } else {
                 JOptionPane.showMessageDialog(null, "Factura de venta duplicada");
@@ -899,7 +1000,7 @@ public class Metodos {
             System.err.println(ex);
         }
     }
-    
+
     public static void Sucursal_empresa() {
         try {
             Statement st13 = conexion.createStatement();
@@ -914,10 +1015,9 @@ public class Metodos {
             System.err.println(ex);
         }
     }
+
     public synchronized static void Facturas_de_venta_buscar() {
         try {
-
-          
 
             Statement st1 = conexion.createStatement();
             ResultSet result = st1.executeQuery(""
@@ -1451,6 +1551,7 @@ public class Metodos {
         Compras.jTextField_total.setText("");
 
     }
+
     public static void Facturas_de_venta_clear() {
         id_factura = 0;
         id_moneda = 1;

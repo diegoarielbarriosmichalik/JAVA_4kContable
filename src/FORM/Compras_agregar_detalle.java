@@ -17,6 +17,15 @@ public class Compras_agregar_detalle extends javax.swing.JFrame {
 
         jTextField_gravadas10.requestFocus();
         jTextField_gravadas10.selectAll();
+        
+        Metodos.total = 0;
+        Metodos.exentas = 0;
+        Metodos.gravada_10_long = 0;
+        Metodos.gravada_5_long = 0;
+        Metodos.iva_10 = 0;
+        Metodos.iva_5 = 0;
+        
+        
     }
 
     @SuppressWarnings("unchecked")

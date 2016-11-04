@@ -6,6 +6,20 @@ INSERT INTO comprobante VALUES
 INSERT INTO parametro VALUES 
 ('1');
 
+INSERT INTO cliente VALUES 
+('1', 'Diego Barrios','0','','','','0');
+
+INSERT INTO empresa VALUES 
+('1', '4k','','','','1');
+
+INSERT INTO sucursal VALUES 
+('1', 'Casa Matriz','1','0');
+
+INSERT INTO proveedor VALUES 
+('1', 'Casa Amin','0','0','','0');
+
+
+
 INSERT INTO tipo_de_iva VALUES 
 ('0', '---'),
 ('1', 'Indistinto');
@@ -382,4 +396,8 @@ INSERT INTO cuenta VALUES
 	
 	('302', '19', '0', '0', '0', '0',		'IMPUESTO A LA RENTA','0'),
 	
-	('303', '20', '0', '0', '0', '0',		'GANANCIAS/PERDIDAS NETAS DEL EJERCICIO','0');
+	('303', '20', '0', '0', '0', '0',		'GANANCIAS/PERDIDAS NETAS DEL EJERCICIO','0'),
+	('304', '1', '1', '3', '5', '5',		'IVA - CREDITO FISCAL 5%','0');
+	
+	INSERT INTO parametro VALUES 
+('1', '21','304','0','5');

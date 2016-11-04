@@ -6,14 +6,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class Principal extends javax.swing.JFrame {
-
+    
     public Principal() {
         initComponents();
-        this.setLocationRelativeTo(null);
-        this.setTitle(Metodos.empresa_razon_social);
+        setLocationRelativeTo(null);
+        setTitle(Metodos.empresa_razon_social);
         new File(".").getAbsolutePath();
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/icon.png")).getImage());
-
+        
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -22,7 +22,7 @@ public class Principal extends javax.swing.JFrame {
             }
         });
     }
-
+    
     private void close() {
         if (JOptionPane.showConfirmDialog(rootPane, "¿Salir del sistema?",
                 "Salir del sistema", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
@@ -30,7 +30,7 @@ public class Principal extends javax.swing.JFrame {
             System.exit(0);
         }
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -53,6 +53,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem16 = new javax.swing.JMenuItem();
         jMenu_movimientos = new javax.swing.JMenu();
         jSeparator6 = new javax.swing.JPopupMenu.Separator();
         jMenuItem7 = new javax.swing.JMenuItem();
@@ -157,6 +158,14 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem4.setText("Cierre del ejercicio");
         jMenu3.add(jMenuItem4);
         jMenu3.add(jSeparator5);
+
+        jMenuItem16.setText("Libro de Compras");
+        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem16ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem16);
 
         jMenuBar1.add(jMenu3);
 
@@ -276,7 +285,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-
+        
         if (Metodos.empresa != 0) {
             new Compras().setVisible(true);
         } else {
@@ -299,7 +308,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem18ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-
+        
         if (Metodos.empresa != 0) {
             new Ventas().setVisible(true);
         } else {
@@ -324,6 +333,10 @@ public class Principal extends javax.swing.JFrame {
         new Seleccionar_empresa().setVisible(true);
     }//GEN-LAST:event_jMenu6MouseClicked
 
+    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
+        new Libro_de_compras().setVisible(true);
+    }//GEN-LAST:event_jMenuItem16ActionPerformed
+    
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -335,7 +348,7 @@ public class Principal extends javax.swing.JFrame {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             System.err.println(ex);
         }
-
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Principal().setVisible(true);
@@ -357,6 +370,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
+    private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
