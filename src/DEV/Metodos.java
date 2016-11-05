@@ -42,6 +42,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -136,6 +138,15 @@ public class Metodos {
         }
     }
 
+    public synchronized static java.sql.Date util_Date_to_sql_date(Date fecha) {
+        java.sql.Date fecha_sql_date = null;
+        if (fecha != null) {
+            java.util.Date utilDate = fecha;
+            fecha_sql_date = new java.sql.Date(utilDate.getTime());
+        }
+        return fecha_sql_date;
+    }
+
     public synchronized static void Libro_de_compras_print() {
         try {
 
@@ -147,7 +158,8 @@ public class Metodos {
 //            while (result12.next()) {
             Statement st122 = conexion.createStatement();
             ResultSet result122 = st122.executeQuery(""
-                    + "SELECT  distinct(factura.id_factura), nombre, ruc, descripcion FROM factura "
+                    + "SELECT  distinct(factura.id_factura), nombre, ruc, descripcion, fecha, factura_sucursal, factura_caja, factura_numero "
+                    + "FROM factura "
                     + "inner join proveedor on proveedor.id_proveedor = factura.id_proveedor "
                     + "where compra = '1' "
                     + "and factura.id_empresa = '" + empresa + "'");
@@ -178,8 +190,36 @@ public class Metodos {
                     id = result.getInt(1) + 1;
                 }
 
+                String fac_suc = null;
+                String fac_caja = null;
+                String fac_numero = "";
+                String factura = null;
+
+                if (result122.getString("factura_sucursal").length() < 2) {
+                    fac_suc = "00" + result122.getString("factura_sucursal").trim();
+                }
+                if (result122.getString("factura_sucursal").length() < 1) {
+                    fac_suc = "0" + result122.getString("factura_sucursal").trim();
+                }
+                if (result122.getString("factura_caja").length() < 2) {
+                    fac_caja = "00" + result122.getString("factura_caja").trim();
+                }
+                if (result122.getString("factura_caja").length() < 1) {
+                    fac_caja = "0" + result122.getString("factura_caja").trim();
+                }
+                if (result122.getString("factura_numero").trim().length() < 12) {
+                    int c = result122.getString("factura_numero").trim().length();
+                    while (c <= 12) {
+                        fac_numero = "0" + fac_numero;
+                        c++;
+                    }
+                    fac_numero = fac_numero + result122.getString("factura_numero");
+                }
+                factura = fac_suc + "-" + fac_caja + "-" + fac_numero;
+//                result122.getString("factura_sucursal").trim()+"-"+result122.getString("factura_caja").trim()+"-"+result122.getString("factura_numero").trim();
+
                 PreparedStatement stUpdateProducto = conexion.prepareStatement(""
-                        + "INSERT INTO reporte_libro_de_compras VALUES(?,?,?,?,?, ?,?,?,?,?)");
+                        + "INSERT INTO reporte_libro_de_compras VALUES(?,?,?,?,?, ?,?,?,?,?, ?,?)");
                 stUpdateProducto.setInt(1, id);
                 stUpdateProducto.setString(2, result122.getString("nombre"));
                 stUpdateProducto.setString(3, result122.getString("ruc"));
@@ -190,16 +230,23 @@ public class Metodos {
                 stUpdateProducto.setLong(8, i_5);
                 stUpdateProducto.setLong(9, ex);
                 stUpdateProducto.setLong(10, g_10 + g_5 + i_10 + i_5 + ex);
+                stUpdateProducto.setDate(11, util_Date_to_sql_date(result122.getDate("fecha")));
+                stUpdateProducto.setString(12, factura);
                 stUpdateProducto.executeUpdate();
 //                    }
 
             }
 //            }
+            Map parametros = new HashMap();
+            parametros.put("empresa", "Razón social: "+empresa_razon_social);
+            parametros.put("sucursal", "Sucursal: ");
+            parametros.put("propietario", "Propietario: ");
+            parametros.put("periodo", "Periodo: ");
 
             String ubicacion_proyecto = new File("").getAbsolutePath();
             String path = ubicacion_proyecto + "\\reports\\libro_de_compras.jasper";
             JasperReport jr = (JasperReport) JRLoader.loadObjectFromFile(path);
-            JasperPrint jp = JasperFillManager.fillReport(jr, null, conexion);
+            JasperPrint jp = JasperFillManager.fillReport(jr, parametros, conexion);
             JasperViewer jv = new JasperViewer(jp, false);
             jv.setVisible(true);
 
@@ -696,15 +743,6 @@ public class Metodos {
         } catch (SQLException ex) {
             System.err.println(ex);
         }
-    }
-
-    public synchronized static java.sql.Date util_Date_to_sql_date(Date fecha) {
-        java.sql.Date fecha_sql_date = null;
-        if (fecha != null) {
-            java.util.Date utilDate = fecha;
-            fecha_sql_date = new java.sql.Date(utilDate.getTime());
-        }
-        return fecha_sql_date;
     }
 
     public synchronized static void Factura_de_compra_guardar() {
@@ -2350,7 +2388,7 @@ public class Metodos {
         try {
             DefaultTableModel tm = (DefaultTableModel) Seleccionar_empresa.jTable1.getModel();
             empresa = Integer.parseInt(String.valueOf(tm.getValueAt(Seleccionar_empresa.jTable1.getSelectedRow(), 0)));
-            empresa_razon_social = "Empresa activa: " + String.valueOf(tm.getValueAt(Seleccionar_empresa.jTable1.getSelectedRow(), 1));
+            empresa_razon_social = String.valueOf(tm.getValueAt(Seleccionar_empresa.jTable1.getSelectedRow(), 1));
 
             Statement st14 = conexion.createStatement();
             ResultSet result44 = st14.executeQuery("SELECT * FROM sucursal where id_empresa = '" + empresa + "' order by id_sucursal ASC");
