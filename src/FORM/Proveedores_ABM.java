@@ -15,6 +15,7 @@ public class Proveedores_ABM extends javax.swing.JFrame {
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/icon.png")).getImage());
 
         jTextField_razon_social.requestFocus();
+        Metodos.id_proveedor = 0;
     }
 
     @SuppressWarnings("unchecked")

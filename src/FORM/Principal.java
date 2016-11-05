@@ -6,14 +6,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class Principal extends javax.swing.JFrame {
-    
+
     public Principal() {
         initComponents();
         setLocationRelativeTo(null);
         setTitle(Metodos.empresa_razon_social);
         new File(".").getAbsolutePath();
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/icon.png")).getImage());
-        
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -22,7 +22,7 @@ public class Principal extends javax.swing.JFrame {
             }
         });
     }
-    
+
     private void close() {
         if (JOptionPane.showConfirmDialog(rootPane, "¿Salir del sistema?",
                 "Salir del sistema", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
@@ -30,7 +30,7 @@ public class Principal extends javax.swing.JFrame {
             System.exit(0);
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -285,7 +285,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        
+
         if (Metodos.empresa != 0) {
             new Compras().setVisible(true);
         } else {
@@ -308,7 +308,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem18ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-        
+
         if (Metodos.empresa != 0) {
             new Ventas().setVisible(true);
         } else {
@@ -330,13 +330,22 @@ public class Principal extends javax.swing.JFrame {
         this.setVisible(false);
         Metodos.form_compra = 0;
         Metodos.form_venta = 0;
+        Metodos.form_libro_compra = 0;
         new Seleccionar_empresa().setVisible(true);
     }//GEN-LAST:event_jMenu6MouseClicked
 
     private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
-        new Libro_de_compras().setVisible(true);
+
+        if (Metodos.empresa != 0) {
+            new Libro_de_compras().setVisible(true);
+        } else {
+            this.setVisible(false);
+            Metodos.form_libro_compra = 1;
+            new Seleccionar_empresa().setVisible(true);
+        }
+
     }//GEN-LAST:event_jMenuItem16ActionPerformed
-    
+
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -348,7 +357,7 @@ public class Principal extends javax.swing.JFrame {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             System.err.println(ex);
         }
-        
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Principal().setVisible(true);

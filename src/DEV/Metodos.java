@@ -88,6 +88,7 @@ public class Metodos {
     public static boolean existe = false;
     public static int cuenta_gravada_10 = 0;
     public static int cuenta_parametros = 0;
+    public static int form_libro_compra = 0;
     public static boolean enter_press = false;
 
     public synchronized static void Iniciar_Conexion() {
@@ -146,8 +147,8 @@ public class Metodos {
 //            while (result12.next()) {
             Statement st122 = conexion.createStatement();
             ResultSet result122 = st122.executeQuery(""
-                    + "SELECT  distinct(factura.id_factura), razon_social, ruc, descripcion FROM factura "
-                    + "inner join empresa on empresa.id_empresa = factura.id_empresa "
+                    + "SELECT  distinct(factura.id_factura), nombre, ruc, descripcion FROM factura "
+                    + "inner join proveedor on proveedor.id_proveedor = factura.id_proveedor "
                     + "where compra = '1' "
                     + "and factura.id_empresa = '" + empresa + "'");
             while (result122.next()) {
@@ -180,7 +181,7 @@ public class Metodos {
                 PreparedStatement stUpdateProducto = conexion.prepareStatement(""
                         + "INSERT INTO reporte_libro_de_compras VALUES(?,?,?,?,?, ?,?,?,?,?)");
                 stUpdateProducto.setInt(1, id);
-                stUpdateProducto.setString(2, result122.getString("razon_social"));
+                stUpdateProducto.setString(2, result122.getString("nombre"));
                 stUpdateProducto.setString(3, result122.getString("ruc"));
                 stUpdateProducto.setString(4, result122.getString("descripcion"));
                 stUpdateProducto.setLong(5, g_10);
@@ -188,7 +189,7 @@ public class Metodos {
                 stUpdateProducto.setLong(7, g_5);
                 stUpdateProducto.setLong(8, i_5);
                 stUpdateProducto.setLong(9, ex);
-                stUpdateProducto.setLong(10, g_10+g_5+i_10+i_5+ex);
+                stUpdateProducto.setLong(10, g_10 + g_5 + i_10 + i_5 + ex);
                 stUpdateProducto.executeUpdate();
 //                    }
 
@@ -1016,6 +1017,21 @@ public class Metodos {
         }
     }
 
+    public static void Sucursal_empresa_compras() {
+        try {
+            Statement st13 = conexion.createStatement();
+            ResultSet result3 = st13.executeQuery(""
+                    + "SELECT * FROM sucursal "
+                    + "where id_empresa = '" + empresa + "' order by id_sucursal ");
+            if (result3.next()) {
+                Compras.jTextField_sucursal.setText(result3.getString("sucursal").trim());
+                id_sucursal = result3.getInt("id_sucursal");
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+    }
+
     public synchronized static void Facturas_de_venta_buscar() {
         try {
 
@@ -1296,51 +1312,9 @@ public class Metodos {
                     stUpdateProducto.setString(5, Proveedores_ABM.jTextField_direccion.getText());
                     stUpdateProducto.setInt(6, 0); //borrado
                     stUpdateProducto.executeUpdate();
-
+                    JOptionPane.showMessageDialog(null, "Guardado correctamente");
                 }
-
-//            } else if (Clientes.jDateChooser_cumpleanos.getDate() != null) {
-//                java.util.Date utilDate = Clientes.jDateChooser_cumpleanos.getDate();
-//                java.sql.Date cumple = new java.sql.Date(utilDate.getTime());
-//                PreparedStatement st = conexion.prepareStatement(""
-//                        + "UPDATE cliente "
-//                        + "SET nombre ='" + jt_nombre.getText() + "', "
-//                        + "direccion ='" + jt_direccion.getText() + "', "
-//                        + "telefono ='" + jt_telefono.getText() + "', "
-//                        + "ruc ='" + jt_ruc.getText() + "', "
-//                        + "email = '" + jt_email.getText() + "', "
-//                        + "cumpleanos = '" + cumple + "', "
-//                        + "ci = '" + Integer.parseInt(Clientes.jTextField_ci.getText()) + "' "
-//                        + "WHERE id_cliente = '" + id_cliente + "'");
-//                st.executeUpdate();
-////                    Clientes.jt_nombre.setEditable(false);
-////                    JOptionPane.showMessageDialog(null, "Cliente actualizado correctamente");
-//                Clientes.jLabel_mensaje.setText("Actualizado correctamente");
-//                Clientes.jLabel_mensaje.setVisible(true);
-////                    Clientes.jt_nombre.requestFocus();
-//
-//            } else {
-//                int ci = 0;
-//                if (Clientes.jTextField_ci.getText().length() > 1) {
-//                    ci = Integer.parseInt(Clientes.jTextField_ci.getText());
-//                }
-//
-//                PreparedStatement st = conexion.prepareStatement(""
-//                        + "UPDATE cliente "
-//                        + "SET nombre ='" + jt_nombre.getText() + "', "
-//                        + "direccion ='" + jt_direccion.getText() + "', "
-//                        + "telefono ='" + jt_telefono.getText() + "', "
-//                        + "ruc ='" + jt_ruc.getText() + "', "
-//                        + "email = '" + jt_email.getText() + "', "
-//                        + "ci = '" + ci + "' "
-//                        + "WHERE id_cliente = '" + id_cliente + "'");
-//                st.executeUpdate();
-//                Clientes.jLabel_mensaje.setText("Actualizado correctamente");
-//                Clientes.jLabel_mensaje.setVisible(true);
-////                    Clientes.jt_nombre.requestFocus();
             }
-
-            JOptionPane.showMessageDialog(null, "Guardado correctamente");
 
         } catch (NumberFormatException | SQLException e) {
             JOptionPane.showMessageDialog(null, e);
@@ -2215,6 +2189,16 @@ public class Metodos {
             if (RS.next()) {
                 cuenta = RS.getString("cuenta").trim();
                 Compras.jTextField_cuenta.setText(RS.getString("cuenta").trim());
+
+                if (Compras.jTextField_descripcion.getText().length() > 0) {
+                } else {
+                    PreparedStatement st = conexion.prepareStatement(""
+                            + "UPDATE factura "
+                            + "SET descripcion ='" + cuenta + "' "
+                            + "WHERE id_factura = '" + id_factura + "'");
+                    st.executeUpdate();
+                }
+
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);

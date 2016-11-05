@@ -374,7 +374,7 @@ public class Compras extends javax.swing.JFrame {
         Metodos.id_factura = 0;
         Metodos.Facturas_de_compra_clear();
         Metodos.Compras_detalle_cargar_jtable();
-        Metodos.Sucursal_empresa();
+        Metodos.Sucursal_empresa_compras();
         jTextField_proveedor.requestFocus();
     }//GEN-LAST:event_jButton3ActionPerformed
 

@@ -188,6 +188,9 @@ public class Seleccionar_empresa extends javax.swing.JFrame {
         if (Metodos.form_venta == 1) {
             new Ventas().setVisible(true);
         }
+        if (Metodos.form_libro_compra == 1) {
+            new Libro_de_compras().setVisible(true);
+        }
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
